@@ -1,8 +1,8 @@
 {
   "phase": "I4",
-  "updated_at": "2026-11-11T15:27:52.870155+00:00",
+  "updated_at": "2026-11-11T18:45:04.838560+00:00",
   "implementation": "complete_and_real_OpenAI_validated",
-  "acceptance_status": "pending_quality_fix_Telegram_confirmation_and_formal_acceptance",
+  "acceptance_status": "approved_for_pilot_with_documented_limitations",
   "entry_conditions": {
     "I3_owner_acceptance": "approved",
     "G3_document_transfer_and_costs": "authorized",
@@ -52,7 +52,8 @@
         "code": "knowledge_answer"
       }
     },
-    "current_model": "gpt-4.1-2025-04-14"
+    "current_model": "gpt-4o-2024-08-06",
+    "four_current_model_Telegram_retests": "passed_two_per_role_API_and_human_confirmation"
   },
   "preservation": {
     "operational_database_opened_by_I4_work": true,
@@ -65,10 +66,7 @@
     "private_configuration_vector_store_id_persisted": true,
     "baseline_business_tables_preserved": true
   },
-  "pending_criteria": [
-    "post_quality_fix_bicycle_Telegram_confirmation",
-    "owner_reviews_I4_acceptance"
-  ],
+  "pending_criteria": [],
   "scope_limits": {
     "no_google_mutations": true,
     "no_reservations": true,
@@ -101,5 +99,16 @@
     "source": "windows-control-live.json",
     "status": "verified",
     "does_not_approve_documentary_answer_quality": true
+  },
+  "final_review": {
+    "source": "i4-final-review-20261111.json",
+    "recommendation": "ready_for_formal_owner_review_with_documented_limitations"
+  },
+  "owner_acceptance": {
+    "approved": true,
+    "recorded_at": "2026-11-11T18:45:04.838560+00:00",
+    "source": "explicit_owner_reply_sim_to_formal_I4_acceptance_question",
+    "scope": "I4_pilot_with_limitations_in_fechamento-i4-2026-11-11.md",
+    "I5_or_G4_authorized": false
   }
 }

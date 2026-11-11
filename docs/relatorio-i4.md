@@ -1,4 +1,14 @@
-# Relatório I4 — citações corrigidas e retestadas; aceite formal pendente
+# Relatório I4 — aceite formal do piloto registrado com limitações
+
+Aceite posterior: em 11/11/2026, o responsável aceitou formalmente a I4 para o
+piloto, com as limitações do fechamento. Prevalece o registro em
+[i4-acceptance.json](evidencias/i4-acceptance.json). As pendências de aceite no
+histórico abaixo foram encerradas; G4 não foi concedido e I5 não foi iniciada.
+
+Atualização de fechamento: os quatro retestes posteriores no GPT-4o foram
+confirmados nos recibos e pelo responsável. Para estado atual e limitações,
+prevalece [fechamento-i4-2026-11-11.md](fechamento-i4-2026-11-11.md).
+As etapas abaixo preservam o histórico anterior a esse fechamento.
 
 Data: 10/11/2026. Atualizado em 11/11/2026. Responsável: Codex.
 Escopo: executar o PLAN I4 aprovado, respeitando G3 e autorizações por operação.

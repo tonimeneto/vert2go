@@ -1,5 +1,11 @@
 # Vert2Go
 
+**Fechamento I4:** quatro retestes documentais aprovados nas duas contas foram
+conferidos e confirmados pelo responsável. **I4 aceita formalmente para o piloto
+em 11/11/2026, com limitações documentadas**, histórico de falhas preservado em
+[fechamento de 11/11/2026](docs/fechamento-i4-2026-11-11.md).
+Para o estado consolidado, esse fechamento prevalece sobre os resumos anteriores.
+
 **Controle Windows:** o atalho **Alfredo - Ligar e desligar**, na área de trabalho,
 abre uma janela com botões e estados visíveis. Pode minimizar; fechar a janela
 desliga o agente com segurança. Não depende do VS Code.
@@ -7,7 +13,7 @@ desliga o agente com segurança. Não depende do VS Code.
 
 I4, 11/11/2026: **OpenAI, indexação e consultas documentais reais validadas,
 inclusive nos ensaios das duas contas Telegram; ajuste de qualidade aplicado,
-confirmação da bicicleta no Telegram e aceite formal pendentes**. O responsável aceitou formalmente
+quatro retestes da bicicleta confirmados e aceite formal registrado para o piloto**. O responsável aceitou formalmente
 a I3 e autorizou G3 para Regulamento Interno/Convenção e consultas de teste,
 com orçamento estimado de R$ 30/mês e alerta em R$ 24. Também autorizou ativação
 documental e testes nas duas contas Telegram. Projeto/chave foram cadastrados
@@ -26,8 +32,9 @@ Uma nova recusa da bicicleta mostrou que o mini ainda montava citações e inven
 IDs de arquivo. O piloto vigente usa `gpt-4.1-2025-04-14`, com preços atualizados
 e orçamento/alerta preservados. O formato restringe referências ao manifesto e
 o validador mantém a conferência estrita. Bicicleta nas duas variantes e piscina
-passaram no serviço real; a confirmação da bicicleta no Telegram após esse ajuste
-está pendente. A busca/interpretação continuam semânticas, sem índice local ou
+passaram no serviço real. Posteriormente, com GPT-4o, quatro retestes da bicicleta
+no Telegram foram confirmados; ver o fechamento vigente para limites e histórico.
+A busca/interpretação continuam semânticas, sem índice local ou
 respostas fixas por palavras-chave. Evidência: [ajuste de qualidade](docs/evidencias/i4-model-quality-fix.json).
 
 I4 acrescenta sincronização manual Drive → Vector Store, consulta natural por
@@ -232,8 +239,7 @@ Telegram real de ajuda/contexto já foi exercitado nas duas contas. OAuth e leit
 Google foram validados e aceitos na I3. OpenAI/indexação e consultas documentais
 reais foram validadas nos ensaios da I4, inclusive nas duas contas Telegram.
 As novas consultas recusadas tiveram ajustes e retestes do serviço aprovados;
-a confirmação da bicicleta no Telegram com o ajuste atual e o aceite formal I4 permanecem
-pendente conforme o relatório vigente. Reservas, escrita Sheets e
+o aceite formal I4 foi registrado com limitações conforme o fechamento vigente. Reservas, escrita Sheets e
 aceite integrado T01–T18 dependem das fases e portões posteriores.
 Não há broadcast, serviço Windows, webhook,
 publicação, cobrança condominial ou integração oficial. O orçamento OpenAI usa

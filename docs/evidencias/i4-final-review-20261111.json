@@ -1,0 +1,76 @@
+{
+  "phase": "I4",
+  "scope": "final_bounded_review_for_owner_acceptance",
+  "updated_at": "2026-11-11T18:45:04.838560+00:00",
+  "current_model": "gpt-4o-2024-08-06",
+  "four_retests": [
+    {
+      "role": "manager",
+      "created_at": "2026-11-11T18:37:04.397237+00:00",
+      "call_ref": "dfb3a09224f4e3ce7551e4d85921a52d2474c1a648a29c12df334016d647af06",
+      "code": "knowledge_answer",
+      "delivery": "sent",
+      "completed": true,
+      "reply_matches_persisted_result": true,
+      "bicycle_reply": true,
+      "sources_authorized": true
+    },
+    {
+      "role": "resident",
+      "created_at": "2026-11-11T18:36:35.495115+00:00",
+      "call_ref": "9c9f80f54ebc9093ddb1d9c9d367db34d3dc22c158387b99dc94d2a2f3951806",
+      "code": "knowledge_answer",
+      "delivery": "sent",
+      "completed": true,
+      "reply_matches_persisted_result": true,
+      "bicycle_reply": true,
+      "sources_authorized": true
+    },
+    {
+      "role": "manager",
+      "created_at": "2026-11-11T18:35:42.110664+00:00",
+      "call_ref": "802424c202f6735438b854f173dc927c8d42b80244af9cd081365d27112c6048",
+      "code": "knowledge_answer",
+      "delivery": "sent",
+      "completed": true,
+      "reply_matches_persisted_result": true,
+      "bicycle_reply": true,
+      "sources_authorized": true
+    },
+    {
+      "role": "resident",
+      "created_at": "2026-11-11T18:35:07.298670+00:00",
+      "call_ref": "a432d6b92f7aba8b0bb557afe9550fd9011472cb66fdb7556df242ab12951dc9",
+      "code": "knowledge_answer",
+      "delivery": "sent",
+      "completed": true,
+      "reply_matches_persisted_result": true,
+      "bicycle_reply": true,
+      "sources_authorized": true
+    }
+  ],
+  "human_confirmation": "explicit_owner_reply_two_successes_per_role_with_source",
+  "result": "accepted_by_owner_for_pilot_with_documented_limitations",
+  "formal_owner_acceptance": true,
+  "tests_source": "i4-tests.json",
+  "tests_passed": 338,
+  "source_hash_mismatches": [],
+  "database_integrity_ok": true,
+  "foreign_keys_valid": true,
+  "unresolved_OpenAI_operations": 0,
+  "estimated_measured_total_brl": "2.580846",
+  "budget_brl": "30.00",
+  "alert_brl": "24.00",
+  "new_paid_queries_performed_for_this_review": false,
+  "historical_failures_preserved": true,
+  "current_model_missing_evidence_semantic_retest": "not_separately_identified_previous_real_case_and_current_code_offline_guards_available",
+  "limitations": [
+    "four_retests_are_not_a_statistical_reliability_guarantee",
+    "literal_source_validation_does_not_prove_semantic_entailment",
+    "historical_citation_failures_not_erased",
+    "billing_limit_is_local_estimate_not_provider_invoice_cap"
+  ],
+  "I5_started": false,
+  "G4_granted": false,
+  "owner_acceptance_source": "i4-acceptance.json"
+}

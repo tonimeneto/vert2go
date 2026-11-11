@@ -1,8 +1,8 @@
 {
   "phase": "I4",
   "scope": "real_g3_authorized_validation",
-  "updated_at": "2026-11-11T14:37:24.490146+00:00",
-  "model": "gpt-4.1-2025-04-14",
+  "updated_at": "2026-11-11T18:45:04.838560+00:00",
+  "model": "gpt-4o-2024-08-06",
   "project_and_key": "registered_and_validated_locally",
   "sync_source": "i4-sync-20261110T174455399413Z.json",
   "document_count": 2,
@@ -283,7 +283,7 @@
   },
   "telegram_source": "i4-telegram-live.json",
   "local_tests_source": "i4-tests.json",
-  "estimated_total_brl": "1.044485",
+  "estimated_total_brl": "2.580846",
   "monthly_budget_brl": "30.00",
   "alert_brl": "24.00",
   "unresolved_openai_operations": 0,
@@ -293,10 +293,7 @@
     "short_continuous_quotes",
     "strict_layout_normalization_with_matching_mode"
   ],
-  "pending": [
-    "post_quality_fix_bicycle_Telegram_confirmation",
-    "formal_owner_I4_acceptance"
-  ],
+  "pending": [],
   "I5_started": false,
   "google_mutations_attempted": false,
   "git_operations_attempted": false,
@@ -310,5 +307,8 @@
     "follow_up_source": "i4-multiline-citation-fix.json"
   },
   "multiline_citation_fix_source": "i4-multiline-citation-fix.json",
-  "model_quality_fix_source": "i4-model-quality-fix.json"
+  "model_quality_fix_source": "i4-model-quality-fix.json",
+  "final_review_source": "i4-final-review-20261111.json",
+  "formal_owner_acceptance": "approved_for_I4_pilot_with_documented_limitations",
+  "next_gate": "G4_not_authorized_I5_not_started"
 }
