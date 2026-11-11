@@ -1,0 +1,20 @@
+{
+  "phase": "I4",
+  "operation": "query",
+  "updated_at": "2026-11-10T17:45:41.578337+00:00",
+  "status": "success",
+  "external_api_attempted": true,
+  "google_mutations_attempted": false,
+  "private_backup_created": false,
+  "result_code": "knowledge_insufficient",
+  "references": [],
+  "budget": {
+    "period": "2026-11",
+    "estimated_brl": "0.024181",
+    "alert": false,
+    "allowed": true,
+    "reason": "available"
+  },
+  "openai_request_count": 2,
+  "google_data_request_count": 12
+}

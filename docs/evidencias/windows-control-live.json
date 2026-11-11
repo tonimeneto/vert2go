@@ -1,0 +1,65 @@
+{
+  "scope": "windows_control_real_lifecycle",
+  "updated_at": "2026-11-11T15:27:22.188937+00:00",
+  "result": "passed",
+  "shortcut_name": "Alfredo - Ligar e desligar.lnk",
+  "shortcut_target_pythonw_verified": true,
+  "shortcut_arguments_and_working_directory_verified": true,
+  "independent_of_VS_Code": true,
+  "runtime": "same_app.main_and_database",
+  "local_tests": {
+    "source": "i4-tests.json",
+    "total": 338,
+    "passed": 338,
+    "specific_new_tests": 13
+  },
+  "observed_Windows_accessibility_states": [
+    "ATIVO",
+    "DESLIGANDO",
+    "closed",
+    "INATIVO",
+    "ATIVO",
+    "DESLIGANDO",
+    "INATIVO",
+    "ATIVO"
+  ],
+  "tested_actions": [
+    "close_window_gracefully_stops_bot",
+    "open_desktop_shortcut",
+    "Ctrl_L_starts_canonical_bot",
+    "Ctrl_D_stops_canonical_bot",
+    "start_again_after_stop"
+  ],
+  "duplicate_instance_prevention_verified": true,
+  "canonical_database_lock_free_when_inactive": true,
+  "canonical_database_lock_held_when_active": true,
+  "process_force_killed": false,
+  "final_state": "ATIVO",
+  "panel_left_open": true,
+  "layout": {
+    "requested_width": 396,
+    "requested_height": 402,
+    "minimum_width": 480,
+    "minimum_height": 460,
+    "content_fits_minimum": true
+  },
+  "screenshot_capture": {
+    "result": "unavailable",
+    "reason": "window_capture_timed_out",
+    "mouse_coordinate_input": "coordinate_input_geometry_unavailable",
+    "alternative": "Windows_accessibility_and_keyboard_actions_verified"
+  },
+  "first_external_probe_source": "windows-control-live-first-probe.json",
+  "first_probe_note": "probe_expected_inactive_but_the_user_panel_was_already_active_external_execution_correctly_blocked",
+  "source_hash_mismatches": [],
+  "extra_source_sha256": {
+    "Alfredo.cmd": "c430b2e95ac010d937d36be825932afd6aa9c9a78632ffc877af6f8d6829f721",
+    "scripts/install_alfredo_shortcut.ps1": "b4236297a33aa5d50e021095205258f538215a3cc7a90091b0e2ef9d7ce2d589"
+  },
+  "secrets_displayed": false,
+  "new_dependencies_installed": false,
+  "no_service_or_autostart_installed": true,
+  "config_yaml_changed_by_this_task": false,
+  "I5_started": false,
+  "git_operations_attempted": false
+}

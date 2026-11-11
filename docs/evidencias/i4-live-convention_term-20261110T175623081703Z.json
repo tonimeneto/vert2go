@@ -1,0 +1,87 @@
+{
+  "phase": "I4",
+  "scope": "real_local_document_query",
+  "case": "convention_term",
+  "updated_at": "2026-11-10T17:56:02.265145+00:00",
+  "result": "passed",
+  "external_api_attempted": true,
+  "google_mutations_attempted": false,
+  "telegram_messages_sent": false,
+  "response": {
+    "provider_status": "completed",
+    "model": "gpt-4.1-mini-2025-04-14",
+    "response_ref": "49a3ca13ffa0b08e72421dcb8e18ea92d58dc03b7cd06a3cc57c25476b29c1df",
+    "search_count": 1,
+    "search_statuses": [
+      "completed"
+    ],
+    "result_count": 6,
+    "model_evidence_status": "answered",
+    "search_queries": [
+      "tempo de mandato do síndico",
+      "duração do mandato do síndico",
+      "síndico mandato Convenção",
+      "por quanto tempo fica o síndico no cargo",
+      "mandato síndico Convenção"
+    ],
+    "claim_checks": [
+      {
+        "section": "Art. 28 --- Síndico",
+        "quote": "A Convenção original prevê mandato bienal (2 anos), permitida a reeleição.",
+        "exact_quote_in_result": false,
+        "whitespace_normalized_quote_in_result": false,
+        "layout_normalized_quote_in_result": true,
+        "section_heading_in_result": true
+      }
+    ],
+    "retrieved_pool_hours": false,
+    "retrieved_convention_term": true,
+    "usage": {
+      "input_tokens": 5966,
+      "input_tokens_details": {
+        "cache_write_tokens": 0,
+        "cached_tokens": 0
+      },
+      "output_tokens": 158,
+      "output_tokens_details": {
+        "reasoning_tokens": 0
+      },
+      "total_tokens": 6124
+    },
+    "retrieved_file_refs": [
+      "197cd075a2ff547cc007800736883abb8055e87372a4f0208cb1bc3771ed7b5c"
+    ]
+  },
+  "http": [
+    {
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "status": 200
+    }
+  ],
+  "role": "manager",
+  "result_code": "knowledge_answer",
+  "expected_code": "knowledge_answer",
+  "references": [
+    {
+      "source_ref": "f6dc4f39c8ca486aecf4457626296bcabb6e1dfd0cad9a8193385ab2a209c983",
+      "source_hash": "f2905f4a28be0c5674c86e257ddac70b170f13541f9e90b83a33a328605daa2d",
+      "file_id": "file-JL7553EwN32FiooF3vk34E",
+      "quote_hash": "58bb68c53cf894b50951daa38a50f6eebc11daf6b7a55fba97b931cb0f7cba8d",
+      "quote_match": "layout_normalized"
+    }
+  ],
+  "reply": "Alfredo experimental\n\nA Convenção original prevê mandato bienal (2 anos) para o Síndico, permitida a reeleição.\nFonte: Convenção do Condomínio — Art. 28 --- Síndico\nTrecho: “A Convenção original prevê mandato bienal (2 anos), permitida a reeleição.”",
+  "budget": {
+    "period": "2026-11",
+    "estimated_brl": "0.237215",
+    "alert": false,
+    "allowed": true,
+    "reason": "available"
+  },
+  "openai_request_count": 2,
+  "google_data_request_count": 12
+}

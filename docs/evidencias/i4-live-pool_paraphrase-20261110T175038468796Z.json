@@ -1,0 +1,74 @@
+{
+  "phase": "I4",
+  "scope": "real_local_document_query",
+  "case": "pool_paraphrase",
+  "updated_at": "2026-11-10T17:50:17.847138+00:00",
+  "result": "passed",
+  "external_api_attempted": true,
+  "google_mutations_attempted": false,
+  "telegram_messages_sent": false,
+  "response": {
+    "provider_status": "completed",
+    "model": "gpt-4.1-mini-2025-04-14",
+    "response_ref": "101b19840acb02e303a6ca681478f9d3efb73d173c8138492ab24814250fe78c",
+    "search_count": 1,
+    "result_count": 6,
+    "model_evidence_status": "answered",
+    "search_queries": [
+      "horário da piscina",
+      "piscina horário funcionamento",
+      "mergulho às 23 horas",
+      "piscina aberta 23h",
+      "posso mergulhar às 23h"
+    ],
+    "retrieved_pool_hours": true,
+    "retrieved_convention_term": true,
+    "usage": {
+      "input_tokens": 5732,
+      "input_tokens_details": {
+        "cache_write_tokens": 0,
+        "cached_tokens": 0
+      },
+      "output_tokens": 140,
+      "output_tokens_details": {
+        "reasoning_tokens": 0
+      },
+      "total_tokens": 5872
+    },
+    "retrieved_file_refs": [
+      "197cd075a2ff547cc007800736883abb8055e87372a4f0208cb1bc3771ed7b5c",
+      "500273bed85aa4d0bf9fbd3f8bb992f36139effdcb5401c35cbb956f5429db6e"
+    ]
+  },
+  "http": [
+    {
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "status": 200
+    }
+  ],
+  "role": "resident",
+  "result_code": "knowledge_answer",
+  "expected_code": "knowledge_answer",
+  "references": [
+    {
+      "source_ref": "c0cd7d018bb59e9d63c7f6294d2707595d31ec9f9663bbbcb8f88b67cab5250d",
+      "source_hash": "22ee5c8717bc9d4ad12de5724b728052cb5e124bdd24f0f219ae550cf8de4cb7",
+      "file_id": "file-A8ZAX4m2tqkUfQMYuDjXwJ",
+      "quote_hash": "05ea30c23c9c353496063641125f8f41e71a6ded1b4e2c65aa58caafea638579"
+    }
+  ],
+  "reply": "Alfredo experimental\n\nA piscina funciona diariamente das 08:00 às 22:00 horas.\nFonte: Regulamento Interno — Piscinas\nTrecho: “A piscina funciona diariamente das **08:00 às 22:00 horas**.”",
+  "budget": {
+    "period": "2026-11",
+    "estimated_brl": "0.098722",
+    "alert": false,
+    "allowed": true,
+    "reason": "available"
+  },
+  "openai_request_count": 2,
+  "google_data_request_count": 12
+}

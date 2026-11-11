@@ -1,0 +1,72 @@
+{
+    "phase":  "I3",
+    "updated_date":  "2026-11-09",
+    "responsible":  "Codex",
+    "implementation":  "complete_local",
+    "acceptance_status":  "approved_by_owner",
+    "recommendation":  "I3 APROVADA PELO RESPONSAVEL",
+    "local_regression":  {
+                             "source":  "i3-tests.json",
+                             "tests_run":  255,
+                             "passed":  255,
+                             "failed":  0,
+                             "errors":  0,
+                             "skipped":  0,
+                             "i2_regression_tests":  205,
+                             "i3_tests":  50,
+                             "windows_private_acl":  "passed_fictitious_files",
+                             "fresh_python_process_reload":  "passed_fictitious_credentials",
+                             "pip_check":  "passed"
+                         },
+    "real_google":  {
+                        "source":  "i3-google-check-20261109T232128245703Z.json",
+                        "oauth_consent":  "passed",
+                        "account_verification":  "passed",
+                        "drive_documents":  "passed",
+                        "document_bytes":  [
+                                               12360,
+                                               32481
+                                           ],
+                        "document_hashes_match_authorized_local_copies":  true,
+                        "calendar":  "passed",
+                        "calendar_event_count_in_authorized_window":  0,
+                        "sheets":  "passed",
+                        "sheets_authorized_range":  "\u0027Página1\u0027!A1:J20",
+                        "sheets_range_empty":  true,
+                        "refresh_and_reload":  "passed",
+                        "reload_modality":  "new_manager_same_process",
+                        "persisted_oauth_loaded_by_separate_checker_process":  true,
+                        "external_api_attempted":  true,
+                        "google_mutations_attempted":  false,
+                        "data_request_count":  11,
+                        "all_data_requests_get_http_200":  true
+                    },
+    "pending_criteria":  [
+
+                         ],
+    "scope_limits":  {
+                         "google_read_only":  true,
+                         "no_operational_database_migration":  true,
+                         "no_openai_transfer_or_calls":  true,
+                         "no_google_resource_creation":  true,
+                         "no_I4_I5_I6":  true,
+                         "no_git_remote_operations":  true,
+                         "no_lovable_publication":  true
+                     },
+    "preservation_source":  "i3-preservation.json",
+    "I2_definitive_acceptance_preserved":  true,
+    "technical_criteria_status":  "passed",
+    "updated_at":  "2026-11-09T23:22:21.269647+00:00",
+    "current_private_acl_validation":  "passed_configuration_secrets_and_staged_client",
+    "I2_current_offline_compatibility":  {
+                                             "configuration":  "passed",
+                                             "token_schema_and_bot_binding":  "passed",
+                                             "external_telegram_calls":  false
+                                         },
+    "resource_authorization_source":  "i3-resource-authorizations.json",
+    "owner_acceptance":  {
+                             "date":  "2026-11-10",
+                             "source":  "explicit_owner_reply_in_I4_execution_session",
+                             "statement":  "Aceito a I3 e autorizo esse G3"
+                         }
+}

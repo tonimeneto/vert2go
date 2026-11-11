@@ -1,0 +1,24 @@
+{
+  "phase": "I4",
+  "accepted_i3": true,
+  "g3": "authorized",
+  "authorized_at": "2026-11-10T16:37:52.4942520Z",
+  "source": "explicit_owner_reply_in_I4_execution_session",
+  "documents": [
+    "Regulamento Interno",
+    "Convencao do Condominio"
+  ],
+  "authorized_local_sha256": [
+    "22ee5c8717bc9d4ad12de5724b728052cb5e124bdd24f0f219ae550cf8de4cb7",
+    "f2905f4a28be0c5674c86e257ddac70b170f13541f9e90b83a33a328605daa2d"
+  ],
+  "monthly_budget_brl": "30.00",
+  "alert_brl": "24.00",
+  "openai_project": "registered_locally_and_api_validated",
+  "api_key": "registered_locally_hidden_input_never_published",
+  "telegram_document_tests": "authorized",
+  "google_writes": false,
+  "deletions": false,
+  "telegram_authorization_source": "explicit_owner_reply_in_I4_execution_session",
+  "enrollment_confirmed_by_owner": true
+}

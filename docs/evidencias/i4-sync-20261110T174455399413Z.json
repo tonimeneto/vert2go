@@ -1,0 +1,21 @@
+{
+  "phase": "I4",
+  "operation": "sync",
+  "updated_at": "2026-11-10T17:44:19.827671+00:00",
+  "status": "passed",
+  "external_api_attempted": true,
+  "google_mutations_attempted": false,
+  "private_backup_created": false,
+  "vector_store_id": "vs_6af357fc36f4819192b13976c40770e0",
+  "document_count": 2,
+  "generation": "6aff69fac8bd0c55d9538dc47e8724fbd17846fcd6b6769874d4c6f94acdaefc",
+  "budget": {
+    "period": "2026-11",
+    "estimated_brl": "0.000016",
+    "alert": false,
+    "allowed": true,
+    "reason": "available"
+  },
+  "openai_request_count": 14,
+  "google_data_request_count": 12
+}

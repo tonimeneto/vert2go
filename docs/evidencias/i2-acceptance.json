@@ -1,0 +1,186 @@
+{
+  "phase": "I2",
+  "scope": "definitive_telegram_acceptance",
+  "updated_at": "2026-11-09T21:42:48.841223+00:00",
+  "responsible": "Codex",
+  "recommendation": "I2 APROVADA",
+  "failed_criteria": [],
+  "criteria": {
+    "real_communication_and_registered_identity": {
+      "result": "passed",
+      "source": "i2-live-validation.json",
+      "human_receipt_confirmed_both_roles": true
+    },
+    "context_isolation": {
+      "local_integration": "passed",
+      "real_api_and_sqlite": "passed",
+      "human_confirmation": "passed_both_accounts_distinct_fictional_references",
+      "observations": {
+        "read_only": true,
+        "distinct_references": true,
+        "roles": {
+          "resident": {
+            "has_nonempty_unit_reference": true,
+            "unit_save_response_api_accepted": true,
+            "subsequent_context_response_api_accepted": true,
+            "subsequent_response_contains_exactly_own_reference": true
+          },
+          "manager": {
+            "has_nonempty_unit_reference": true,
+            "unit_save_response_api_accepted": true,
+            "subsequent_context_response_api_accepted": true,
+            "subsequent_response_contains_exactly_own_reference": true
+          }
+        },
+        "api_and_persistence_observation": "passed",
+        "human_confirmation_inferred": false
+      },
+      "result": "passed"
+    },
+    "unknown_group_and_cross_chat_denial": {
+      "result": "passed",
+      "modality": "synthetic_external_inputs; actual_configuration_channel_policy_core_and_sqlite_copies",
+      "orchestrator_calls": 0,
+      "external_sends": 0,
+      "real_unknown_or_group_accounts_used": false,
+      "limitations": "No real Telegram unknown/group rejection claimed; simulation explicitly authorized by current EXECUTE."
+    },
+    "privilege_escalation": {
+      "local_integration": "passed",
+      "real_expected_resident_probe_matches": [
+        {
+          "role": "resident",
+          "response_api_accepted": true,
+          "expected_input_hash_matched": true,
+          "code": "phase_not_available"
+        }
+      ],
+      "real_human_confirmation": "passed",
+      "configured_resident_role_unchanged": true,
+      "administrative_rows": {
+        "requests_state": 0,
+        "operational_guidance": 0,
+        "operational_guidance_revisions": 0
+      },
+      "real_test_status": "passed_api_audit_policy_and_human_receipt",
+      "result": "passed",
+      "internal_audit_source": "i2-final-internal-check.json"
+    },
+    "idempotency": {
+      "local_integration": "passed",
+      "original_live_update_replay": "passed",
+      "original_update_in_memory": true,
+      "replay_attempts": 2,
+      "second_effects_absent": true,
+      "additional_send_calls": 0,
+      "offset_unchanged": true,
+      "replay_database": "isolated_sqlite_memory_copies",
+      "real_provider_redelivery_claimed": false,
+      "source": "i2-real-replay.json",
+      "result": "passed"
+    },
+    "restart_and_context_persistence": {
+      "local_integration": "passed",
+      "real_context_api_response_after_restart": {
+        "resident": true,
+        "manager": true
+      },
+      "human_confirmation_after_restart": "passed_both_accounts_own_context_only",
+      "process_started_at_utc": "2026-11-09T21:34:11.836574+00:00",
+      "result": "passed"
+    },
+    "uncertain_delivery_and_partial_commit": {
+      "result": "passed",
+      "modality": "injected_failure_in_isolated_sqlite_copy",
+      "uncertain_not_resent": true
+    }
+  },
+  "pending_criteria": [],
+  "changes": {
+    "production_fix": "malformed_unit_commands_rejected_before_core_access",
+    "schema_version_before": 2,
+    "schema_version_after": 2,
+    "new_schema_migrations": 0,
+    "configuration_modified": false,
+    "secrets_modified": false,
+    "participant_permissions_modified": false,
+    "operational_records_manually_edited": false,
+    "offsets_reset": false,
+    "operational_history_deleted": false,
+    "source_database_written_by_local_runner_or_replay_probe": false,
+    "temporary_test_copies_removed": true,
+    "consistent_backup": "data/backups/i2-before-acceptance-20261109T212841Z.sqlite3",
+    "backup_integrity_and_foreign_keys_ok": true,
+    "backup_access_rules_match_source": true
+  },
+  "regression": {
+    "tests_run": 205,
+    "passed": 205,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "successful": true
+  },
+  "operational_snapshot": {
+    "updated_at": "2026-11-09T21:40:05.649360+00:00",
+    "receipt_count": 24,
+    "delivery_states": {
+      "pending": 0,
+      "sending": 0,
+      "sent": 24,
+      "uncertain": 0,
+      "failed": 0,
+      "discarded": 0
+    },
+    "integrity_check": "ok",
+    "foreign_keys_valid": true,
+    "offset_persisted": true,
+    "offset_covers_receipts": true
+  },
+  "integration_acceptance": {
+    "passed": 10,
+    "total": 10,
+    "source_snapshot_receipts": 20,
+    "source_logical_contents_unchanged_during_runner": true,
+    "source": "i2-security-tests.json"
+  },
+  "tested_sources_unchanged": true,
+  "supervised_process": {
+    "pid": 20892,
+    "one_instance_restarted_with_same_database": true,
+    "replay_probe_one_shot": true,
+    "separate_service_installed": false
+  },
+  "no_third_party_accounts_used": true,
+  "other_external_integrations_used": false,
+  "I3": "not_authorized",
+  "git_operations": false,
+  "lovable_publication": false,
+  "decision_history": [
+    {
+      "recommendation": "I2 PENDENTE",
+      "at": "2026-11-09T21:40:05.649311+00:00",
+      "pending_criteria": [
+        "human_resident_privilege_denial_confirmation",
+        "human_context_confirmation_after_restart"
+      ],
+      "superseded_by": "human_confirmations_and_final_internal_audit_check"
+    }
+  ],
+  "acceptance_status": "passed",
+  "human_confirmations": {
+    "recorded_at": "2026-11-09T21:42:48.841223+00:00",
+    "source": "explicit_user_replies_in_current_session",
+    "after_restart_both_accounts_own_context_only": true,
+    "resident_received_only_phase_limit_help_on_real_elevation_attempt": true,
+    "phone_numbers_names_ids_or_raw_private_content_recorded": false
+  },
+  "nonblocking_validation_limits": [
+    "Unknown IDs, groups and cross-chat inputs were synthetic, processed by actual code/configuration with copied SQLite and no external sends, as explicitly authorized.",
+    "Original live update replay was performed only in SQLite memory copies; no provider network redelivery or repeated real Telegram send is claimed.",
+    "Timeout, uncertain delivery and partial-commit failures were injected only in isolated tests.",
+    "Approval applies only to I2; it does not approve the pilot, later integrations or G2 authorization."
+  ],
+  "next_phase_authorized": false,
+  "final_internal_check_source": "i2-final-internal-check.json"
+}

@@ -1,0 +1,20 @@
+{
+  "phase": "I2",
+  "scope": "original_live_update_replayed_in_memory_copies",
+  "updated_at": "2026-11-09T21:35:18.583157+00:00",
+  "result": "passed",
+  "original_provider_update_in_memory": true,
+  "incoming_role": "resident",
+  "raw_update_persisted": false,
+  "participant_ids_published": false,
+  "operational_database_write_attempted": false,
+  "probe_external_api_attempted": false,
+  "probe_messages_sent_to_telegram": false,
+  "live_acceptance": "not_decided_by_this_probe",
+  "canonical_input_hash_matches_receipt": true,
+  "replay_attempts": 2,
+  "second_effects_absent": true,
+  "offset_unchanged": true,
+  "additional_send_calls": 0,
+  "memory_store_reopen_exercised": true
+}

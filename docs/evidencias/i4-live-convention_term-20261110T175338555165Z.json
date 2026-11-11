@@ -1,0 +1,68 @@
+{
+  "phase": "I4",
+  "scope": "real_local_document_query",
+  "case": "convention_term",
+  "updated_at": "2026-11-10T17:53:18.261695+00:00",
+  "result": "failed",
+  "external_api_attempted": true,
+  "google_mutations_attempted": false,
+  "telegram_messages_sent": false,
+  "response": {
+    "provider_status": "completed",
+    "model": "gpt-4.1-mini-2025-04-14",
+    "response_ref": "2e473ea25f1feeec3cd6de81ccff766851fa3f462c76a3eb43466c31f052366e",
+    "search_count": 1,
+    "search_statuses": [
+      "completed"
+    ],
+    "result_count": 6,
+    "model_evidence_status": "answered",
+    "search_queries": [
+      "tempo de mandato do síndico",
+      "duração do mandato do síndico",
+      "prazo do mandato do síndico segundo a Convenção",
+      "mandato do síndico Convenção"
+    ],
+    "retrieved_pool_hours": false,
+    "retrieved_convention_term": true,
+    "usage": {
+      "input_tokens": 5994,
+      "input_tokens_details": {
+        "cache_write_tokens": 0,
+        "cached_tokens": 0
+      },
+      "output_tokens": 173,
+      "output_tokens_details": {
+        "reasoning_tokens": 0
+      },
+      "total_tokens": 6167
+    },
+    "retrieved_file_refs": [
+      "197cd075a2ff547cc007800736883abb8055e87372a4f0208cb1bc3771ed7b5c"
+    ]
+  },
+  "http": [
+    {
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "status": 200
+    }
+  ],
+  "role": "manager",
+  "result_code": "knowledge_evidence_invalid",
+  "expected_code": "knowledge_answer",
+  "references": [],
+  "reply": "A consulta documental está indisponível. Não foi possível verificar a regra.",
+  "budget": {
+    "period": "2026-11",
+    "estimated_brl": "0.186235",
+    "alert": false,
+    "allowed": true,
+    "reason": "available"
+  },
+  "openai_request_count": 2,
+  "google_data_request_count": 12
+}

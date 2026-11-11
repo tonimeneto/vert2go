@@ -1,0 +1,66 @@
+{
+  "phase": "I4",
+  "scope": "real_local_document_query",
+  "case": "missing_rule",
+  "updated_at": "2026-11-10T17:52:58.011032+00:00",
+  "result": "passed",
+  "external_api_attempted": true,
+  "google_mutations_attempted": false,
+  "telegram_messages_sent": false,
+  "response": {
+    "provider_status": "completed",
+    "model": "gpt-4.1-mini-2025-04-14",
+    "response_ref": "d6fc6f3e15b9873f0ae58bb019122198e4e7a9805cea6832c8517931cf52af0e",
+    "search_count": 1,
+    "search_statuses": [
+      "completed"
+    ],
+    "result_count": 6,
+    "model_evidence_status": "insufficient",
+    "search_queries": [
+      "cor obrigatória pulseiras de identificação piscina",
+      "pulseira identificação piscina cor"
+    ],
+    "retrieved_pool_hours": false,
+    "retrieved_convention_term": true,
+    "usage": {
+      "input_tokens": 5914,
+      "input_tokens_details": {
+        "cache_write_tokens": 0,
+        "cached_tokens": 0
+      },
+      "output_tokens": 42,
+      "output_tokens_details": {
+        "reasoning_tokens": 0
+      },
+      "total_tokens": 5956
+    },
+    "retrieved_file_refs": [
+      "197cd075a2ff547cc007800736883abb8055e87372a4f0208cb1bc3771ed7b5c"
+    ]
+  },
+  "http": [
+    {
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "status": 200
+    }
+  ],
+  "role": "resident",
+  "result_code": "knowledge_insufficient",
+  "expected_code": "knowledge_insufficient",
+  "references": [],
+  "reply": "Não encontrei evidência documental suficiente para responder com segurança.",
+  "budget": {
+    "period": "2026-11",
+    "estimated_brl": "0.160362",
+    "alert": false,
+    "allowed": true,
+    "reason": "available"
+  },
+  "openai_request_count": 2,
+  "google_data_request_count": 12
+}

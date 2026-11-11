@@ -1,0 +1,314 @@
+{
+  "phase": "I4",
+  "scope": "real_g3_authorized_validation",
+  "updated_at": "2026-11-11T14:37:24.490146+00:00",
+  "model": "gpt-4.1-2025-04-14",
+  "project_and_key": "registered_and_validated_locally",
+  "sync_source": "i4-sync-20261110T174455399413Z.json",
+  "document_count": 2,
+  "source_hashes_authorized": true,
+  "latest_cases": {
+    "apartment_62_spaces": {
+      "case": "apartment_62_spaces",
+      "source": "i4-live-apartment_62_spaces-20261111T140804080539Z.json",
+      "result": "passed",
+      "code": "knowledge_answer",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "validation_error": null
+    },
+    "bicycle_full_model_final": {
+      "case": "bicycle_full_model_final",
+      "source": "i4-live-bicycle_full_model_final-20261111T143356134500Z.json",
+      "result": "passed",
+      "code": "knowledge_answer",
+      "model": "gpt-4.1-2025-04-14",
+      "validation_error": null
+    },
+    "bicycle_full_model_probe": {
+      "case": "bicycle_full_model_probe",
+      "source": "i4-live-bicycle_full_model_probe-20261111T143252284073Z.json",
+      "result": "passed",
+      "code": "knowledge_answer",
+      "model": "gpt-4.1-2025-04-14",
+      "validation_error": null
+    },
+    "bicycle_parking": {
+      "case": "bicycle_parking",
+      "source": "i4-live-bicycle_parking-20261111T143552950093Z.json",
+      "result": "passed",
+      "code": "knowledge_answer",
+      "model": "gpt-4.1-2025-04-14",
+      "validation_error": null
+    },
+    "bicycle_parking_plain": {
+      "case": "bicycle_parking_plain",
+      "source": "i4-live-bicycle_parking_plain-20261111T142721101328Z.json",
+      "result": "passed",
+      "code": "knowledge_answer",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "validation_error": null
+    },
+    "bicycle_provenance_probe": {
+      "case": "bicycle_provenance_probe",
+      "source": "i4-live-bicycle_provenance_probe-20261111T142452969170Z.json",
+      "result": "passed",
+      "code": "knowledge_answer",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "validation_error": null
+    },
+    "convention_term": {
+      "case": "convention_term",
+      "source": "i4-live-convention_term-20261110T175623081703Z.json",
+      "result": "passed",
+      "code": "knowledge_answer",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "validation_error": null
+    },
+    "missing_rule": {
+      "case": "missing_rule",
+      "source": "i4-live-missing_rule-20261110T175317934049Z.json",
+      "result": "passed",
+      "code": "knowledge_insufficient",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "validation_error": null
+    },
+    "pool_hours": {
+      "case": "pool_hours",
+      "source": "i4-live-pool_hours-20261111T143520711686Z.json",
+      "result": "passed",
+      "code": "knowledge_answer",
+      "model": "gpt-4.1-2025-04-14",
+      "validation_error": null
+    },
+    "pool_paraphrase": {
+      "case": "pool_paraphrase",
+      "source": "i4-live-pool_paraphrase-20261110T175038468796Z.json",
+      "result": "passed",
+      "code": "knowledge_answer",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "validation_error": null
+    },
+    "visitor_conflict": {
+      "case": "visitor_conflict",
+      "source": "i4-live-visitor_conflict-20261110T175646792664Z.json",
+      "result": "failed",
+      "code": "knowledge_evidence_invalid",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "validation_error": null
+    },
+    "visitor_scope": {
+      "case": "visitor_scope",
+      "source": "i4-live-visitor_scope-20261110T175813806498Z.json",
+      "result": "passed",
+      "code": "knowledge_answer",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "validation_error": null
+    }
+  },
+  "historical_attempts": [
+    {
+      "case": "apartment_62_spaces",
+      "source": "i4-live-apartment_62_spaces-20261111T140804080539Z.json",
+      "result": "passed",
+      "code": "knowledge_answer",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "validation_error": null
+    },
+    {
+      "case": "bicycle_full_model_final",
+      "source": "i4-live-bicycle_full_model_final-20261111T143356134500Z.json",
+      "result": "passed",
+      "code": "knowledge_answer",
+      "model": "gpt-4.1-2025-04-14",
+      "validation_error": null
+    },
+    {
+      "case": "bicycle_full_model_probe",
+      "source": "i4-live-bicycle_full_model_probe-20261111T143252284073Z.json",
+      "result": "passed",
+      "code": "knowledge_answer",
+      "model": "gpt-4.1-2025-04-14",
+      "validation_error": null
+    },
+    {
+      "case": "bicycle_parking",
+      "source": "i4-live-bicycle_parking-20261111T140713628648Z.json",
+      "result": "passed",
+      "code": "knowledge_answer",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "validation_error": null
+    },
+    {
+      "case": "bicycle_parking",
+      "source": "i4-live-bicycle_parking-20261111T142804662197Z.json",
+      "result": "failed",
+      "code": "knowledge_evidence_invalid",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "validation_error": "claim_fields_invalid"
+    },
+    {
+      "case": "bicycle_parking",
+      "source": "i4-live-bicycle_parking-20261111T143117036333Z.json",
+      "result": "failed",
+      "code": "knowledge_evidence_invalid",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "validation_error": "quote_not_found"
+    },
+    {
+      "case": "bicycle_parking",
+      "source": "i4-live-bicycle_parking-20261111T143552950093Z.json",
+      "result": "passed",
+      "code": "knowledge_answer",
+      "model": "gpt-4.1-2025-04-14",
+      "validation_error": null
+    },
+    {
+      "case": "bicycle_parking_plain",
+      "source": "i4-live-bicycle_parking_plain-20261111T142355607735Z.json",
+      "result": "failed",
+      "code": "knowledge_evidence_invalid",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "validation_error": null
+    },
+    {
+      "case": "bicycle_parking_plain",
+      "source": "i4-live-bicycle_parking_plain-20261111T142721101328Z.json",
+      "result": "passed",
+      "code": "knowledge_answer",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "validation_error": null
+    },
+    {
+      "case": "bicycle_provenance_probe",
+      "source": "i4-live-bicycle_provenance_probe-20261111T142452969170Z.json",
+      "result": "passed",
+      "code": "knowledge_answer",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "validation_error": null
+    },
+    {
+      "case": "convention_term",
+      "source": "i4-live-convention_term-20261110T175338555165Z.json",
+      "result": "failed",
+      "code": "knowledge_evidence_invalid",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "validation_error": null
+    },
+    {
+      "case": "convention_term",
+      "source": "i4-live-convention_term-20261110T175450613683Z.json",
+      "result": "failed",
+      "code": "knowledge_evidence_invalid",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "validation_error": null
+    },
+    {
+      "case": "convention_term",
+      "source": "i4-live-convention_term-20261110T175623081703Z.json",
+      "result": "passed",
+      "code": "knowledge_answer",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "validation_error": null
+    },
+    {
+      "case": "missing_rule",
+      "source": "i4-live-missing_rule-20261110T175142169343Z.json",
+      "result": "failed",
+      "code": "knowledge_incomplete_response",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "validation_error": null
+    },
+    {
+      "case": "missing_rule",
+      "source": "i4-live-missing_rule-20261110T175317934049Z.json",
+      "result": "passed",
+      "code": "knowledge_insufficient",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "validation_error": null
+    },
+    {
+      "case": "pool_hours",
+      "source": "i4-live-pool_hours-20261110T174808972151Z.json",
+      "result": "passed",
+      "code": "knowledge_answer",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "validation_error": null
+    },
+    {
+      "case": "pool_hours",
+      "source": "i4-live-pool_hours-20261111T143520711686Z.json",
+      "result": "passed",
+      "code": "knowledge_answer",
+      "model": "gpt-4.1-2025-04-14",
+      "validation_error": null
+    },
+    {
+      "case": "pool_paraphrase",
+      "source": "i4-live-pool_paraphrase-20261110T174904229774Z.json",
+      "result": "failed",
+      "code": "knowledge_insufficient",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "validation_error": null
+    },
+    {
+      "case": "pool_paraphrase",
+      "source": "i4-live-pool_paraphrase-20261110T175038468796Z.json",
+      "result": "passed",
+      "code": "knowledge_answer",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "validation_error": null
+    },
+    {
+      "case": "visitor_conflict",
+      "source": "i4-live-visitor_conflict-20261110T175646792664Z.json",
+      "result": "failed",
+      "code": "knowledge_evidence_invalid",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "validation_error": null
+    },
+    {
+      "case": "visitor_scope",
+      "source": "i4-live-visitor_scope-20261110T175813806498Z.json",
+      "result": "passed",
+      "code": "knowledge_answer",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "validation_error": null
+    }
+  ],
+  "exploratory_conflict": {
+    "source": "i4-live-visitor_conflict-20261110T175646792664Z.json",
+    "assessment": "not_a_proven_conflict_clauses_have_distinct_contexts",
+    "invalid_joined_quote_rejected": true,
+    "context_comparison_retest": "i4-live-visitor_scope-20261110T175813806498Z.json"
+  },
+  "telegram_source": "i4-telegram-live.json",
+  "local_tests_source": "i4-tests.json",
+  "estimated_total_brl": "1.044485",
+  "monthly_budget_brl": "30.00",
+  "alert_brl": "24.00",
+  "unresolved_openai_operations": 0,
+  "adjustments": [
+    "reformulate_colloquial_queries_by_resource_and_rule",
+    "one_tool_call_with_grouped_queries",
+    "short_continuous_quotes",
+    "strict_layout_normalization_with_matching_mode"
+  ],
+  "pending": [
+    "post_quality_fix_bicycle_Telegram_confirmation",
+    "formal_owner_I4_acceptance"
+  ],
+  "I5_started": false,
+  "google_mutations_attempted": false,
+  "git_operations_attempted": false,
+  "secrets_exposed": false,
+  "telegram_validation": "passed_API_and_human_receipt_on_both_registered_accounts",
+  "latest_runtime_observation": {
+    "source": "i4-runtime-restart-20261111.json",
+    "manual_process_restarted": true,
+    "new_queries_result": "two_knowledge_evidence_invalid_safe_notices_API_accepted",
+    "diagnosis": "wrapped_bold_false_rejection_reproduced_and_fixed",
+    "follow_up_source": "i4-multiline-citation-fix.json"
+  },
+  "multiline_citation_fix_source": "i4-multiline-citation-fix.json",
+  "model_quality_fix_source": "i4-model-quality-fix.json"
+}

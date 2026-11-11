@@ -1,0 +1,94 @@
+{
+  "phase": "I4",
+  "scope": "real_local_document_query",
+  "case": "bicycle_parking",
+  "updated_at": "2026-11-11T14:27:33.670378+00:00",
+  "result": "failed",
+  "external_api_attempted": true,
+  "google_mutations_attempted": false,
+  "telegram_messages_sent": false,
+  "response": {
+    "provider_status": "completed",
+    "model": "gpt-4.1-mini-2025-04-14",
+    "response_ref": "e676f970032eb1ca16c63c17d9df464b0ec2bec2ac30063d9c495f22361c26bb",
+    "search_count": 1,
+    "search_statuses": [
+      "completed"
+    ],
+    "result_count": 6,
+    "model_evidence_status": "answered",
+    "search_queries": [
+      "estacionar bicicleta na vaga de garagem",
+      "bicicleta vaga de garagem",
+      "estacionamento bicicletas",
+      "vaga de garagem uso para bicicleta"
+    ],
+    "claim_checks": [
+      {
+        "section": "Art. 14 --- Uso da garagem",
+        "quote": "A garagem destina-se prioritariamente à guarda e estacionamento de veículos.\nÉ vedado utilizar as vagas como depósito de móveis, objetos, materiais\nou mercadorias incompatíveis com sua finalidade.",
+        "claim_file_ref": "9bd9bf08e0adaac0f876b70eab5dd1316f2f884a04d4eec214d1175c54432b39",
+        "quote_matching_file_refs": [
+          "197cd075a2ff547cc007800736883abb8055e87372a4f0208cb1bc3771ed7b5c"
+        ],
+        "exact_quote_in_result": false,
+        "whitespace_normalized_quote_in_result": false,
+        "layout_normalized_quote_in_result": false,
+        "section_heading_in_result": false
+      },
+      {
+        "section": "Garagem",
+        "quote": "Só é permitido utilizar a vaga para estacionar **1 (um) veículo\nautomotor, seja ele carro ou moto**, portanto é proibido estacionar\nnúmero maior de veículos por vaga.\n\nNão use sua vaga como depósito.",
+        "claim_file_ref": "5c8faaa66f2fdf6d0b22a2f50020d66103aecae2eb6dfbcd1740225b2bf6d041",
+        "quote_matching_file_refs": [],
+        "exact_quote_in_result": false,
+        "whitespace_normalized_quote_in_result": false,
+        "layout_normalized_quote_in_result": false,
+        "section_heading_in_result": false
+      }
+    ],
+    "retrieved_pool_hours": false,
+    "retrieved_convention_term": false,
+    "usage": {
+      "input_tokens": 6249,
+      "input_tokens_details": {
+        "cache_write_tokens": 0,
+        "cached_tokens": 0
+      },
+      "output_tokens": 290,
+      "output_tokens_details": {
+        "reasoning_tokens": 0
+      },
+      "total_tokens": 6539
+    },
+    "retrieved_file_refs": [
+      "197cd075a2ff547cc007800736883abb8055e87372a4f0208cb1bc3771ed7b5c",
+      "500273bed85aa4d0bf9fbd3f8bb992f36139effdcb5401c35cbb956f5429db6e"
+    ]
+  },
+  "http": [
+    {
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "status": 200
+    }
+  ],
+  "role": "resident",
+  "result_code": "knowledge_evidence_invalid",
+  "expected_code": "knowledge_answer",
+  "references": [],
+  "reply": "A consulta documental está indisponível. Não foi possível verificar a regra.",
+  "budget": {
+    "period": "2026-11",
+    "estimated_brl": "0.687096",
+    "alert": false,
+    "allowed": true,
+    "reason": "available"
+  },
+  "validation_error": "claim_fields_invalid",
+  "openai_request_count": 2,
+  "google_data_request_count": 12
+}

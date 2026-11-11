@@ -1,0 +1,12 @@
+{
+  "phase": "I4",
+  "operation": "sync",
+  "updated_at": "2026-11-10T17:43:47.371405+00:00",
+  "status": "blocked",
+  "external_api_attempted": true,
+  "google_mutations_attempted": false,
+  "private_backup_created": true,
+  "reason": "google_auth_temporary_error",
+  "openai_request_count": 0,
+  "google_data_request_count": 1
+}

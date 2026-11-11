@@ -1,0 +1,46 @@
+{
+  "phase": "I3",
+  "updated_at": "2026-11-09T23:22:20.970030+00:00",
+  "source": "explicit_owner_resource_authorization_and_calendar_window_approval",
+  "experimental_project": "vert2go-alfredo",
+  "matching_desktop_client_staged": true,
+  "original_downloads_modified": false,
+  "account_ref": "97815f366fc73314db7c5808",
+  "drive_documents": [
+    {
+      "resource_ref": "530526664217040126960c17",
+      "operation": "read_only",
+      "format_reported_by_owner": "Markdown"
+    },
+    {
+      "resource_ref": "6641336d54dd0719b02170ef",
+      "operation": "read_only",
+      "format_reported_by_owner": "Markdown"
+    }
+  ],
+  "calendar": {
+    "resource_ref": "7ec9b2cdbd24087b413169f1",
+    "operation": "events_read_only",
+    "owned_by_experimental_account_reported": true,
+    "window_start": "2026-11-10T00:00:00-03:00",
+    "window_end": "2026-11-17T00:00:00-03:00",
+    "timezone": "America/Sao_Paulo",
+    "start_inclusive": true,
+    "end_exclusive": true
+  },
+  "sheets": {
+    "resource_ref": "7d619d3e2190c36635e67fa7",
+    "structure_discovery_authorized": true,
+    "cell_ranges_authorized": [
+      "'Página1'!A1:J20"
+    ],
+    "cells_read_authorized": true,
+    "authorized_cells_limit": 200
+  },
+  "scopes_requested": [
+    "https://www.googleapis.com/auth/drive.readonly",
+    "https://www.googleapis.com/auth/calendar.events.owned.readonly"
+  ],
+  "google_mutations_authorized": false,
+  "I4_authorized": false
+}

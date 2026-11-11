@@ -1,0 +1,88 @@
+{
+  "phase": "I4",
+  "scope": "real_local_document_query",
+  "case": "visitor_conflict",
+  "updated_at": "2026-11-10T17:56:23.512792+00:00",
+  "result": "failed",
+  "external_api_attempted": true,
+  "google_mutations_attempted": false,
+  "telegram_messages_sent": false,
+  "response": {
+    "provider_status": "completed",
+    "model": "gpt-4.1-mini-2025-04-14",
+    "response_ref": "13232a873cf41941e1763ac61351d1f2040ad9e78f68fb28ae9936c077382327",
+    "search_count": 1,
+    "search_statuses": [
+      "completed"
+    ],
+    "result_count": 6,
+    "model_evidence_status": "answered",
+    "search_queries": [
+      "permitir levar convidados à piscina",
+      "convidados na piscina",
+      "piscina e convidados regulamento interno",
+      "convidados permitidos na piscina",
+      "regras para convidados no regulamento interno"
+    ],
+    "claim_checks": [
+      {
+        "section": "Piscinas",
+        "quote": "A presença na área interna da piscina de qualquer pessoa que não seja proprietário ou inquilino. Visitantes: somente é permitido 1 por apartamento. Crianças até 10 anos não poderão frequentar a piscina desacompanhadas de adulto responsável.",
+        "exact_quote_in_result": false,
+        "whitespace_normalized_quote_in_result": false,
+        "layout_normalized_quote_in_result": false,
+        "section_heading_in_result": true
+      },
+      {
+        "section": "Salão de festas e churrasqueiras",
+        "quote": "Convidados não podem frequentar a piscina, independentemente da idade.",
+        "exact_quote_in_result": true,
+        "whitespace_normalized_quote_in_result": true,
+        "layout_normalized_quote_in_result": true,
+        "section_heading_in_result": true
+      }
+    ],
+    "retrieved_pool_hours": true,
+    "retrieved_convention_term": false,
+    "usage": {
+      "input_tokens": 6154,
+      "input_tokens_details": {
+        "cache_write_tokens": 0,
+        "cached_tokens": 0
+      },
+      "output_tokens": 309,
+      "output_tokens_details": {
+        "reasoning_tokens": 0
+      },
+      "total_tokens": 6463
+    },
+    "retrieved_file_refs": [
+      "197cd075a2ff547cc007800736883abb8055e87372a4f0208cb1bc3771ed7b5c",
+      "500273bed85aa4d0bf9fbd3f8bb992f36139effdcb5401c35cbb956f5429db6e"
+    ]
+  },
+  "http": [
+    {
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "status": 200
+    }
+  ],
+  "role": "manager",
+  "result_code": "knowledge_evidence_invalid",
+  "expected_code": "knowledge_conflict",
+  "references": [],
+  "reply": "A consulta documental está indisponível. Não foi possível verificar a regra.",
+  "budget": {
+    "period": "2026-11",
+    "estimated_brl": "0.264496",
+    "alert": false,
+    "allowed": true,
+    "reason": "available"
+  },
+  "openai_request_count": 2,
+  "google_data_request_count": 12
+}

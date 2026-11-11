@@ -1,0 +1,163 @@
+{
+  "phase": "I2",
+  "scope": "local_security_acceptance_on_operational_snapshot",
+  "updated_at": "2026-11-09T21:33:33.847445+00:00",
+  "operational_database_open_mode": "ro",
+  "operational_database_write_attempted": false,
+  "source_snapshot_method": "sqlite_backup_api",
+  "secrets_read": false,
+  "external_api_attempted": false,
+  "messages_sent_to_telegram": false,
+  "transport": "in_memory_capture_with_network_guards",
+  "administrative_simulation_enabled": false,
+  "local_acceptance": "passed",
+  "live_acceptance": "not_decided_by_this_runner",
+  "I3": "not_authorized",
+  "git_operations": false,
+  "lovable_publication": false,
+  "source_schema_version": 2,
+  "source_integrity_ok": true,
+  "source_foreign_keys_valid": true,
+  "source_receipts_at_snapshot": 20,
+  "live_context_observation_at_snapshot": {
+    "read_only": true,
+    "distinct_references": true,
+    "roles": {
+      "resident": {
+        "has_nonempty_unit_reference": true,
+        "unit_save_response_api_accepted": true,
+        "subsequent_context_response_api_accepted": true,
+        "subsequent_response_contains_exactly_own_reference": true
+      },
+      "manager": {
+        "has_nonempty_unit_reference": true,
+        "unit_save_response_api_accepted": true,
+        "subsequent_context_response_api_accepted": true,
+        "subsequent_response_contains_exactly_own_reference": true
+      }
+    },
+    "api_and_persistence_observation": "passed",
+    "human_confirmation_inferred": false
+  },
+  "source_logical_contents_unchanged_during_runner": true,
+  "configuration_bytes_unchanged": true,
+  "scenarios": [
+    {
+      "scenario": "bidirectional_context_isolation_survives_restart_and_shared_message_ids",
+      "result": "passed",
+      "checks": {
+        "network_used": false,
+        "administrative_simulation_enabled": false,
+        "both_directions": true,
+        "restart": true,
+        "same_message_id_in_different_chats": true
+      }
+    },
+    {
+      "scenario": "changed_content_or_sender_with_reused_identity_stops_without_offset_advance",
+      "result": "passed",
+      "checks": {
+        "network_used": false,
+        "administrative_simulation_enabled": false,
+        "conflicting_variants": 3,
+        "offset_unchanged": true,
+        "data_unchanged": true
+      }
+    },
+    {
+      "scenario": "core_commit_before_receipt_failure_is_recovered_without_second_context_write",
+      "result": "passed",
+      "checks": {
+        "network_used": false,
+        "administrative_simulation_enabled": false,
+        "injected_local_failure": true,
+        "committed_effects": 1,
+        "captured_sends": 1
+      }
+    },
+    {
+      "scenario": "duplicate_update_and_message_have_one_context_effect_and_one_reply_after_restart",
+      "result": "passed",
+      "checks": {
+        "network_used": false,
+        "administrative_simulation_enabled": false,
+        "new_effects": 1,
+        "captured_sends": 1,
+        "restart": true,
+        "update_and_message_dedup": true
+      }
+    },
+    {
+      "scenario": "isolation_observer_requires_distinct_units_and_fresh_matching_replies",
+      "result": "passed",
+      "checks": {
+        "network_used": false,
+        "administrative_simulation_enabled": false,
+        "same_unit_and_stale_reply_do_not_approve": true
+      }
+    },
+    {
+      "scenario": "malformed_unit_commands_are_rejected_without_reading_or_changing_context",
+      "result": "passed",
+      "checks": {
+        "network_used": false,
+        "administrative_simulation_enabled": false,
+        "invalid_formats_rejected": 7,
+        "orchestration_calls": 0
+      }
+    },
+    {
+      "scenario": "message_and_display_name_cannot_elevate_resident_or_enable_admin_route",
+      "result": "passed",
+      "checks": {
+        "network_used": false,
+        "administrative_simulation_enabled": false,
+        "resident_role_preserved": true,
+        "admin_route_disabled": true,
+        "privileged_effects": 0
+      }
+    },
+    {
+      "scenario": "replay_of_hash_verified_recorded_context_receipt_has_no_second_effect_or_send",
+      "result": "passed",
+      "checks": {
+        "network_used": false,
+        "administrative_simulation_enabled": false,
+        "replay_origin": "real_persisted_receipt",
+        "normalized_identity_and_content_hash_match": true,
+        "copied_database_only": true,
+        "original_provider_update_captured": false,
+        "real_provider_redelivery": false,
+        "second_effects": 0,
+        "additional_send_calls": 0
+      }
+    },
+    {
+      "scenario": "uncertain_delivery_is_not_resent_by_replay_or_restart",
+      "result": "passed",
+      "checks": {
+        "network_used": false,
+        "administrative_simulation_enabled": false,
+        "captured_sends": 1,
+        "uncertain_preserved": true,
+        "automatic_resends": 0
+      }
+    },
+    {
+      "scenario": "unknown_group_and_cross_chat_are_denied_before_orchestration",
+      "result": "passed",
+      "checks": {
+        "network_used": false,
+        "administrative_simulation_enabled": false,
+        "rejected_inputs": 3,
+        "orchestration_calls": 0,
+        "neutral_replies_captured_only": true
+      }
+    }
+  ],
+  "tests_run": 10,
+  "passed": 10,
+  "failed": 0,
+  "errors": 0,
+  "temporary_copies_removed": true
+}

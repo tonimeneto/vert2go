@@ -1,0 +1,15 @@
+{
+  "phase": "I2",
+  "scope": "telegram_enrollment",
+  "updated_at": "2026-11-09T15:55:47.036427+00:00",
+  "stage": "enrollment_complete",
+  "result": "passed",
+  "external_api_attempted": true,
+  "getMe": "passed",
+  "getWebhookInfo": "passed",
+  "token_saved": true,
+  "messages_sent": false,
+  "database_opened": false,
+  "live_acceptance": "blocked",
+  "candidate_count": 2
+}

@@ -1,0 +1,112 @@
+{
+  "phase": "I4",
+  "scope": "real_local_document_query",
+  "case": "bicycle_full_model_probe",
+  "updated_at": "2026-11-11T14:32:30.231091+00:00",
+  "result": "passed",
+  "external_api_attempted": true,
+  "google_mutations_attempted": false,
+  "telegram_messages_sent": false,
+  "response": {
+    "provider_status": "completed",
+    "model": "gpt-4.1-2025-04-14",
+    "response_ref": "e0dbcc07b737ed00175b65ac1573a2d06cf97cc869f0e55caa53b3a3d1b9a6e4",
+    "search_count": 1,
+    "search_statuses": [
+      "completed"
+    ],
+    "result_count": 6,
+    "model_evidence_status": "answered",
+    "search_queries": [
+      "Posso estacionar bicicleta na vaga de garagem?",
+      "bicicleta na vaga de garagem",
+      "uso da vaga de garagem para bicicleta",
+      "regra para estacionar bicicleta na vaga",
+      "Permissão para guardar bicicleta na garagem"
+    ],
+    "claim_checks": [
+      {
+        "section": null,
+        "quote": "Só é permitido utilizar a vaga para estacionar 1 (um) veículo automotor, seja ele carro ou moto, portanto é proibido estacionar número maior de veículos por vag",
+        "claim_file_ref": "500273bed85aa4d0bf9fbd3f8bb992f36139effdcb5401c35cbb956f5429db6e",
+        "quote_matching_file_refs": [
+          "500273bed85aa4d0bf9fbd3f8bb992f36139effdcb5401c35cbb956f5429db6e"
+        ],
+        "exact_quote_in_result": false,
+        "whitespace_normalized_quote_in_result": false,
+        "layout_normalized_quote_in_result": true,
+        "section_heading_in_result": true
+      },
+      {
+        "section": null,
+        "quote": "Não use sua vaga como depósito.",
+        "claim_file_ref": "500273bed85aa4d0bf9fbd3f8bb992f36139effdcb5401c35cbb956f5429db6e",
+        "quote_matching_file_refs": [
+          "500273bed85aa4d0bf9fbd3f8bb992f36139effdcb5401c35cbb956f5429db6e"
+        ],
+        "exact_quote_in_result": true,
+        "whitespace_normalized_quote_in_result": true,
+        "layout_normalized_quote_in_result": true,
+        "section_heading_in_result": true
+      }
+    ],
+    "retrieved_pool_hours": false,
+    "retrieved_convention_term": false,
+    "usage": {
+      "input_tokens": 6309,
+      "input_tokens_details": {
+        "cache_write_tokens": 0,
+        "cached_tokens": 0
+      },
+      "output_tokens": 244,
+      "output_tokens_details": {
+        "reasoning_tokens": 0
+      },
+      "total_tokens": 6553
+    },
+    "retrieved_file_refs": [
+      "197cd075a2ff547cc007800736883abb8055e87372a4f0208cb1bc3771ed7b5c",
+      "500273bed85aa4d0bf9fbd3f8bb992f36139effdcb5401c35cbb956f5429db6e"
+    ]
+  },
+  "http": [
+    {
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "status": 200
+    }
+  ],
+  "role": "resident",
+  "result_code": "knowledge_answer",
+  "expected_code": "knowledge_answer",
+  "references": [
+    {
+      "source_ref": "c0cd7d018bb59e9d63c7f6294d2707595d31ec9f9663bbbcb8f88b67cab5250d",
+      "source_hash": "22ee5c8717bc9d4ad12de5724b728052cb5e124bdd24f0f219ae550cf8de4cb7",
+      "file_id": "file-A8ZAX4m2tqkUfQMYuDjXwJ",
+      "quote_hash": "aac356d9e4b6b78d035589eade50cc766b5d226ca386a61799336c6e58bbc914",
+      "quote_match": "layout_normalized"
+    },
+    {
+      "source_ref": "c0cd7d018bb59e9d63c7f6294d2707595d31ec9f9663bbbcb8f88b67cab5250d",
+      "source_hash": "22ee5c8717bc9d4ad12de5724b728052cb5e124bdd24f0f219ae550cf8de4cb7",
+      "file_id": "file-A8ZAX4m2tqkUfQMYuDjXwJ",
+      "quote_hash": "b434a8f05b7ef2d48339bb85f2ffa2b9ade2f6c7b23c7ea4db0963980adf57a0",
+      "quote_match": "exact"
+    }
+  ],
+  "reply": "Alfredo experimental\n\nNão, não é permitido estacionar bicicleta na vaga de garagem. Só é permitido utilizar a vaga para estacionar 1 veículo automotor, seja ele carro ou moto, sendo proibido estacionar outro tipo de veículo ou utilizar como depósito.\nFonte: Regulamento Interno\nTrecho: “Só é permitido utilizar a vaga para estacionar 1 (um) veículo automotor, seja ele carro ou moto, portanto é proibido estacionar número maior de veículos por vag”\n\nNão use sua vaga como depósito, o que inclui deixar objetos como bicicletas.\nFonte: Regulamento Interno\nTrecho: “Não use sua vaga como depósito.”",
+  "budget": {
+    "period": "2026-11",
+    "estimated_brl": "0.799892",
+    "alert": false,
+    "allowed": true,
+    "reason": "available"
+  },
+  "validation_error": null,
+  "openai_request_count": 2,
+  "google_data_request_count": 12
+}

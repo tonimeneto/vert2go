@@ -1,0 +1,71 @@
+{
+  "database": "data/i1-development.sqlite3",
+  "application_id": 1446135601,
+  "user_version": 1,
+  "integrity_check": "ok",
+  "foreign_key_check": [],
+  "tables": [
+    "conversation_state",
+    "document_sync_metadata",
+    "operation_log",
+    "operational_guidance",
+    "operational_guidance_revisions",
+    "processed_messages",
+    "requests_state",
+    "sync_outbox",
+    "usage_ledger"
+  ],
+  "table_count": 9,
+  "explicit_indexes": [
+    "audit_entity_idx",
+    "guidance_status_idx",
+    "guidance_topic_idx",
+    "message_retention_idx",
+    "outbox_state_idx",
+    "request_state_idx",
+    "usage_period_idx"
+  ],
+  "row_counts": {
+    "conversation_state": 0,
+    "document_sync_metadata": 0,
+    "operation_log": 0,
+    "operational_guidance": 0,
+    "operational_guidance_revisions": 0,
+    "processed_messages": 0,
+    "requests_state": 0,
+    "sync_outbox": 0,
+    "usage_ledger": 0
+  },
+  "migration_sha256": "09d75c937dea6a70ea6e6019c5a441127bd5fe1f0a7246891320e515bd3546d1",
+  "application_imports": [
+    "app",
+    "argparse",
+    "contextlib",
+    "dataclasses",
+    "datetime",
+    "decimal",
+    "enum",
+    "fcntl",
+    "hashlib",
+    "json",
+    "logging",
+    "msvcrt",
+    "os",
+    "pathlib",
+    "re",
+    "sqlite3",
+    "types",
+    "uuid",
+    "yaml",
+    "zoneinfo"
+  ],
+  "network_imports_found": [],
+  "compileall_exit_code": 0,
+  "startup_output": [
+    "INFO local_ready schema=001 simulation=true recovered=0 expired=0",
+    "INFO local_closed"
+  ],
+  "local_git_directory_exists": false,
+  "operational_external_apis_used": false,
+  "dependency_installation_network": "PyPI package installation only; authorized by I1 request"
+}

@@ -1,0 +1,36 @@
+{
+  "phase": "I2",
+  "scope": "telegram_runtime_snapshot",
+  "updated_at": "2026-11-09T21:40:05.649360+00:00",
+  "database_exists": true,
+  "read_only": true,
+  "external_api_attempted": false,
+  "human_delivery_confirmed": false,
+  "live_acceptance": "blocked",
+  "result": "passed",
+  "integrity_check": "ok",
+  "foreign_keys_valid": true,
+  "offset_persisted": true,
+  "offset_covers_receipts": true,
+  "delivery_states": {
+    "pending": 0,
+    "sending": 0,
+    "sent": 24,
+    "uncertain": 0,
+    "failed": 0,
+    "discarded": 0
+  },
+  "api_accepted_commands": {
+    "resident": {
+      "help_including_start": 5,
+      "context": 6
+    },
+    "manager": {
+      "help_including_start": 2,
+      "context": 4
+    }
+  },
+  "receipt_count": 24,
+  "delivery_backoff_active": false,
+  "reason": "snapshot_only_human_and_scenario_acceptance_pending"
+}

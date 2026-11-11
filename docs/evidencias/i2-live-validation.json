@@ -1,0 +1,152 @@
+{
+  "phase": "I2",
+  "scope": "supervised_real_telegram_validation",
+  "updated_at": "2026-11-09T21:42:48.841223+00:00",
+  "initial_observation": {
+    "python_process_count": 0,
+    "dedicated_i2_database_existed": false,
+    "dedicated_i2_lock_existed": false,
+    "config_and_participants_valid": true,
+    "historical_launch_failure_reason": "not_reconstructable"
+  },
+  "bot_identity_and_empty_webhook": "passed",
+  "initial_remote_pending_updates": 5,
+  "root_causes": {
+    "consumer_absent_at_initial_inspection": true,
+    "sequential_ipv6_timeout_delayed_https": true,
+    "broadcast_observed": false
+  },
+  "network_measurements": {
+    "dns_ms": 9,
+    "address_order": [
+      "ipv6",
+      "ipv4"
+    ],
+    "ipv6_probe": "timed_out_at_3005_ms",
+    "ipv4_tcp_ms": 235,
+    "original_getMe_ms": 21726,
+    "corrected_getMe_ms": 960,
+    "corrected_getWebhookInfo_ms": 967
+  },
+  "transport_fix": {
+    "family_stagger_ms": 250,
+    "ipv6_disabled": false,
+    "global_network_changes": false,
+    "tls_certificate_and_hostname_checks_preserved": true,
+    "http_automatic_retries_added": false
+  },
+  "before_corrected_transport_retest": {
+    "receipts": 9,
+    "api_accepted_replies": 9,
+    "failed": 0,
+    "uncertain": 0,
+    "human_confirmed_receipt_both_accounts": true,
+    "human_confirmed_different_selected_accounts": true
+  },
+  "latest_delivery_states": {
+    "pending": 0,
+    "sending": 0,
+    "sent": 24,
+    "uncertain": 0,
+    "failed": 0,
+    "discarded": 0
+  },
+  "latest_api_accepted_commands": {
+    "resident": {
+      "help_including_start": 5,
+      "context": 6
+    },
+    "manager": {
+      "help_including_start": 2,
+      "context": 4
+    }
+  },
+  "same_database_restart_preserved_receipts_and_offset": true,
+  "duplicate_responses_observed_on_empty_restart": false,
+  "overlapping_local_start_refused_by_lock": true,
+  "remote_polling_conflict_observed": false,
+  "corrected_getMe_and_getWebhookInfo": "passed",
+  "corrected_transport_message_retest": {
+    "resident": "passed",
+    "manager": "passed_api_processing_and_human_receipt",
+    "resident_api_accepted_send_ms": {
+      "help": 1012,
+      "context": 1064
+    },
+    "human_confirmation": "resident_replied_quickly_and_manager_receipt_confirmed",
+    "manager_before_transport_fix": "help_and_context_api_accepted_and_human_receipt_confirmed",
+    "manager_api_accepted_send_ms": {
+      "help": 1057,
+      "context": 1004
+    },
+    "manager_human_receipt_confirmed": true,
+    "manager_human_confirmation_scope": "receipt_in_manager_account; individual_response_content_and_perceived_latency_not_specified"
+  },
+  "human_confirmed_corrected_latency": {
+    "resident": "passed",
+    "manager": "not_explicitly_measured_by_human; api_send_about_one_second"
+  },
+  "live_acceptance": "passed",
+  "pending_scenarios": [],
+  "private_files_unchanged": {
+    "config.yaml": true,
+    "secrets.yaml": true
+  },
+  "dedicated_i2_database_created_for_test": true,
+  "i1_database_modified": false,
+  "offsets_reset": false,
+  "messages_or_history_deleted": false,
+  "uncertain_delivery_repaired": false,
+  "participant_permissions_changed": false,
+  "regression": {
+    "total": 205,
+    "passed": 205,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "new_tests": 15
+  },
+  "supervised_process": {
+    "pid": 20892,
+    "running_at_snapshot": true,
+    "separate_service_installed": false,
+    "replay_probe_one_shot": true
+  },
+  "other_external_integrations_used": false,
+  "I3": "not_implemented",
+  "git_operations": false,
+  "lovable_publication": false,
+  "latest_receipt_count": 24,
+  "latest_database_integrity": {
+    "integrity_check": "ok",
+    "foreign_keys_valid": true,
+    "offset_persisted": true,
+    "offset_covers_receipts": true
+  },
+  "context_isolation": {
+    "result": "passed",
+    "human_confirmation": true,
+    "api_and_persistence": "passed"
+  },
+  "original_update_replay": {
+    "result": "passed",
+    "source": "i2-real-replay.json",
+    "additional_send_calls": 0
+  },
+  "definitive_acceptance_source": "i2-acceptance.json",
+  "resident_real_profile_denial": {
+    "expected_input_hash_matched": true,
+    "administrative_operations": {
+      "requests_state": 0,
+      "operational_guidance_revisions": 0
+    },
+    "human_confirmation": "passed",
+    "audit_and_policy_verified": true,
+    "internal_check_source": "i2-final-internal-check.json"
+  },
+  "acceptance_scope": "I2_only_with_documented_local_and_real_validation_boundaries",
+  "restart_context_human_confirmation": {
+    "resident": true,
+    "manager": true
+  }
+}

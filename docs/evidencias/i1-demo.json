@@ -1,0 +1,70 @@
+{
+  "simulation": true,
+  "proposal": {
+    "status": "awaiting_confirmation",
+    "code": "proposal",
+    "data": {
+      "operation_id": "8f4af3a5-b666-4edb-b50c-71f32bf46304",
+      "guidance_id": "aae8f59e-0a91-4c70-9ee9-d8c4608d2cd4",
+      "kind": "create",
+      "expected_version": null,
+      "topic": "fachada",
+      "content": "SIMULA??O: manter as janelas fechadas durante o servi?o fict?cio.",
+      "audience": "residents",
+      "effective_from": "2026-11-05T20:58:59.183761+00:00",
+      "effective_until": "2026-11-06T00:58:59.183761+00:00",
+      "timezone": "America/Sao_Paulo",
+      "expires_at": "2026-11-05T21:03:59.183761+00:00",
+      "proposal_hash": "bfa3474117bb0b02ad220ba7771e4ee4b29675ee06407d5b0dbaef1d6c6d8f1a",
+      "document_check": "not_checked_in_i1",
+      "scope": [
+        "i1-fictional",
+        "local",
+        2002,
+        2002
+      ],
+      "original_message_at": "2026-11-05T20:58:59.183761+00:00"
+    }
+  },
+  "before_confirmation": {
+    "status": "success",
+    "code": "guidance",
+    "data": {
+      "guidance": [],
+      "source": "orienta??o comunicada pela administra??o",
+      "document_check": "not_checked_in_i1",
+      "content_is_untrusted_data": true
+    }
+  },
+  "confirmation": {
+    "status": "success",
+    "code": "confirmed",
+    "data": {
+      "operation_id": "8f4af3a5-b666-4edb-b50c-71f32bf46304",
+      "guidance_id": "aae8f59e-0a91-4c70-9ee9-d8c4608d2cd4",
+      "version": 1,
+      "status": "active"
+    }
+  },
+  "resident_query": {
+    "status": "success",
+    "code": "guidance",
+    "data": {
+      "guidance": [
+        {
+          "guidance_id": "aae8f59e-0a91-4c70-9ee9-d8c4608d2cd4",
+          "version": 1,
+          "topic": "fachada",
+          "content": "SIMULA??O: manter as janelas fechadas durante o servi?o fict?cio.",
+          "audience": "residents",
+          "effective_from": "2026-11-05T20:58:59.183761+00:00",
+          "effective_until": "2026-11-06T00:58:59.183761+00:00",
+          "timezone": "America/Sao_Paulo"
+        }
+      ],
+      "source": "orienta??o comunicada pela administra??o",
+      "document_check": "not_checked_in_i1",
+      "content_is_untrusted_data": true
+    }
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "configuration_role": "resident",
+  "guidance_create_authorization": "denied",
+  "expected_real_message_hash_matched": true,
+  "channel_reply_code": "phase_not_available",
+  "channel_reply_state": "sent",
+  "correlated_audit": [
+    {
+      "role": "resident",
+      "operation": "get_context",
+      "result": "success",
+      "operation_id": null,
+      "entity_id": null
+    },
+    {
+      "role": "resident",
+      "operation": "telegram.receive",
+      "result": "processed",
+      "operation_id": null,
+      "entity_id": null
+    }
+  ],
+  "administrative_rows": {
+    "requests_state": 0,
+    "operational_guidance": 0,
+    "operational_guidance_revisions": 0
+  },
+  "live_context_observation": {
+    "read_only": true,
+    "distinct_references": true,
+    "roles": {
+      "resident": {
+        "has_nonempty_unit_reference": true,
+        "unit_save_response_api_accepted": true,
+        "subsequent_context_response_api_accepted": true,
+        "subsequent_response_contains_exactly_own_reference": true
+      },
+      "manager": {
+        "has_nonempty_unit_reference": true,
+        "unit_save_response_api_accepted": true,
+        "subsequent_context_response_api_accepted": true,
+        "subsequent_response_contains_exactly_own_reference": true
+      }
+    },
+    "api_and_persistence_observation": "passed",
+    "human_confirmation_inferred": false
+  },
+  "code_matches_205_tested_sources": true,
+  "operational_database_opened_read_only": true,
+  "updated_at": "2026-11-09T21:42:48.841223+00:00",
+  "scope": "final_role_and_correlated_audit_verification"
+}

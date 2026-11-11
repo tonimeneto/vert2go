@@ -1,0 +1,101 @@
+{
+  "phase": "I4",
+  "scope": "real_local_document_query",
+  "case": "bicycle_parking",
+  "updated_at": "2026-11-11T14:06:49.600113+00:00",
+  "result": "passed",
+  "external_api_attempted": true,
+  "google_mutations_attempted": false,
+  "telegram_messages_sent": false,
+  "response": {
+    "provider_status": "completed",
+    "model": "gpt-4.1-mini-2025-04-14",
+    "response_ref": "44d7b55f49262324afb61933168a2afd184e94d26208f64bc68e0cb4ad09d506",
+    "search_count": 1,
+    "search_statuses": [
+      "completed"
+    ],
+    "result_count": 6,
+    "model_evidence_status": "answered",
+    "search_queries": [
+      "estacionar bicicleta na vaga de garagem",
+      "bicicleta vaga de garagem",
+      "vaga de garagem bicicleta"
+    ],
+    "claim_checks": [
+      {
+        "section": "Art. 14 --- Uso da garagem",
+        "quote": "A garagem destina-se prioritariamente à guarda e estacionamento de veículos. É vedado utilizar as vagas como depósito de móveis, objetos, materiais ou mercadorias incompatíveis com sua finalidade.",
+        "exact_quote_in_result": false,
+        "whitespace_normalized_quote_in_result": true,
+        "layout_normalized_quote_in_result": true,
+        "section_heading_in_result": true
+      },
+      {
+        "section": "Garagem",
+        "quote": "Só é permitido utilizar a vaga para estacionar 1 (um) veículo automotor, seja ele carro ou moto, portanto é proibido estacionar número maior de veículos por vaga. Não buzine, use luzes baixas e respeite a sua vaga. Não use sua vaga como depósito.",
+        "exact_quote_in_result": false,
+        "whitespace_normalized_quote_in_result": false,
+        "layout_normalized_quote_in_result": true,
+        "section_heading_in_result": true
+      }
+    ],
+    "retrieved_pool_hours": false,
+    "retrieved_convention_term": false,
+    "usage": {
+      "input_tokens": 6119,
+      "input_tokens_details": {
+        "cache_write_tokens": 0,
+        "cached_tokens": 0
+      },
+      "output_tokens": 294,
+      "output_tokens_details": {
+        "reasoning_tokens": 0
+      },
+      "total_tokens": 6413
+    },
+    "retrieved_file_refs": [
+      "197cd075a2ff547cc007800736883abb8055e87372a4f0208cb1bc3771ed7b5c",
+      "500273bed85aa4d0bf9fbd3f8bb992f36139effdcb5401c35cbb956f5429db6e"
+    ]
+  },
+  "http": [
+    {
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "status": 200
+    }
+  ],
+  "role": "resident",
+  "result_code": "knowledge_answer",
+  "expected_code": "knowledge_answer",
+  "references": [
+    {
+      "source_ref": "f6dc4f39c8ca486aecf4457626296bcabb6e1dfd0cad9a8193385ab2a209c983",
+      "source_hash": "f2905f4a28be0c5674c86e257ddac70b170f13541f9e90b83a33a328605daa2d",
+      "file_id": "file-JL7553EwN32FiooF3vk34E",
+      "quote_hash": "bc0e0d555ff983ebc014491772f79b7a5ef1ca8c16f0343e6b144fc3397f4822",
+      "quote_match": "layout_normalized"
+    },
+    {
+      "source_ref": "c0cd7d018bb59e9d63c7f6294d2707595d31ec9f9663bbbcb8f88b67cab5250d",
+      "source_hash": "22ee5c8717bc9d4ad12de5724b728052cb5e124bdd24f0f219ae550cf8de4cb7",
+      "file_id": "file-A8ZAX4m2tqkUfQMYuDjXwJ",
+      "quote_hash": "09b3424a819c8ff3fbf71fa7fa5ef7e656e92875a4ff9daca9559ebf8c72d668",
+      "quote_match": "layout_normalized"
+    }
+  ],
+  "reply": "Alfredo experimental\n\nA garagem destina-se prioritariamente à guarda e estacionamento de veículos. É vedado utilizar as vagas como depósito de móveis, objetos, materiais ou mercadorias incompatíveis com sua finalidade.\nFonte: Convenção do Condomínio — Art. 14 --- Uso da garagem\nTrecho: “A garagem destina-se prioritariamente à guarda e estacionamento de veículos. É vedado utilizar as vagas como depósito de móveis, objetos, materiais ou mercadorias incompatíveis com sua finalidade.”\n\nSó é permitido utilizar a vaga para estacionar 1 (um) veículo automotor, seja ele carro ou moto, portanto é proibido estacionar número maior de veículos por vaga. Não use sua vaga como depósito.\nFonte: Regulamento Interno — Garagem\nTrecho: “Só é permitido utilizar a vaga para estacionar 1 (um) veículo automotor, seja ele carro ou moto, portanto é proibido estacionar número maior de veículos por vaga. Não buzine, use luzes baixas e respeite a sua vaga. Não use sua vaga como depósito.”",
+  "budget": {
+    "period": "2026-11",
+    "estimated_brl": "0.500755",
+    "alert": false,
+    "allowed": true,
+    "reason": "available"
+  },
+  "openai_request_count": 2,
+  "google_data_request_count": 12
+}

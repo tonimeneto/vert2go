@@ -1,0 +1,20 @@
+{
+  "phase": "I4",
+  "scope": "operational_state_preservation_after_real_queries_and_telegram",
+  "updated_at": "2026-11-10T18:05:12.680420+00:00",
+  "private_backup_available": true,
+  "before_schema": 2,
+  "current_schema": 3,
+  "baseline_business_tables_unchanged": {
+    "conversation_state": true,
+    "requests_state": true,
+    "operational_guidance": true,
+    "operational_guidance_revisions": true
+  },
+  "processed_messages_baseline_preserved": true,
+  "new_read_receipts_expected": true,
+  "integrity_ok": true,
+  "foreign_keys_valid": true,
+  "unresolved_openai_operations": 0,
+  "external_api_attempted": false
+}

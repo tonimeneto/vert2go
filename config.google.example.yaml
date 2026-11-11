@@ -1,0 +1,80 @@
+# EXEMPLO FICTICIO I3. Nao substituir config.yaml particular por este arquivo.
+environment_id: i2-fictional
+simulation_mode: true
+agent_name: Alfredo
+locale: pt-BR
+timezone: America/Sao_Paulo
+users:
+- channel: telegram
+  channel_user_id: 1001
+  chat_ids:
+  - 1001
+  role: resident
+  enabled: true
+- channel: telegram
+  channel_user_id: 2002
+  chat_ids:
+  - 2002
+  role: manager
+  enabled: true
+permissions:
+  resident:
+  - guidance.read
+  - context.read
+  - context.write
+  manager:
+  - guidance.read
+  - guidance.create
+  - guidance.correct
+  - guidance.cancel
+  - guidance.history
+  - context.read
+  - context.write
+limits:
+  confirmation_seconds: 300
+  max_message_chars: 8000
+  messages_per_minute: 60
+retention:
+  conversation_days: 30
+  deduplication_days: 30
+  audit_days: 90
+  closed_request_days: 90
+  guidance_audit_days: 90
+openai:
+  monthly_budget_brl: '30.00'
+  alert_brl: '24.00'
+  usd_brl: '5.00'
+  input_usd_per_million: '1.00'
+  output_usd_per_million: '2.00'
+  reference_date: '2026-11-05'
+  reference_label: fictitious-test-prices-not-market-data
+  missing_measurement: block
+channels:
+  telegram:
+    bot_id: 9009
+    poll_seconds: 25
+    request_seconds: 35
+    batch_size: 100
+    retry_seconds: 5
+google:
+  expected_account: alfredo@example.invalid
+  drive_documents:
+  - id: doc-fictional
+    classification: simulation
+    export_mime: text/plain
+  calendar:
+    id: calendar-fictional@group.calendar.google.com
+    owned: false
+    window_start: '2026-11-01T00:00:00-03:00'
+    window_end: '2026-11-30T00:00:00-03:00'
+  sheets:
+    id: sheet-fictional
+    ranges:
+    - '''Operacao''!A1:B2'
+  limits:
+    timeout_seconds: 20
+    total_seconds: 120
+    max_attempts: 3
+    max_pages: 5
+    max_bytes: 10485760
+    max_cells: 1000

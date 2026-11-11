@@ -1,0 +1,39 @@
+{
+  "phase": "I4",
+  "scope": "manual_bot_recovery",
+  "updated_at": "2026-11-11T13:49:54.683696+00:00",
+  "before": {
+    "python_process_found": false,
+    "instance_lock_held": false,
+    "previous_exec_session_available": false,
+    "last_receipt_updated_at": "2026-11-10T22:46:15.479402+00:00"
+  },
+  "cause": "manual_bot_not_running_reason_for_previous_exit_not_reconstructable",
+  "after": {
+    "startup": "passed_identity_and_webhook_verified",
+    "queued_updates_observed": 2,
+    "entries": [
+      {
+        "role": "resident",
+        "code": "knowledge_evidence_invalid",
+        "state": "sent",
+        "created_at": "2026-11-11T13:48:15.402182+00:00",
+        "updated_at": "2026-11-11T13:49:19.832100+00:00"
+      },
+      {
+        "role": "resident",
+        "code": "knowledge_evidence_invalid",
+        "state": "sent",
+        "created_at": "2026-11-11T13:48:53.278927+00:00",
+        "updated_at": "2026-11-11T13:49:20.979548+00:00"
+      }
+    ],
+    "unresolved_OpenAI_operations": 0
+  },
+  "new_documentary_answers_validated": false,
+  "new_question_text_not_logged": true,
+  "google_mutations_attempted": false,
+  "code_changed": false,
+  "automatic_start_configured": false,
+  "I5_started": false
+}

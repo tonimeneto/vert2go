@@ -1,0 +1,177 @@
+{
+  "phase": "I4",
+  "scope": "semantic_generation_quality_correction",
+  "updated_at": "2026-11-11T14:37:24.490146+00:00",
+  "reason": "owner_reported_bicycle_failure_after_multiline_fix_pool_passed",
+  "diagnosis": "live_reproductions_showed_stitched_quotes_and_invented_file_ids",
+  "previous_fix_did_not_stabilize_generation": true,
+  "model_before": "gpt-4.1-mini-2025-04-14",
+  "model_after": "gpt-4.1-2025-04-14",
+  "input_usd_per_million": "2.00",
+  "output_usd_per_million": "8.00",
+  "model_change_authority": "owner_fix_request_and_existing_G3_same_documents_and_budget",
+  "sources": [
+    "https://developers.openai.com/api/docs/models/gpt-4.1",
+    "https://developers.openai.com/api/docs/pricing",
+    "https://developers.openai.com/api/docs/guides/structured-outputs"
+  ],
+  "generation_changes": [
+    "concise_semantic_answers_with_contiguous_quotes",
+    "response_file_ids_enum_from_verified_manifest",
+    "quote_limit_1000_matches_existing_guard"
+  ],
+  "abandoned_trial": "quote_limit_160_caused_truncated_words",
+  "internal_diagnostics": "fixed_validation_error_codes_only_no_user_text",
+  "semantic_retrieval_preserved": true,
+  "local_keyword_search_in_bot": false,
+  "hardcoded_condominium_answers": false,
+  "local_index_added": false,
+  "validation_not_relaxed": true,
+  "attempts": [
+    {
+      "case": "apartment_62_spaces",
+      "source": "i4-live-apartment_62_spaces-20261111T140804080539Z.json",
+      "result": "passed",
+      "code": "knowledge_answer",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "validation_error": null
+    },
+    {
+      "case": "bicycle_full_model_final",
+      "source": "i4-live-bicycle_full_model_final-20261111T143356134500Z.json",
+      "result": "passed",
+      "code": "knowledge_answer",
+      "model": "gpt-4.1-2025-04-14",
+      "validation_error": null
+    },
+    {
+      "case": "bicycle_full_model_probe",
+      "source": "i4-live-bicycle_full_model_probe-20261111T143252284073Z.json",
+      "result": "passed",
+      "code": "knowledge_answer",
+      "model": "gpt-4.1-2025-04-14",
+      "validation_error": null
+    },
+    {
+      "case": "bicycle_parking",
+      "source": "i4-live-bicycle_parking-20261111T140713628648Z.json",
+      "result": "passed",
+      "code": "knowledge_answer",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "validation_error": null
+    },
+    {
+      "case": "bicycle_parking",
+      "source": "i4-live-bicycle_parking-20261111T142804662197Z.json",
+      "result": "failed",
+      "code": "knowledge_evidence_invalid",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "validation_error": "claim_fields_invalid"
+    },
+    {
+      "case": "bicycle_parking",
+      "source": "i4-live-bicycle_parking-20261111T143117036333Z.json",
+      "result": "failed",
+      "code": "knowledge_evidence_invalid",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "validation_error": "quote_not_found"
+    },
+    {
+      "case": "bicycle_parking",
+      "source": "i4-live-bicycle_parking-20261111T143552950093Z.json",
+      "result": "passed",
+      "code": "knowledge_answer",
+      "model": "gpt-4.1-2025-04-14",
+      "validation_error": null
+    },
+    {
+      "case": "bicycle_parking_plain",
+      "source": "i4-live-bicycle_parking_plain-20261111T142355607735Z.json",
+      "result": "failed",
+      "code": "knowledge_evidence_invalid",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "validation_error": null
+    },
+    {
+      "case": "bicycle_parking_plain",
+      "source": "i4-live-bicycle_parking_plain-20261111T142721101328Z.json",
+      "result": "passed",
+      "code": "knowledge_answer",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "validation_error": null
+    },
+    {
+      "case": "bicycle_provenance_probe",
+      "source": "i4-live-bicycle_provenance_probe-20261111T142452969170Z.json",
+      "result": "passed",
+      "code": "knowledge_answer",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "validation_error": null
+    },
+    {
+      "case": "pool_hours",
+      "source": "i4-live-pool_hours-20261111T143520711686Z.json",
+      "result": "passed",
+      "code": "knowledge_answer",
+      "model": "gpt-4.1-2025-04-14",
+      "validation_error": null
+    }
+  ],
+  "final_configuration_retests": [
+    {
+      "case": "bicycle_full_model_final",
+      "source": "i4-live-bicycle_full_model_final-20261111T143356134500Z.json",
+      "result": "passed",
+      "code": "knowledge_answer",
+      "model": "gpt-4.1-2025-04-14",
+      "validation_error": null
+    },
+    {
+      "case": "bicycle_parking",
+      "source": "i4-live-bicycle_parking-20261111T143552950093Z.json",
+      "result": "passed",
+      "code": "knowledge_answer",
+      "model": "gpt-4.1-2025-04-14",
+      "validation_error": null
+    },
+    {
+      "case": "pool_hours",
+      "source": "i4-live-pool_hours-20261111T143520711686Z.json",
+      "result": "passed",
+      "code": "knowledge_answer",
+      "model": "gpt-4.1-2025-04-14",
+      "validation_error": null
+    }
+  ],
+  "configuration_other_fields_preserved": true,
+  "private_configuration_written_atomically_with_ACL": true,
+  "secrets_file_read_for_configuration_change": false,
+  "tests_run": 325,
+  "tests_passed": 325,
+  "test_source": "i4-tests.json",
+  "source_hash_mismatches": [],
+  "business_tables_preserved": {
+    "conversation_state": true,
+    "requests_state": true,
+    "operational_guidance": true,
+    "operational_guidance_revisions": true
+  },
+  "unresolved_openai_operations": 0,
+  "estimated_total_brl": "1.044485",
+  "monthly_budget_brl": "30.00",
+  "alert_brl": "24.00",
+  "budget_not_increased": true,
+  "bot_restart": {
+    "process_id": 3752,
+    "mode": "manual_I4",
+    "identity_verified": true,
+    "webhook_clear": true,
+    "polling_started": true
+  },
+  "post_fix_Telegram_threshold_utc": "2026-11-11T14:35:52.950093+00:00",
+  "post_fix_Telegram_entries": [],
+  "post_fix_human_confirmation": "pending",
+  "formal_I4_acceptance": "pending",
+  "I5_started": false,
+  "git_operations_attempted": false
+}

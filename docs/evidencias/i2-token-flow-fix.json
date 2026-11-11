@@ -1,0 +1,61 @@
+{
+  "phase": "I2",
+  "scope": "token_entry_and_discovery_fix",
+  "updated_at": "2026-11-09T15:28:48.659847+00:00",
+  "reported_error": "invalid_telegram_secrets",
+  "original_failure_stage": "hidden_prompt_local_format_validation_before_getMe",
+  "localization_basis": "reported_execution_point_and_original_code_path",
+  "historical_input_stored": false,
+  "historical_input_subtype": "not_reconstructable_without_storing_secret_input",
+  "yaml_and_enrollment_schema": "passed",
+  "token_currently_registered": false,
+  "confirmed_implementation_defects": [
+    "ambiguous_error_codes",
+    "duplicated_token_contract",
+    "token_persisted_only_after_all_participants",
+    "discovery_required_custom_markers",
+    "expected_username_not_verified"
+  ],
+  "fixes": [
+    "single_strict_token_contract",
+    "safe_source_and_stage_diagnostics",
+    "three_hidden_input_attempts",
+    "new_input_boundary_whitespace_only",
+    "verify_expected_bot_before_persisting_new_token",
+    "persist_token_before_participant_discovery",
+    "token_only_mode",
+    "discover_private_pending_text_including_start",
+    "explicit_roles_from_discovered_numeric_ids",
+    "resumable_enrollment_evidence_without_secrets"
+  ],
+  "private_files_unchanged": {
+    "config.yaml": true,
+    "secrets.yaml": true
+  },
+  "regression": {
+    "total": 175,
+    "passed": 175,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "new_tests": 15,
+    "enrollment_tests": 37,
+    "network_in_tests": false
+  },
+  "actual_bot_discovery": "not_run_local_token_absent",
+  "external_api_attempted": false,
+  "messages_sent": false,
+  "operational_databases_opened": false,
+  "git_operations": false,
+  "lovable_publication": false,
+  "I3": "not_implemented",
+  "telegram_operational": false,
+  "user_terminal_clarification": {
+    "terminal": "VSCode",
+    "input_echo_expected": false,
+    "asterisks_expected": false,
+    "lack_of_echo_proves_empty_input": false,
+    "historical_received_input_known": false,
+    "powershell_scriptblock_syntax_validated": true
+  }
+}

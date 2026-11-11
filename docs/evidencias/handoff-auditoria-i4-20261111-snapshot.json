@@ -1,0 +1,40 @@
+{
+  "purpose": "handoff_context_for_read_only_audit_not_new_acceptance",
+  "observed_at_local": "2026-11-11T12:32:28.781909-03:00",
+  "timezone": "America/Sao_Paulo",
+  "model": "gpt-4o-2024-08-06",
+  "input_usd_per_million": "2.50",
+  "output_usd_per_million": "10.00",
+  "usd_brl_assumption": "5.00",
+  "monthly_budget_brl": "30.00",
+  "alert_brl": "24.00",
+  "operational_schema": 3,
+  "integrity_ok": true,
+  "foreign_keys_valid": true,
+  "unresolved_OpenAI_operations": 0,
+  "estimated_total_recorded_brl": "1.127696",
+  "tests_passed": 338,
+  "source_hash_mismatches": [],
+  "git_marker_exists": false,
+  "panel_title_observed": "Alfredo - ATIVO",
+  "canonical_database_lock_held": true,
+  "confirmed_unresolved_bicycle_failure": {
+    "human_reply": "Retornou indisponibilidade novamente",
+    "receipt_created_at_UTC": "2026-11-11T14:37:23.701183+00:00",
+    "code": "knowledge_evidence_invalid",
+    "delivery": "sent",
+    "validation_error": "quote_not_found"
+  },
+  "latest_receipt": {
+    "created_at_UTC": "2026-11-11T15:20:29.308678+00:00",
+    "code": "telegram_update_unsupported",
+    "delivery": "discarded",
+    "original_input_not_inferred": true
+  },
+  "new_model_semantic_acceptance": "not_demonstrated",
+  "I4_formal_acceptance": "pending",
+  "I5_started": false,
+  "current_handoff_external_OpenAI_calls": false,
+  "current_handoff_config_or_runtime_changes": false,
+  "secrets_included": false
+}

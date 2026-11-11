@@ -1,0 +1,187 @@
+{
+  "phase": "I3",
+  "scope": "google_read_only",
+  "updated_at": "2026-11-09T23:21:12.042455+00:00",
+  "local_configuration": "passed",
+  "local_credentials": "passed",
+  "account_verified": "passed",
+  "refresh_and_reload": "passed",
+  "documents": [
+    {
+      "resource_ref": "530526664217040126960c17",
+      "result": "passed",
+      "byte_count": 12360,
+      "sha256": "22ee5c8717bc9d4ad12de5724b728052cb5e124bdd24f0f219ae550cf8de4cb7",
+      "source_version_ref": "d4735e3a265e16eee03f5971",
+      "classification": "official",
+      "mime_type": "text/markdown"
+    },
+    {
+      "resource_ref": "6641336d54dd0719b02170ef",
+      "result": "passed",
+      "byte_count": 32481,
+      "sha256": "f2905f4a28be0c5674c86e257ddac70b170f13541f9e90b83a33a328605daa2d",
+      "source_version_ref": "d4735e3a265e16eee03f5971",
+      "classification": "official",
+      "mime_type": "text/markdown"
+    }
+  ],
+  "calendar": {
+    "result": "passed",
+    "resource_ref": "7ec9b2cdbd24087b413169f1",
+    "event_count": 0,
+    "empty": true,
+    "data_sha256": "9823410b16355711d8871b3d3b473ed983a7263e794a3b925be72f85a8cf66dd",
+    "complete": true
+  },
+  "sheets": {
+    "result": "passed",
+    "resource_ref": "7d619d3e2190c36635e67fa7",
+    "ranges": [
+      {
+        "range_ref": "1e3c8a96e690294dbb4ab779",
+        "row_count": 0,
+        "cell_count": 0,
+        "empty": true,
+        "data_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      }
+    ]
+  },
+  "calls": [
+    {
+      "correlation_id": "3eec0a93cf804983a0325a6189243609",
+      "operation": "identity",
+      "resource_ref": "e3b0c44298fc1c149afbf4c8",
+      "method": "GET",
+      "attempt": 1,
+      "http_status": 200,
+      "duration_ms": 1382,
+      "safe_error": null
+    },
+    {
+      "correlation_id": "8e185dd115f844eda8d4f854f9830c9a",
+      "operation": "drive.metadata",
+      "resource_ref": "530526664217040126960c17",
+      "method": "GET",
+      "attempt": 1,
+      "http_status": 200,
+      "duration_ms": 818,
+      "safe_error": null
+    },
+    {
+      "correlation_id": "012618cc5440413199785cb133722963",
+      "operation": "drive.download",
+      "resource_ref": "530526664217040126960c17",
+      "method": "GET",
+      "attempt": 1,
+      "http_status": 200,
+      "duration_ms": 1787,
+      "safe_error": null
+    },
+    {
+      "correlation_id": "32db7f1f798446febfbb2bbbf021f056",
+      "operation": "drive.metadata",
+      "resource_ref": "530526664217040126960c17",
+      "method": "GET",
+      "attempt": 1,
+      "http_status": 200,
+      "duration_ms": 873,
+      "safe_error": null
+    },
+    {
+      "correlation_id": "7aa5a163466349cf9713f6736ee39502",
+      "operation": "drive.metadata",
+      "resource_ref": "6641336d54dd0719b02170ef",
+      "method": "GET",
+      "attempt": 1,
+      "http_status": 200,
+      "duration_ms": 919,
+      "safe_error": null
+    },
+    {
+      "correlation_id": "38efab2396b542e48804b7dc227c8f74",
+      "operation": "drive.download",
+      "resource_ref": "6641336d54dd0719b02170ef",
+      "method": "GET",
+      "attempt": 1,
+      "http_status": 200,
+      "duration_ms": 1302,
+      "safe_error": null
+    },
+    {
+      "correlation_id": "584ee7b5bb574296882d78763e7fb91a",
+      "operation": "drive.metadata",
+      "resource_ref": "6641336d54dd0719b02170ef",
+      "method": "GET",
+      "attempt": 1,
+      "http_status": 200,
+      "duration_ms": 1339,
+      "safe_error": null
+    },
+    {
+      "correlation_id": "d52b0b86f3bc43528c6c078f5d5e9d2c",
+      "operation": "calendar.events",
+      "resource_ref": "7ec9b2cdbd24087b413169f1",
+      "method": "GET",
+      "attempt": 1,
+      "http_status": 200,
+      "duration_ms": 1265,
+      "safe_error": null
+    },
+    {
+      "correlation_id": "fb5c69307e004820a6f9534e0b6aacd8",
+      "operation": "sheets.metadata",
+      "resource_ref": "7d619d3e2190c36635e67fa7",
+      "method": "GET",
+      "attempt": 1,
+      "http_status": 200,
+      "duration_ms": 1333,
+      "safe_error": null
+    },
+    {
+      "correlation_id": "b2740973d96f4c8fb77ed50d7033aa9e",
+      "operation": "sheets.structure",
+      "resource_ref": "7d619d3e2190c36635e67fa7",
+      "method": "GET",
+      "attempt": 1,
+      "http_status": 200,
+      "duration_ms": 841,
+      "safe_error": null
+    },
+    {
+      "correlation_id": "2a1355798fc34f2d82151624dbad64fb",
+      "operation": "sheets.values",
+      "resource_ref": "7d619d3e2190c36635e67fa7",
+      "method": "GET",
+      "attempt": 1,
+      "http_status": 200,
+      "duration_ms": 1039,
+      "safe_error": null
+    }
+  ],
+  "external_api_attempted": true,
+  "google_mutations_attempted": false,
+  "database_opened": false,
+  "openai_used": false,
+  "acceptance": "passed_google_reads",
+  "I4_I5_I6": "not_authorized",
+  "reload_modality": "new_manager_same_process",
+  "sheets_structure": {
+    "result": "passed",
+    "tabs": [
+      {
+        "sheetId": 0,
+        "title": "Página1",
+        "sheetType": "GRID",
+        "gridProperties": {
+          "rowCount": 1000,
+          "columnCount": 26
+        }
+      }
+    ],
+    "named_ranges": [],
+    "cells_read": false,
+    "dimensions_are_used_range": false
+  },
+  "reason": "offline_tests_and_owner_review_also_required"
+}

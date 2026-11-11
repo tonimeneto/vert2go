@@ -1,0 +1,39 @@
+{
+  "phase": "I4",
+  "scope": "offline_model_validation_fix",
+  "updated_at": "2026-11-10T17:33:50.744872+00:00",
+  "cause": "shared_identifier_validator_rejected_dot_in_default_model_name",
+  "correction": "dedicated_model_name_validator_preserving_project_and_vector_store_rules",
+  "default_model": "gpt-4.1-mini-2025-04-14",
+  "default_model_preserved": true,
+  "previous_evidence": "i4-tests-before-model-validation-fix.json",
+  "previous_test_count": 308,
+  "regression_reproduced_before_fix": true,
+  "targeted_tests_after_fix": {
+    "tests_run": 5,
+    "passed": 5,
+    "failed": 0,
+    "errors": 0
+  },
+  "full_regression": {
+    "source": "i4-tests.json",
+    "tests_run": 313,
+    "passed": 313,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "successful": true
+  },
+  "changed_sources": [
+    "app/ai/configuration.py",
+    "tests/test_knowledge.py"
+  ],
+  "source_hash_mismatches": [],
+  "enrollment_script_preserved": true,
+  "real_secrets_read": false,
+  "private_configuration_changed": false,
+  "operational_database_opened": false,
+  "external_api_attempted": false,
+  "git_operations": false,
+  "I4_real_acceptance_unchanged": true
+}

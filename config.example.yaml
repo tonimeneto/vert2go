@@ -1,0 +1,38 @@
+environment_id: i1-fictional
+simulation_mode: true
+agent_name: Alfredo
+locale: pt-BR
+timezone: America/Sao_Paulo
+users:
+  - channel: local
+    channel_user_id: 1001
+    chat_ids: [1001]
+    role: resident
+    enabled: true
+  - channel: local
+    channel_user_id: 2002
+    chat_ids: [2002]
+    role: manager
+    enabled: true
+permissions:
+  resident: [guidance.read, context.read, context.write]
+  manager: [guidance.read, guidance.create, guidance.correct, guidance.cancel, guidance.history, context.read, context.write]
+limits:
+  confirmation_seconds: 300
+  max_message_chars: 8000
+  messages_per_minute: 60
+retention:
+  conversation_days: 30
+  deduplication_days: 30
+  audit_days: 90
+  closed_request_days: 90
+  guidance_audit_days: 90
+openai:
+  monthly_budget_brl: '30.00'
+  alert_brl: '24.00'
+  usd_brl: '5.00'
+  input_usd_per_million: '1.00'
+  output_usd_per_million: '2.00'
+  reference_date: '2026-11-05'
+  reference_label: fictitious-test-prices-not-market-data
+  missing_measurement: block

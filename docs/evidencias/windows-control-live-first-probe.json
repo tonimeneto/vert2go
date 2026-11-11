@@ -1,0 +1,16 @@
+{
+  "scope": "windows_control_real_lifecycle",
+  "updated_at": "2026-11-11T15:21:20.034025+00:00",
+  "external_Telegram_calls": true,
+  "explicit_OpenAI_test_question_sent": false,
+  "result": "failed",
+  "reason": "control_live_check_failed",
+  "states": [
+    {
+      "state": "external",
+      "at": "2026-11-11T15:21:20.034873+00:00"
+    }
+  ],
+  "final_state": "external",
+  "worker_terminated": true
+}

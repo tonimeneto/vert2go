@@ -1,0 +1,101 @@
+{
+  "phase": "I4",
+  "scope": "real_local_document_query",
+  "case": "visitor_scope",
+  "updated_at": "2026-11-10T17:57:52.917994+00:00",
+  "result": "passed",
+  "external_api_attempted": true,
+  "google_mutations_attempted": false,
+  "telegram_messages_sent": false,
+  "response": {
+    "provider_status": "completed",
+    "model": "gpt-4.1-mini-2025-04-14",
+    "response_ref": "840d674ca52d5b151ffb8037cd13aa97be3489deefdb40d0343485da1f6449f3",
+    "search_count": 1,
+    "search_statuses": [
+      "completed"
+    ],
+    "result_count": 6,
+    "model_evidence_status": "answered",
+    "search_queries": [
+      "regra de visitantes seção Piscinas",
+      "regra para convidados Salão de festas",
+      "regra para convidados churrasqueiras"
+    ],
+    "claim_checks": [
+      {
+        "section": "Piscinas",
+        "quote": "A presença na área interna da piscina de qualquer pessoa que não seja proprietário ou inquilino. Visitantes: somente é permitido 1 por apartamento.",
+        "exact_quote_in_result": false,
+        "whitespace_normalized_quote_in_result": true,
+        "layout_normalized_quote_in_result": true,
+        "section_heading_in_result": true
+      },
+      {
+        "section": "Salão de festas e churrasqueiras",
+        "quote": "Faça uma lista com os nomes dos convidados e envie para Portaria Remota. Informe-se e respeite as regras do local, principalmente em relação a barulho. Convidados não podem frequentar a piscina, independentemente da idade.",
+        "exact_quote_in_result": false,
+        "whitespace_normalized_quote_in_result": true,
+        "layout_normalized_quote_in_result": true,
+        "section_heading_in_result": true
+      }
+    ],
+    "retrieved_pool_hours": true,
+    "retrieved_convention_term": true,
+    "usage": {
+      "input_tokens": 6233,
+      "input_tokens_details": {
+        "cache_write_tokens": 0,
+        "cached_tokens": 0
+      },
+      "output_tokens": 291,
+      "output_tokens_details": {
+        "reasoning_tokens": 0
+      },
+      "total_tokens": 6524
+    },
+    "retrieved_file_refs": [
+      "197cd075a2ff547cc007800736883abb8055e87372a4f0208cb1bc3771ed7b5c",
+      "500273bed85aa4d0bf9fbd3f8bb992f36139effdcb5401c35cbb956f5429db6e"
+    ]
+  },
+  "http": [
+    {
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "status": 200
+    }
+  ],
+  "role": "manager",
+  "result_code": "knowledge_answer",
+  "expected_code": "knowledge_answer",
+  "references": [
+    {
+      "source_ref": "c0cd7d018bb59e9d63c7f6294d2707595d31ec9f9663bbbcb8f88b67cab5250d",
+      "source_hash": "22ee5c8717bc9d4ad12de5724b728052cb5e124bdd24f0f219ae550cf8de4cb7",
+      "file_id": "file-A8ZAX4m2tqkUfQMYuDjXwJ",
+      "quote_hash": "a84b55ef0f86bc7f18caeed9add3c929d73fee5fc0fa7a23d8d113c0132c38e7",
+      "quote_match": "layout_normalized"
+    },
+    {
+      "source_ref": "c0cd7d018bb59e9d63c7f6294d2707595d31ec9f9663bbbcb8f88b67cab5250d",
+      "source_hash": "22ee5c8717bc9d4ad12de5724b728052cb5e124bdd24f0f219ae550cf8de4cb7",
+      "file_id": "file-A8ZAX4m2tqkUfQMYuDjXwJ",
+      "quote_hash": "dbf483a7a543efa5a4a807e05b07500b622825a21744edbf2b2837c3f67637ae",
+      "quote_match": "layout_normalized"
+    }
+  ],
+  "reply": "Alfredo experimental\n\nNa seção Piscinas, a presença na área interna da piscina de qualquer pessoa que não seja proprietário ou inquilino é proibida, sendo permitido somente 1 visitante por apartamento.\nFonte: Regulamento Interno — Piscinas\nTrecho: “A presença na área interna da piscina de qualquer pessoa que não seja proprietário ou inquilino. Visitantes: somente é permitido 1 por apartamento.”\n\nNo Salão de festas e churrasqueiras, para convidados é necessário fazer uma lista com os nomes dos convidados e enviar para Portaria Remota, não é permitida a presença de convidados na piscina, e as reservas devem ser feitas com 7 dias de antecedência.\nFonte: Regulamento Interno — Salão de festas e churrasqueiras\nTrecho: “Faça uma lista com os nomes dos convidados e envie para Portaria Remota. Informe-se e respeite as regras do local, principalmente em relação a barulho. Convidados não podem frequentar a piscina, independentemente da idade.”",
+  "budget": {
+    "period": "2026-11",
+    "estimated_brl": "0.291791",
+    "alert": false,
+    "allowed": true,
+    "reason": "available"
+  },
+  "openai_request_count": 2,
+  "google_data_request_count": 12
+}

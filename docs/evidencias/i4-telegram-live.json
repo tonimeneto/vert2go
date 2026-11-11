@@ -1,0 +1,92 @@
+{
+  "phase": "I4",
+  "scope": "real_telegram_documentary_receipts",
+  "updated_at": "2026-11-11T13:39:31.835813+00:00",
+  "entries": [
+    {
+      "role": "resident",
+      "code": "knowledge_evidence_invalid",
+      "delivery": "sent",
+      "created_at": "2026-11-10T17:58:38.262971+00:00",
+      "call_ref": "84d61f9be4f1e416b2ec43aeb3b1265e24fa43cbb44e605198c3c53f35ab7fc4",
+      "call_state": "completed",
+      "reply_matches_persisted_result": true,
+      "source_count": 0,
+      "sources_authorized": false,
+      "source_titles": []
+    },
+    {
+      "role": "resident",
+      "code": "knowledge_answer",
+      "delivery": "sent",
+      "created_at": "2026-11-10T18:02:20.102873+00:00",
+      "call_ref": "9523cdd50f614fa849c0d582050f63c557db56992ff7356916f6e85e0d3852e5",
+      "call_state": "completed",
+      "reply_matches_persisted_result": true,
+      "source_count": 1,
+      "sources_authorized": true,
+      "source_titles": [
+        "Regulamento Interno"
+      ]
+    },
+    {
+      "role": "resident",
+      "code": "knowledge_answer",
+      "delivery": "sent",
+      "created_at": "2026-11-10T18:05:08.490720+00:00",
+      "call_ref": "55a2c6ca4b8bd2792cee6d4e8f515f73129cd64dc22413373d100771137bde0c",
+      "call_state": "completed",
+      "reply_matches_persisted_result": true,
+      "source_count": 2,
+      "sources_authorized": true,
+      "source_titles": [
+        "Convenção do Condomínio",
+        "Regulamento Interno"
+      ]
+    },
+    {
+      "role": "resident",
+      "code": "knowledge_insufficient",
+      "delivery": "sent",
+      "created_at": "2026-11-10T22:43:51.356171+00:00",
+      "call_ref": "24523caba0b3b54c8a862a6e8034afd65fd53c16bda23d9a69b22bc6cea3e1d4",
+      "call_state": "completed",
+      "reply_matches_persisted_result": true,
+      "source_count": 0,
+      "sources_authorized": false,
+      "source_titles": []
+    },
+    {
+      "role": "manager",
+      "code": "knowledge_answer",
+      "delivery": "sent",
+      "created_at": "2026-11-10T22:45:44.857337+00:00",
+      "call_ref": "3ddc3d423fa50c2e1cba26141a58351b8327a2428d93656284ddce255ec3438f",
+      "call_state": "completed",
+      "reply_matches_persisted_result": true,
+      "source_count": 1,
+      "sources_authorized": true,
+      "source_titles": [
+        "Regulamento Interno"
+      ]
+    }
+  ],
+  "passed_api_delivery_by_role": {
+    "resident": 2,
+    "manager": 1
+  },
+  "estimated_total_brl": "0.420222",
+  "human_delivery_confirmation": {
+    "resident": "confirmed_by_owner_with_reply_and_source",
+    "manager": "confirmed_by_owner_correct_answer"
+  },
+  "human_confirmation_source": "explicit_owner_reply_in_this_session",
+  "participant_ids_published": false,
+  "incoming_text_persisted": false,
+  "google_mutations_attempted": false,
+  "manager_human_confirmation_date": "2026-11-11",
+  "manager_human_confirmation_source": "explicit_owner_reply_reporting_successful_manager_Telegram_test",
+  "unresolved_openai_operations": 0,
+  "integrity_ok": true,
+  "foreign_keys_valid": true
+}

@@ -1,0 +1,169 @@
+{
+  "phase": "I3",
+  "scope": "google_read_only",
+  "updated_at": "2026-11-09T23:19:10.882544+00:00",
+  "local_configuration": "passed",
+  "local_credentials": "passed",
+  "account_verified": "passed",
+  "refresh_and_reload": "passed",
+  "documents": [
+    {
+      "resource_ref": "530526664217040126960c17",
+      "result": "passed",
+      "byte_count": 12360,
+      "sha256": "22ee5c8717bc9d4ad12de5724b728052cb5e124bdd24f0f219ae550cf8de4cb7",
+      "source_version_ref": "d4735e3a265e16eee03f5971",
+      "classification": "official",
+      "mime_type": "text/markdown"
+    },
+    {
+      "resource_ref": "6641336d54dd0719b02170ef",
+      "result": "passed",
+      "byte_count": 32481,
+      "sha256": "f2905f4a28be0c5674c86e257ddac70b170f13541f9e90b83a33a328605daa2d",
+      "source_version_ref": "d4735e3a265e16eee03f5971",
+      "classification": "official",
+      "mime_type": "text/markdown"
+    }
+  ],
+  "calendar": {
+    "result": "passed",
+    "resource_ref": "7ec9b2cdbd24087b413169f1",
+    "event_count": 0,
+    "empty": true,
+    "data_sha256": "9823410b16355711d8871b3d3b473ed983a7263e794a3b925be72f85a8cf66dd",
+    "complete": true
+  },
+  "sheets": {
+    "result": "metadata_only",
+    "resource_ref": "7d619d3e2190c36635e67fa7",
+    "ranges": []
+  },
+  "calls": [
+    {
+      "correlation_id": "afa5d3664416422daab07564ed94c326",
+      "operation": "identity",
+      "resource_ref": "e3b0c44298fc1c149afbf4c8",
+      "method": "GET",
+      "attempt": 1,
+      "http_status": 200,
+      "duration_ms": 1397,
+      "safe_error": null
+    },
+    {
+      "correlation_id": "742361abf7494a63b78766a6d5c765a2",
+      "operation": "drive.metadata",
+      "resource_ref": "530526664217040126960c17",
+      "method": "GET",
+      "attempt": 1,
+      "http_status": 200,
+      "duration_ms": 1008,
+      "safe_error": null
+    },
+    {
+      "correlation_id": "068bc9d548f84a2bb0725681913e2d77",
+      "operation": "drive.download",
+      "resource_ref": "530526664217040126960c17",
+      "method": "GET",
+      "attempt": 1,
+      "http_status": 200,
+      "duration_ms": 2036,
+      "safe_error": null
+    },
+    {
+      "correlation_id": "2c8b530cc8c64b969dd5b4af9f51c642",
+      "operation": "drive.metadata",
+      "resource_ref": "530526664217040126960c17",
+      "method": "GET",
+      "attempt": 1,
+      "http_status": 200,
+      "duration_ms": 1308,
+      "safe_error": null
+    },
+    {
+      "correlation_id": "e68da51bc1534a1b9e04034fd834a5cc",
+      "operation": "drive.metadata",
+      "resource_ref": "6641336d54dd0719b02170ef",
+      "method": "GET",
+      "attempt": 1,
+      "http_status": 200,
+      "duration_ms": 1022,
+      "safe_error": null
+    },
+    {
+      "correlation_id": "1c64422dca0d4f3c9083cc8e249b3129",
+      "operation": "drive.download",
+      "resource_ref": "6641336d54dd0719b02170ef",
+      "method": "GET",
+      "attempt": 1,
+      "http_status": 200,
+      "duration_ms": 1330,
+      "safe_error": null
+    },
+    {
+      "correlation_id": "38429919cc8946e48a853d2e6a72d1e1",
+      "operation": "drive.metadata",
+      "resource_ref": "6641336d54dd0719b02170ef",
+      "method": "GET",
+      "attempt": 1,
+      "http_status": 200,
+      "duration_ms": 1180,
+      "safe_error": null
+    },
+    {
+      "correlation_id": "525bea5c79d64f0ca68ec27df077317d",
+      "operation": "calendar.events",
+      "resource_ref": "7ec9b2cdbd24087b413169f1",
+      "method": "GET",
+      "attempt": 1,
+      "http_status": 200,
+      "duration_ms": 924,
+      "safe_error": null
+    },
+    {
+      "correlation_id": "6eaf3c53eea442b7a2984d7f8f8f12ce",
+      "operation": "sheets.metadata",
+      "resource_ref": "7d619d3e2190c36635e67fa7",
+      "method": "GET",
+      "attempt": 1,
+      "http_status": 200,
+      "duration_ms": 2246,
+      "safe_error": null
+    },
+    {
+      "correlation_id": "669c03bce37242d9af7a016b5d75ebe1",
+      "operation": "sheets.structure",
+      "resource_ref": "7d619d3e2190c36635e67fa7",
+      "method": "GET",
+      "attempt": 1,
+      "http_status": 200,
+      "duration_ms": 1025,
+      "safe_error": null
+    }
+  ],
+  "external_api_attempted": true,
+  "google_mutations_attempted": false,
+  "database_opened": false,
+  "openai_used": false,
+  "acceptance": "pending",
+  "I4_I5_I6": "not_authorized",
+  "reload_modality": "new_manager_same_process",
+  "sheets_structure": {
+    "result": "passed",
+    "tabs": [
+      {
+        "sheetId": 0,
+        "title": "Página1",
+        "sheetType": "GRID",
+        "gridProperties": {
+          "rowCount": 1000,
+          "columnCount": 26
+        }
+      }
+    ],
+    "named_ranges": [],
+    "cells_read": false,
+    "dimensions_are_used_range": false
+  },
+  "reason": "google_acceptance_incomplete"
+}

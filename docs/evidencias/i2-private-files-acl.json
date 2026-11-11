@@ -1,0 +1,22 @@
+﻿{
+    "updated_at":  "2026-11-09T15:09:00.8807206Z",
+    "files":  {
+                  "secrets.yaml":  {
+                                       "only_authorized_principals":  true,
+                                       "rule_count":  3,
+                                       "inheritance_disabled":  true,
+                                       "windows_user_has_full_control":  true
+                                   },
+                  "config.yaml":  {
+                                      "only_authorized_principals":  true,
+                                      "rule_count":  3,
+                                      "inheritance_disabled":  true,
+                                      "windows_user_has_full_control":  true
+                                  }
+              },
+    "allowed_principals":  [
+                               "authorized_windows_user",
+                               "isolated_codex_identity",
+                               "SYSTEM"
+                           ]
+}

@@ -1,0 +1,54 @@
+{
+  "phase": "I2",
+  "scope": "yaml_access_fix",
+  "updated_at": "2026-11-09T15:09:03.290538+00:00",
+  "root_cause": "windows_user_excluded_from_private_file_acls",
+  "affected_files": [
+    "config.yaml",
+    "secrets.yaml"
+  ],
+  "invalid_yaml_field": null,
+  "failure_stage": "file_read_before_yaml_parser",
+  "before_user_context": {
+    "readable": false,
+    "exception": "PermissionError",
+    "errno": 13,
+    "original_validator_code": "invalid_yaml"
+  },
+  "after_user_context": {
+    "readable": true,
+    "strict_yaml": "passed",
+    "enrollment_schema": "passed"
+  },
+  "fix": "grant_full_control_to_authorized_windows_user_preserving_existing_agent_and_system_rules",
+  "private_content_unchanged": {
+    "config.yaml": true,
+    "secrets.yaml": true
+  },
+  "templates_valid": {
+    "config.example.yaml": true,
+    "config.telegram.example.yaml": true,
+    "secrets.example.yaml": true
+  },
+  "actual_user_terminal_probe": {
+    "hidden_token_prompt_reached": true,
+    "cancelled_without_token": true,
+    "discovery_disabled": true
+  },
+  "regression_tests": {
+    "total": 160,
+    "passed": 160,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "new_regressions": 9
+  },
+  "local_readiness_reason": "telegram_enrollment_incomplete",
+  "external_api_attempted": false,
+  "operational_databases_opened": false,
+  "operational_data_modified": false,
+  "git_operations": false,
+  "lovable_publication": false,
+  "I3": "not_implemented",
+  "telegram_operational": false
+}
