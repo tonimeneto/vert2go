@@ -1,0 +1,44 @@
+{
+  "phase": "I5",
+  "scope": "deterministic_regression_of_exact_actual_human_input",
+  "updated_at": "2026-11-12T19:43:44.411662+00:00",
+  "source_update_id": 436624776,
+  "exact_source_hash_verified": true,
+  "previous_model_result": {
+    "action": "guidance_create",
+    "effective_from": "2026-11-12T16:00:00-03:00",
+    "effective_until": null
+  },
+  "source_interval": {
+    "effective_from": "2026-11-12T16:00:00-03:00",
+    "effective_until": "2026-11-12T18:00:00-03:00"
+  },
+  "focused_tests": 51,
+  "focused_tests_successful": true,
+  "operational_writes": false,
+  "paid_calls": 0,
+  "fresh_human_telegram_retest": {
+    "result": "passed_actual_telegram_without_recovery",
+    "guidance_id": "3a6a7fdf-dea4-43b7-bb18-037d915e73bb",
+    "operation_id": "6a26a6cb-b702-5686-8d62-0ee37d426e58",
+    "source_update_ids": [
+      436624778,
+      436624779
+    ],
+    "version": 1,
+    "status": "active",
+    "topic": "reteste_i5",
+    "audience": "residents",
+    "effective_from": "2026-11-12T16:00:00-03:00",
+    "effective_until": "2026-11-12T18:00:00-03:00",
+    "human_received_confirmation": true,
+    "proposal_delivery": "sent",
+    "confirmation_delivery": "sent",
+    "manual_recovery": false
+  },
+  "full_acceptance": false,
+  "local_regression": {
+    "tests_run": 441,
+    "successful": true
+  }
+}

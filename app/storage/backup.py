@@ -10,6 +10,14 @@ from app.storage.sqlite import APPLICATION_ID
 
 
 def before_knowledge_migration(database, acl_reference):
+    return before_migration(database,acl_reference,3,'i4')
+
+
+def before_operations_migration(database, acl_reference):
+    return before_migration(database,acl_reference,4,'i5')
+
+
+def before_migration(database, acl_reference, target_version, phase):
     """Caller holds instance_lock. Snapshot before writes; private ACL before database bytes."""
     path = no_links(database)
     if not path.exists():
@@ -19,15 +27,18 @@ def before_knowledge_migration(database, acl_reference):
     try:
         if source.execute('PRAGMA application_id').fetchone()[0] != APPLICATION_ID:
             raise EngineError('unrecognized_database')
-        if source.execute('PRAGMA user_version').fetchone()[0] == 3:
+        version = source.execute('PRAGMA user_version').fetchone()[0]
+        if version not in (1,2,3,4):
+            raise EngineError('unrecognized_database')
+        if version >= target_version:
             return None
-        if source.execute('PRAGMA user_version').fetchone()[0] not in (1,2):
+        if source.execute('PRAGMA user_version').fetchone()[0] not in (1,2,3):
             raise EngineError('unrecognized_database')
         private_acl(acl_reference)
         folder = path.parent/'backups'
         no_links(folder)
         folder.mkdir(exist_ok=True)
-        target = folder/('before-i4-'+datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S')+'-'+uuid4().hex+'.sqlite3')
+        target = folder/('before-'+phase+'-'+datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S')+'-'+uuid4().hex+'.sqlite3')
         fd = os.open(target,os.O_CREAT|os.O_EXCL|os.O_WRONLY,0o600)
         os.close(fd)
         private_acl(acl_reference,target)

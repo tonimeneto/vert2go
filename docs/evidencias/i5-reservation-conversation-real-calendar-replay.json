@@ -1,0 +1,68 @@
+{
+  "phase": "I5",
+  "scope": "isolated_database_and_fake_telegram_with_real_authorized_calendar_read_only",
+  "input_origin": "synthetic_replay_of_exact_user_reported_wording_plus_one_valid_interval_choice",
+  "updated_at": "2026-11-12T21:47:41.419229+00:00",
+  "result": "passed",
+  "steps": [
+    {
+      "step": 1,
+      "code": "clarification_required",
+      "expected": "clarification_required",
+      "passed": true
+    },
+    {
+      "step": 2,
+      "code": "pilot_availability",
+      "expected": "pilot_availability",
+      "passed": true
+    },
+    {
+      "step": 3,
+      "code": "clarification_required",
+      "expected": "clarification_required",
+      "passed": true
+    },
+    {
+      "step": 4,
+      "code": "clarification_required",
+      "expected": "clarification_required",
+      "passed": true
+    },
+    {
+      "step": 5,
+      "code": "pilot_availability",
+      "expected": "pilot_availability",
+      "passed": true
+    },
+    {
+      "step": 6,
+      "code": "pilot_proposal",
+      "expected": "pilot_proposal",
+      "passed": true
+    }
+  ],
+  "calendar_reads": 3,
+  "google_write_attempts": 0,
+  "live_telegram_messages_sent": 0,
+  "model_calls": 0,
+  "live_operational_database_opened": false,
+  "availability_for_16_november": [
+    {
+      "date": "2026-11-16",
+      "free": [
+        {
+          "end": "2026-11-16T13:00:00.000000+00:00",
+          "start": "2026-11-16T11:00:00.000000+00:00"
+        },
+        {
+          "end": "2026-11-17T01:00:00.000000+00:00",
+          "start": "2026-11-16T14:00:00.000000+00:00"
+        }
+      ]
+    }
+  ],
+  "new_live_reservation_created": false,
+  "human_retest": "pending",
+  "full_acceptance": false
+}

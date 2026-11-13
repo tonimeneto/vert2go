@@ -121,12 +121,14 @@ def configure(root=ROOT):
     print('Configuracao Google cadastrada. Nenhuma API foi chamada e nenhum segredo foi alterado.')
 
 
-def authorize(root=ROOT, *, allow_live=False):
+def authorize(root=ROOT, *, allow_live=False, allow_writes=False):
     if not allow_live:
         raise EngineError('live_google_authorization_required')
     config = load_config(root/'config.yaml')
     if config.google is None:
         raise EngineError('google_not_configured')
+    if config.google.write_access and not allow_writes:
+        raise EngineError('live_google_writes_authorization_required')
     if not sys.stdin.isatty():
         raise EngineError('google_interactive_terminal_required')
     print('Use somente o cliente Desktop do projeto experimental. Nenhum segredo deve ser enviado ao chat.')
@@ -154,14 +156,15 @@ def main(argv=None):
     action.add_argument('--configure', action='store_true', help='Cadastrar conta, IDs e intervalos com confirmacao local')
     action.add_argument('--authorize', action='store_true', help='Proprietario seleciona JSON local e consente no navegador')
     parser.add_argument('--allow-live-google', action='store_true')
+    parser.add_argument('--allow-live-google-writes',action='store_true',help='Consentir escopos I5 somente para os recursos experimentais autorizados')
     args = parser.parse_args(argv)
     try:
         if args.configure:
-            if args.allow_live_google:
+            if args.allow_live_google or args.allow_live_google_writes:
                 raise EngineError('google_configure_is_offline')
             configure()
         else:
-            authorize(allow_live=args.allow_live_google)
+            authorize(allow_live=args.allow_live_google,allow_writes=args.allow_live_google_writes)
         return 0
     except EngineError as error:
         print('Cadastro interrompido: '+error.code)

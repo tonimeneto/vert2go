@@ -378,9 +378,10 @@ class GoogleAuthTests(GoogleCase):
              patch('google_auth_oauthlib.flow.InstalledAppFlow.run_local_server',return_value=credentials) as run, \
              patch('app.integrations.google_http.GoogleHTTP',return_value=identity):
             with self.assertRaisesRegex(EngineError,'google_account_mismatch'):
-                GoogleAuth(self.config,path,allow_live=True).enroll(self.root/'fake.json')
+                GoogleAuth(self.config,path,allow_live=True).enroll(self.root/'fake.json',consent_timeout_seconds=600)
         self.assertEqual(path.read_bytes(),before)
         self.assertEqual(run.call_args.kwargs['host'],'127.0.0.1')
+        self.assertEqual(run.call_args.kwargs['timeout_seconds'],600)
         self.assertEqual(run.call_args.kwargs['authorization_prompt_message'],'')
 
     def test_consent_success_and_partial_scope_failure(self):

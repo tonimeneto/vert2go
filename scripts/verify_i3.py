@@ -6,7 +6,7 @@ sys.path.insert(0, str(ROOT))
 
 def main():
     from scripts.verify_i4 import main as verify_current
-    print('Verificacao vigente: I4; evidencias historicas I1/I2/I3 preservadas.')
+    print('Verificacao vigente: I5; evidencias historicas I1-I4 preservadas.')
     return verify_current()
 
 if __name__ == '__main__':

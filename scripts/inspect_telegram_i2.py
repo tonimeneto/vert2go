@@ -25,14 +25,14 @@ def inspect(config, database):
     con = sqlite3.connect(database.resolve().as_uri()+'?mode=ro', uri=True)
     try:
         if (con.execute('PRAGMA application_id').fetchone()[0] != APPLICATION_ID
-                or con.execute('PRAGMA user_version').fetchone()[0] not in (2,3)):
+                or con.execute('PRAGMA user_version').fetchone()[0] not in (2,3,4)):
             raise EngineError('unrecognized_database')
         identity = config.environment_id, config.telegram['bot_id']
         integrity = con.execute('PRAGMA integrity_check').fetchone()[0]
         report['integrity_check'] = 'ok' if integrity == 'ok' else 'failed'
         report['foreign_keys_valid'] = not con.execute('PRAGMA foreign_key_check').fetchall()
         row = con.execute('SELECT next_offset FROM telegram_poll_state WHERE environment_id=? AND bot_id=?', identity).fetchone()
-        maximum = con.execute('SELECT max(update_id) FROM telegram_updates WHERE environment_id=? AND bot_id=?', identity).fetchone()[0]
+        maximum = con.execute('SELECT max(update_id) FROM telegram_updates WHERE environment_id=? AND bot_id=? AND update_id>=0', identity).fetchone()[0]
         report['offset_persisted'] = row is not None
         report['offset_covers_receipts'] = maximum is None or (row is not None and row[0] > maximum)
         roles = {u.channel_user_id: u.role for u in config.users if u.enabled}

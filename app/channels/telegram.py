@@ -95,14 +95,22 @@ def normalize(config, update):
         received = datetime.fromtimestamp(raw['date'], timezone.utc)
     except (OverflowError, OSError, ValueError):
         raise EngineError('telegram_update_invalid') from None
+    reply_to=None
+    parent=raw.get('reply_to_message')
+    if config.operations is not None and type(parent) is dict:
+        author=parent.get('from'); parent_chat=parent.get('chat')
+        if (type(author) is dict and author.get('id')==config.telegram['bot_id'] and author.get('is_bot') is True
+                and type(parent_chat) is dict and parent_chat.get('id')==chat['id']
+                and type(parent.get('message_id')) is int and parent['message_id']>0):
+            reply_to=parent['message_id']
     return Message(Scope(config.environment_id, 'telegram', sender['id'], chat['id']),
                    str(raw['message_id']), received, 'telegram_' + str(update['update_id']),
-                   raw['text'], str(update['update_id']))
+                   raw['text'], str(update['update_id']),reply_to)
 
 
 class TelegramChannel:
     def __init__(self, config, store, engine, api, *, simulate_guidance=False, clock=utcnow,
-                 receipt_observer=None):
+                 receipt_observer=None, operation_interpreter=None):
         if not config.telegram:
             raise EngineError('telegram_not_configured')
         # Simulation is only available with an injected fake API, never the real transport.
@@ -114,6 +122,10 @@ class TelegramChannel:
         self.lifecycle_observer = None
         self.identity = (config.environment_id, config.telegram['bot_id'])
         self.stop = Event()
+        self.conversation = None
+        if engine.operations is not None:
+            from app.channels.operations import OperationsConversation
+            self.conversation = OperationsConversation(engine,operation_interpreter)
 
     def startup(self):
         LOG.info('telegram_starting')
@@ -143,6 +155,23 @@ class TelegramChannel:
 
     def _route(self, message):
         text = message.text.strip()
+        if self.conversation is not None:
+            routed = self.conversation.route(message)
+            if routed is not None:
+                code,reply = routed
+                if len(reply.encode('utf-16-le'))//2 > 4096:
+                    return 'pilot_reply_limit','O resultado excede o limite do canal. Restrinja a consulta ou reduza o conteúdo da proposta.'
+                if code == 'storage_error':
+                    raise EngineError('storage_error')
+                # Delivery rechecks role and current source; do not send stale privileged results.
+                with self.store.transaction():
+                    self.store.execute('''INSERT INTO conversation_state VALUES (?,?,?,?,?,?,?,?)
+                        ON CONFLICT(environment_id,channel,channel_user_id,chat_id,state_key)
+                        DO UPDATE SET payload=excluded.payload,updated_at=excluded.updated_at,expires_at=excluded.expires_at''',
+                        (*message.scope.key(),'i5-guard:'+message.message_id,
+                         canonical({'role':self.engine.policy.identify(message.scope),'reply_hash':digest(reply),'code':code}),
+                         stamp(self.clock()),stamp(self.clock()+timedelta(days=self.config.retention['conversation_days']))))
+                return code,reply
         command = ('help' if text in ('/start', '/ajuda', '/help') else 'context' if text == '/contexto'
                    else 'unit' if re.fullmatch(r'/unidade [a-zA-Z0-9_-]{1,64}', text)
                    else 'simulation' if text.startswith('/simular ') else 'unsupported')
@@ -204,6 +233,8 @@ class TelegramChannel:
         try:
             message = normalize(self.config, update)
             fingerprint = digest([message.scope.key(), message.message_id, stamp(message.received_at), message.text])
+            if message.reply_to_message_id is not None:
+                fingerprint=digest([fingerprint,message.reply_to_message_id])
             role = self.engine.policy.identify(message.scope)
             LOG.info('telegram_sender_authorized role=%s', role)
         except EngineError as error:
@@ -291,6 +322,31 @@ class TelegramChannel:
                     LOG.info('telegram_reply_discarded code=authorization_changed')
                     continue
             reply = row['reply']
+            if row['code'] == 'pilot_request_notification':
+                notice = self.store.execute('''SELECT * FROM pilot_notifications WHERE environment_id=?
+                    AND channel='telegram' AND channel_user_id=? AND chat_id=? AND state='queued' ''',
+                    (self.identity[0],row['channel_user_id'],row['chat_id'])).fetchall()
+                matching = [n for n in notice if -(int(n['notification_id'][:15],16)+1) == row['update_id']]
+                try:
+                    role = self.engine.policy.authorize(Scope(self.identity[0],'telegram',row['channel_user_id'],row['chat_id']),'request.read')
+                    if len(matching) != 1 or (matching[0]['response_version'] == 0 and role != 'manager'):
+                        raise EngineError('pilot_delivery_invalidated')
+                except EngineError:
+                    self._delivery_state(key,'discarded')
+                    continue
+            if self.conversation is not None:
+                scope = Scope(self.identity[0],'telegram',row['channel_user_id'],row['chat_id'])
+                guard = self.store.execute('''SELECT payload FROM conversation_state WHERE environment_id=?
+                    AND channel=? AND channel_user_id=? AND chat_id=? AND state_key=?''',
+                    (*scope.key(),'i5-guard:'+str(row['message_id']))).fetchone()
+                if guard:
+                    try:
+                        self.conversation.validate_delivery(scope,str(row['message_id']),reply,json.loads(guard['payload']))
+                    except EngineError:
+                        reply = NEUTRAL
+                        with self.store.transaction():
+                            self.store.execute("UPDATE telegram_updates SET reply=?,code='pilot_delivery_invalidated' WHERE environment_id=? AND bot_id=? AND update_id=?",
+                                               (reply,*key))
             if row['code'].startswith('knowledge_') and reply != NEUTRAL:
                 try:
                     if self.engine.knowledge is None:
@@ -307,8 +363,12 @@ class TelegramChannel:
             self._delivery_state(key, 'sending')
             LOG.info('telegram_reply_sending')
             try:
-                sent = self.api.call('sendMessage', {'chat_id': row['chat_id'], 'text': reply,
-                    'link_preview_options': {'is_disabled': True}})
+                parameters={'chat_id':row['chat_id'],'text':reply,'link_preview_options':{'is_disabled':True}}
+                if self.conversation is not None and reply!=NEUTRAL:
+                    markup=self.conversation.dialog.markup(scope,row)
+                    if markup:
+                        parameters['reply_markup']=markup
+                sent = self.api.call('sendMessage',parameters)
                 if (type(sent) is not dict or type(sent.get('message_id')) is not int
                         or type(sent.get('chat')) is not dict or sent['chat'].get('id') != row['chat_id']):
                     raise TelegramError('telegram_response_invalid')
@@ -321,6 +381,8 @@ class TelegramChannel:
                 LOG.warning('telegram_reply_unavailable code=%s', error.code)
             else:
                 self._delivery_state(key, 'sent')
+                if self.conversation is not None and reply!=NEUTRAL:
+                    self.conversation.dialog.sent(scope,row,sent['message_id'])
                 LOG.info('telegram_reply_sent confirmation=api_accepted')
 
     def _delivery_state(self, key, state, delay=0):
@@ -350,10 +412,32 @@ class TelegramChannel:
                 break
             self.process(update)
             processed.append(update)
+        if self.conversation is not None:
+            self._queue_operation_notices()
         self.deliver()
         if self.receipt_observer:
             for update in processed:
                 self.receipt_observer(self, update)
+
+    def _queue_operation_notices(self):
+        """Reuse the durable Telegram reply queue. No broadcast or write retry on uncertain send."""
+        rows = self.store.execute("SELECT * FROM pilot_notifications WHERE environment_id=? AND state='pending' AND channel='telegram' ORDER BY created_at LIMIT ?",
+                                   (self.identity[0],self.config.telegram['batch_size'])).fetchall()
+        for row in rows:
+            scope = Scope(self.identity[0],'telegram',row['channel_user_id'],row['chat_id'])
+            self.engine.policy.authorize(scope,'request.read')
+            # Unique negative ID, disjoint from Telegram's nonnegative update IDs.
+            uid = -(int(row['notification_id'][:15],16)+1)
+            now = stamp(self.clock())
+            reply = row['reply']
+            if len(reply.encode('utf-16-le'))//2 > 4096:
+                reply = reply[:3000]+'\n\nExibindo apenas um trecho do pedido extenso. Se precisar de mais detalhes, você pode responder pedindo esclarecimentos ao morador. Antes de enviar, vou pedir sua autorização.'
+            with self.store.transaction():
+                self.store.execute('INSERT OR IGNORE INTO telegram_updates VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)',
+                    (*self.identity,uid,row['channel_user_id'],row['chat_id'],uid,digest([row['notification_id']]),
+                     'pilot_request_notification',reply,'pending',now,now,now))
+                self.store.execute("UPDATE pilot_notifications SET state='queued' WHERE environment_id=? AND notification_id=?",
+                                   (self.identity[0],row['notification_id']))
 
     def _lifecycle(self, state, code=None):
         if self.lifecycle_observer is not None:

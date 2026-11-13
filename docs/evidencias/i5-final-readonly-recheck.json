@@ -1,0 +1,31 @@
+{
+  "phase": "I5",
+  "scope": "final_readonly_recheck_of_existing_experimental_resources",
+  "updated_at": "2026-11-12T19:27:12.810729+00:00",
+  "result": "passed",
+  "calendar": {
+    "confirmed_expected": 4,
+    "active_actual": 4,
+    "expected_set_matches": true,
+    "complete": true
+  },
+  "sheets": {
+    "expected_rows": 6,
+    "matched_rows": 6,
+    "populated_rows": 6,
+    "pending_outbox": 0,
+    "distinct_activity_keys": 6,
+    "all_prior_four_activity_rows_preserved": true
+  },
+  "local_regression": {
+    "tests_run": 430,
+    "successful": true,
+    "source_hashes_match": true,
+    "protected_sources_unchanged": true
+  },
+  "budget_estimated_brl": "3.018789",
+  "mutations_attempted": false,
+  "git_operations": false,
+  "publication": false,
+  "full_acceptance": false
+}

@@ -12,6 +12,7 @@ APPLICATION_ID = 1446135601
 MIGRATION = Path(__file__).parent / 'migrations' / '001_initial.sql'
 TELEGRAM_MIGRATION = MIGRATION.with_name('002_telegram.sql')
 KNOWLEDGE_MIGRATION = MIGRATION.with_name('003_knowledge.sql')
+OPERATIONS_MIGRATION = MIGRATION.with_name('004_operations.sql')
 OPEN_STATES = ('received','awaiting_confirmation','committing','needs_reconciliation')
 TERMINAL_STATES = ('confirmed','failed','cancelled','conflicted')
 
@@ -21,7 +22,7 @@ def schema_snapshot(connection):
 
 
 class Store:
-    def __init__(self, path, *, knowledge=False):
+    def __init__(self, path, *, knowledge=False, operations=False):
         self.path = Path(path)
         self.connection = None
         existed = self.path.exists()
@@ -31,7 +32,7 @@ class Store:
                 probe = sqlite3.connect(self.path.resolve().as_uri() + '?mode=ro', uri=True)
                 try:
                     if (probe.execute('PRAGMA application_id').fetchone()[0] != APPLICATION_ID
-                            or probe.execute('PRAGMA user_version').fetchone()[0] not in (1, 2, 3)):
+                            or probe.execute('PRAGMA user_version').fetchone()[0] not in (1, 2, 3, 4)):
                         raise EngineError('unrecognized_database')
                 finally:
                     probe.close()
@@ -52,9 +53,13 @@ class Store:
                 self.connection.executescript('BEGIN IMMEDIATE;\n' + TELEGRAM_MIGRATION.read_text(encoding='utf-8') +
                                               '\nPRAGMA user_version=2; COMMIT;')
                 self.verify()
-            if knowledge and self.connection.execute('PRAGMA user_version').fetchone()[0] == 2:
+            if (knowledge or operations) and self.connection.execute('PRAGMA user_version').fetchone()[0] == 2:
                 self.connection.executescript('BEGIN IMMEDIATE;\n' + KNOWLEDGE_MIGRATION.read_text(encoding='utf-8') +
                                               '\nPRAGMA user_version=3; COMMIT;')
+                self.verify()
+            if operations and self.connection.execute('PRAGMA user_version').fetchone()[0] == 3:
+                self.connection.executescript('BEGIN IMMEDIATE;\n' + OPERATIONS_MIGRATION.read_text(encoding='utf-8') +
+                                              '\nPRAGMA user_version=4; COMMIT;')
                 self.verify()
             self.connection.execute('PRAGMA journal_mode=WAL')
             self.connection.execute('PRAGMA synchronous=FULL')
@@ -75,6 +80,8 @@ class Store:
                 expected.executescript(TELEGRAM_MIGRATION.read_text(encoding='utf-8'))
             if version >= 3:
                 expected.executescript(KNOWLEDGE_MIGRATION.read_text(encoding='utf-8'))
+            if version >= 4:
+                expected.executescript(OPERATIONS_MIGRATION.read_text(encoding='utf-8'))
             if schema_snapshot(expected) != schema_snapshot(self.connection):
                 raise EngineError('schema_mismatch')
         finally:
@@ -210,4 +217,23 @@ class Store:
                 AND NOT EXISTS (SELECT 1 FROM knowledge_calls k WHERE k.environment_id=? AND k.state IN ('running','uncertain'))
                 AND NOT EXISTS (SELECT 1 FROM requests_state r WHERE r.environment_id=? AND (r.closed_at IS NULL OR r.incident_open=1))''',
                 (env,stamp(now),env,env))]
+        if self.execute('PRAGMA user_version').fetchone()[0] >= 4:
+            unresolved = self.execute("""SELECT 1 FROM pilot_operations WHERE environment_id=?
+                AND (closed_at IS NULL OR state='needs_reconciliation') UNION ALL
+                SELECT 1 FROM pilot_requests WHERE environment_id=? AND closed_at IS NULL UNION ALL
+                SELECT 1 FROM pilot_outbox WHERE environment_id=? AND state!='synced' UNION ALL
+                SELECT 1 FROM pilot_notifications n JOIN telegram_updates t
+                ON t.environment_id=n.environment_id AND t.channel_user_id=n.channel_user_id AND t.chat_id=n.chat_id
+                WHERE n.environment_id=? AND t.code='pilot_request_notification' AND t.state IN ('pending','sending','uncertain') LIMIT 1""",
+                (env,env,env,env)).fetchone()
+            # Conservative eligibility only: never discard links needed for an unresolved I5 incident.
+            if unresolved:
+                for key in ('conversation_state','processed_messages','telegram_updates','operation_log','knowledge_calls'):
+                    result[key] = []
+            result['pilot_operations'] = [] if unresolved else [r[0] for r in self.execute("""SELECT operation_id
+                FROM pilot_operations WHERE environment_id=? AND closed_at<?""",
+                (env,cutoff(config.retention['closed_request_days'])))]
+            result['pilot_receipts'] = [] if unresolved else [r[0] for r in self.execute("""SELECT message_id
+                FROM pilot_receipts WHERE environment_id=? AND created_at<?""",
+                (env,cutoff(config.retention['deduplication_days'])))]
         return result

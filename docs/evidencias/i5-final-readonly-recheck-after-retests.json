@@ -1,0 +1,35 @@
+{
+  "phase": "I5",
+  "scope": "final_readonly_recheck_after_fresh_human_retests",
+  "updated_at": "2026-11-12T19:53:06.047125+00:00",
+  "calendar": {
+    "expected": 4,
+    "actual": 4,
+    "exact_match": true,
+    "complete": true
+  },
+  "sheets": {
+    "expected_rows": 8,
+    "matched_rows": 8,
+    "populated_rows": 8,
+    "distinct_activity_keys": 8,
+    "pending": 0,
+    "previous_six_rows_preserved": true
+  },
+  "requests_resolved": 2,
+  "local_regression": {
+    "tests_run": 441,
+    "successful": true,
+    "source_hashes_match": true,
+    "protected_sources_unchanged": true
+  },
+  "budget_estimated_brl": "3.129804",
+  "mutations_attempted": false,
+  "git_operations": false,
+  "publication": false,
+  "full_acceptance": false,
+  "result": "passed",
+  "human_final_resident_receipt": "confirmed_once",
+  "temporary_telegram_session_closed": true,
+  "formal_acceptance": "pending"
+}

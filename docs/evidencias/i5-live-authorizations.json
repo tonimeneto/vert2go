@@ -1,0 +1,50 @@
+{
+  "phase": "I5",
+  "source": "explicit_owner_continuity_request_2026-11-12",
+  "updated_at": "2026-11-12T14:01:21.816389+00:00",
+  "candidate_prepared": true,
+  "active_config_changed": true,
+  "existing_destinations_reused": true,
+  "simulation_conditions": [
+    {
+      "id": "salao",
+      "rule_id": "i5-live-fixture-20261112",
+      "status": "simulated",
+      "source_document_id": "i5-live-test-fixture",
+      "source_title": "Cenário fictício I5; não é regra condominial",
+      "section": "Ensaio experimental autorizado",
+      "source_revision": "2026-11-12",
+      "verified_at": "2026-11-12T13:08:15.798701+00:00",
+      "valid_until": "2026-11-17T00:00:00-03:00",
+      "opens": "08:00",
+      "closes": "22:00",
+      "max_duration_minutes": 240,
+      "min_notice_hours": 0,
+      "max_advance_days": 5,
+      "fee_brl": "0.00",
+      "source_hash": "c76b23dd9c7542471c8664e1fa84f44e7b138afc565d3baf1d0e812ed9e3ec5b"
+    }
+  ],
+  "calendar_write_authorized": true,
+  "sheets_write_authorized": true,
+  "deletions_authorized": false,
+  "i6_started": false,
+  "baseline_config_sha256": "efe06c536aa5fbf48d195010e12855f3500a28014d07773b55162f74df24ba30",
+  "oauth_write_consent": "passed",
+  "existing_telegram_and_openai_secrets_preserved": true,
+  "previous_configuration_backed_up": true,
+  "actual_scopes": [
+    "https://www.googleapis.com/auth/drive.readonly",
+    "https://www.googleapis.com/auth/calendar.events.owned",
+    "https://www.googleapis.com/auth/spreadsheets"
+  ],
+  "previous_configuration_fields_preserved": true,
+  "configuration_preserved_before_consent": true,
+  "previous_failed_attempt": {
+    "reason": "google_oauth_consent_failed",
+    "diagnostic": {
+      "stage": "not_classified_in_first_attempt"
+    }
+  },
+  "consent_timeout_seconds": 600
+}

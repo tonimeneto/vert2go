@@ -137,9 +137,11 @@ class GoogleAuth:
                     session.close()
             return credentials.token
 
-    def enroll(self, client_path):
+    def enroll(self, client_path, *, consent_timeout_seconds=180):
         """No account password, code, URL or token is printed by this application."""
         self.require_live()
+        if type(consent_timeout_seconds) is not int or not 30 <= consent_timeout_seconds <= 1800:
+            raise EngineError('google_consent_timeout_invalid')
         _, InstalledAppFlow, _ = libraries()
         client = import_desktop_client(client_path)
         # Snapshot before browser interaction; concurrent changes are never overwritten.
@@ -159,17 +161,20 @@ class GoogleAuth:
             kwargs['allow_redirects'] = False
             return original_request(method, url, **kwargs)
         flow.oauth2session.request = consent_request
+        stage = 'browser_consent'
         try:
             with quiet_oauth_logs():
                 credentials = flow.run_local_server(
                     host='127.0.0.1', bind_addr='127.0.0.1', port=0, open_browser=True,
-                    timeout_seconds=180, authorization_prompt_message='',
+                    timeout_seconds=consent_timeout_seconds, authorization_prompt_message='',
                     success_message='Autorizacao recebida. Feche esta janela e volte ao terminal do Alfredo.',
                     access_type='offline', prompt='consent select_account',
                     login_hint=self.config.expected_account)
+            stage = 'credential_validation'
             record = credential_record(credentials, self.config)
             # Verify actual identity with the newly issued token BEFORE persistence.
             from app.integrations.google_http import GoogleHTTP
+            stage = 'identity_verification'
             http = GoogleHTTP(self.config, lambda: credentials.token, allow_live=True)
             try:
                 identity = http.read('identity', '').json()
@@ -178,13 +183,19 @@ class GoogleAuth:
             if identity.get('user', {}).get('emailAddress', '').casefold() != self.config.expected_account:
                 raise EngineError('google_account_mismatch')
             raw['google_oauth'] = {'client': client, 'token': record}
+            stage = 'private_persistence'
             with private_lock(self.path):
                 atomic_yaml(self.path, before, raw, validate_secret_document)
-        except EngineError:
+        except EngineError as error:
+            error.diagnostic = {'stage':stage}
             raise
-        except Exception:
+        except Exception as error:
             # SDK exceptions may include codes/URLs; none may cross our boundary.
-            raise EngineError('google_oauth_consent_failed') from None
+            failure = EngineError('google_oauth_consent_failed')
+            safe_types = {'AttributeError','TimeoutError','OSError','Warning','ValueError','ConnectionError'}
+            failure.diagnostic = {'stage':stage,'exception_type':type(error).__name__
+                                  if type(error).__name__ in safe_types else 'provider_exception'}
+            raise failure from None
         finally:
             flow.oauth2session.close()
 

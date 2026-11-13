@@ -1,5 +1,9 @@
 # Relatório I4 — aceite formal do piloto registrado com limitações
 
+Nota posterior de implementação: a I5 foi implementada localmente por autorização
+expressa em 11/11/2026, sem ativação real. Ver [relatório I5](relatorio-i5.md).
+As menções abaixo a I5 não iniciada descrevem o fechamento histórico da I4.
+
 Aceite posterior: em 11/11/2026, o responsável aceitou formalmente a I4 para o
 piloto, com as limitações do fechamento. Prevalece o registro em
 [i4-acceptance.json](evidencias/i4-acceptance.json). As pendências de aceite no

@@ -1,0 +1,66 @@
+{
+  "phase": "I5",
+  "scope": "real_model_extraction_and_supervised_recovery_of_verified_human_input",
+  "updated_at": "2026-11-12T18:56:38.342241+00:00",
+  "cases": [
+    {
+      "case": "verified_original",
+      "result": "passed",
+      "action": "guidance_create",
+      "requested_action": "guidance_create",
+      "effective_from": "2026-11-12T14:00:00-03:00",
+      "effective_until": "2026-11-12T18:00:00-03:00",
+      "clarification_field": null
+    },
+    {
+      "case": "missing_end",
+      "result": "passed",
+      "action": "guidance_create",
+      "requested_action": "guidance_create",
+      "effective_from": "2026-11-12T14:00:00-03:00",
+      "effective_until": null,
+      "clarification_field": "effective_until"
+    },
+    {
+      "case": "invalid_2016_end",
+      "result": "passed",
+      "action": "clarify",
+      "requested_action": "guidance_create",
+      "effective_from": "2026-11-12T14:00:00-03:00",
+      "effective_until": "2016-11-12T18:00:00-02:00",
+      "clarification_field": "effective_until"
+    }
+  ],
+  "source_text_hash_verified": true,
+  "source_update_id": 436624761,
+  "guidance_activated": false,
+  "full_acceptance": false,
+  "budget_estimated_brl": "2.837148",
+  "recovery": {
+    "origin": "verified_actual_human_input_reprocessed_after_fix",
+    "delivery": "sent",
+    "queue_update_id": -1125538999857640385,
+    "operation_id": "95ac17fa-67b0-584e-be3c-8106bcead26b",
+    "expires_at": "2026-11-12T18:41:26.633982+00:00",
+    "confirmation_required": true,
+    "original_receipt_preserved": true
+  },
+  "renewals": [
+    {
+      "origin": "owner_requested_renewal_when_telegram_open",
+      "source_update_id": 436624761,
+      "source_text_hash_verified": true,
+      "queue_update_id": -529462674750082524,
+      "operation_id": "b2ae62b4-0bbd-5034-b181-756816236833",
+      "expires_at": "2026-11-12T18:59:43.266521+00:00",
+      "delivery": "sent",
+      "confirmation_required": true,
+      "guidance_activated": true,
+      "human_received_confirmation": true,
+      "result": {
+        "current_version": 1,
+        "status": "active"
+      }
+    }
+  ]
+}

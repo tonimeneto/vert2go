@@ -41,7 +41,9 @@ mensagens dos participantes, documentos ou respostas brutas do provedor.
 A ativação usa o mesmo `app.main`, banco `data/i2.sqlite3`, configuração, segredos,
 consentimentos G3 e limites já existentes. Não instala dependências, serviço
 Windows, tarefa agendada ou inicialização automática. Não altera reservas,
-Google ou permissões. I5 não foi iniciada.
+Google ou permissões. A I5 foi implementada localmente, mas este painel continua
+iniciando a I4. A ativação I5 é separada e permanece pendente;
+ver [implementação I5](implementacao-i5.md).
 
 Uma segunda abertura do atalho restaura o painel existente. O controle nunca
 mata processos por PID: uma execução manual fora dele deve ser encerrada no

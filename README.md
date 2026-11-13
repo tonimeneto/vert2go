@@ -1,5 +1,76 @@
 # Vert2Go
 
+**Estado vigente — reserva real conferida em 12/11/2026:** Toninho autorizou pelo
+Telegram a reserva de 16/11/2026, das 16h às 19h. Evento único, horários e ausência
+de conflito conferidos em somente leitura. Cinco eventos e oito linhas preservados;
+uma atividade aguardando sincronização. Corrigida também a perda da consulta de
+disponibilidade quando o usuário corrige o ano. Acúmulo de funções morador/síndica
+na mesma conta ainda não está implementado. **I5 sem aceite integral.**
+[Estado, validações e pendências](docs/relatorio-i5.md).
+
+**Histórico técnico anterior, substituído pelo estado acima.**
+
+**Estado vigente — 12/11/2026, após nova falha de reserva:** corrigido o falso
+bloqueio de revalidação causado por alternativas posteriores à validade da regra.
+O conflito original agora segue para disponibilidade; fonte realmente desatualizada
+continua bloqueando. “Dia 16” é resolvido quando inequívoco no período cadastrado,
+e “ao meio-dia” é reconhecido. Passaram 496 testes e a reprodução completa com a
+configuração vigente e leitura real da Agenda, usando gravação apenas simulada.
+Quatro eventos e oito linhas preservados. Contexto do morador mantido; atendimento
+temporário reaberto sem exigir reinício do pedido. **Usabilidade rejeitada nos
+percursos anteriores; reteste humano e aceite integral da I5 pendentes.**
+[Estado e evidências](docs/relatorio-i5.md).
+
+**Histórico da primeira correção, superado pelo estado acima.**
+
+**Correção após falha real de reserva — 12/11/2026:** o atendimento anterior
+perdeu data/horários e recusou pedidos incompletos. A coleta agora guarda os dados
+informados, pergunta apenas o que falta, explica os limites externos e consulta a
+Agenda para mostrar disponibilidade. Passaram 490 testes locais, incluindo 24 de
+reserva e 25 de autorização natural. A reprodução isolada da conversa com leitura
+da Agenda real passou sem criar reserva. **Reteste humano e aceite continuam
+pendentes; I5 sem validação integral.** Estado canônico:
+[relatório I5](docs/relatorio-i5.md).
+
+**Etapa anterior da retomada em 12/11/2026 — conversa revisada:** Alfredo pede autorização com uma
+pergunta sobre os dados do pedido e aceita respostas naturais contextualizadas.
+Maria responde à mensagem do pedido recebido, sem copiar ID ou versão; o bot pede
+permissão antes de enviar e, separadamente, antes de sincronizar a planilha.
+Referências ficam internas; comandos anteriores permanecem como atalhos opcionais.
+Regressão: 462 testes aprovados, incluindo 21 do novo diálogo. Conta Google e
+recursos existentes conferidos em somente leitura: quatro eventos, oito linhas.
+Sessão temporária reaberta para avaliação real das duas contas.
+**Reteste humano da conversa e aceite pendentes; I5 sem validação integral.** Estado canônico:
+[relatório I5](docs/relatorio-i5.md).
+
+**Histórico anterior à revisão da conversa — 12/11/2026:** configuração/OAuth concluídos nos recursos existentes;
+441 testes locais aprovados. Cenários reais selecionados de reserva, idempotência,
+conflito, timeout, retomada e sincronização verificados. Telegram: ajuda nas duas
+contas, reserva, memória administrativa, solicitação/resposta e relatório ensaiados.
+Os últimos retestes de cadastro e resposta passaram pelo fluxo normal, sem
+recuperação manual. Conferência final: quatro eventos na Agenda, oito linhas no
+Sheets, zero pendências. Sessão temporária encerrada cooperativamente; painel I4
+preservado, sem Git ou publicação. Último recebimento único confirmado pelo
+responsável; os retestes técnicos executados foram concluídos. Usabilidade e aceite
+formal ainda pendentes; sem declaração de validação integral.
+Estado e limites:
+[relatório I5](docs/relatorio-i5.md).
+
+**Histórico da implementação local em 11/11/2026, antes dos ensaios reais acima.** A implementação
+segue a fase I5 do plano v0.1.1 aprovado, sem alterar PRD, especificação ou plano.
+Inclui reservas experimentais com confirmação e reconciliação, outbox Sheets,
+solicitações/exceções, memória administrativa no Telegram e relatórios sob demanda.
+Parâmetros e regras ficam externos ao código. Os ensaios usam transportes fictícios.
+O bot operacional e o painel Windows permanecem na I4; a I5 exige ativação manual
+explícita, destinos exclusivos do piloto confirmados e consentimento OAuth de escrita.
+Procedimento e pendências: [implementação I5](docs/implementacao-i5.md).
+Validação local: **402 testes aprovados, incluindo 64 da I5**. Verificador vigente:
+`scripts/verify_i5.py`; I1–I4 encaminham para ele sem sobrescrever
+evidências históricas. Resultados em [relatório I5](docs/relatorio-i5.md) e
+[evidências locais](docs/evidencias/i5-tests.json). G5/I6 e aceite real não foram concedidos.
+
+As seções abaixo preservam a operação e o histórico da I4 e fases anteriores.
+
 **Fechamento I4:** quatro retestes documentais aprovados nas duas contas foram
 conferidos e confirmados pelo responsável. **I4 aceita formalmente para o piloto
 em 11/11/2026, com limitações documentadas**, histórico de falhas preservado em
@@ -45,8 +116,8 @@ Google, reserva ou alteração administrativa real. Procedimento:
 [implementação I4](docs/implementacao-i4.md), [relatório](docs/relatorio-i4.md),
 [autorizações](docs/evidencias/i4-authorizations.json) e
 [aceite](docs/evidencias/i4-acceptance.json).
-O verificador vigente é `scripts/verify_i4.py`; I1/I2/I3 encaminham para ele e
-preservam suas evidências históricas. O banco só recebe a migração opcional I4
+O verificador da entrega I4 era `scripts/verify_i4.py`; agora I1–I4 encaminham
+para `scripts/verify_i5.py`, preservando suas evidências históricas. O banco só recebe a migração opcional I4
 quando esse uso é explicitamente habilitado; antes disso é feito backup privado
 de um banco existente. Os registros operacionais anteriores são preservados.
 

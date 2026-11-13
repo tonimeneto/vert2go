@@ -80,6 +80,12 @@ class OpenAIHTTP:
     def close(self):
         self._session.close()
 
+    def structured(self, instructions, data, schema, name):
+        return self._request('POST','/responses',body={
+            'model':self.config.model,'store':False,'instructions':instructions,
+            'input':data,'max_output_tokens':self.config.limits['max_output_tokens'],
+            'text':{'format':{'type':'json_schema','name':name,'strict':True,'schema':schema}}})
+
     def _request(self, method, path, *, body=None, file=None):
         patterns = {
             'GET': r'/(?:vector_stores/vs_[A-Za-z0-9_-]+(?:/files/file-[A-Za-z0-9_-]+)?|files/file-[A-Za-z0-9_-]+)',

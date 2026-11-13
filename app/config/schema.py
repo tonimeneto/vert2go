@@ -10,9 +10,11 @@ import yaml
 from app.core.contracts import EngineError
 
 ROLE_CAPABILITIES = {
-    'resident': frozenset({'guidance.read', 'context.read', 'context.write', 'knowledge.read'}),
+    'resident': frozenset({'guidance.read', 'context.read', 'context.write', 'knowledge.read',
+                           'reservation.create', 'reservation.read', 'request.create', 'request.read'}),
     'manager': frozenset({'guidance.read', 'guidance.create', 'guidance.correct',
-                          'guidance.cancel', 'guidance.history', 'context.read', 'context.write', 'knowledge.read'}),
+                          'guidance.cancel', 'guidance.history', 'context.read', 'context.write', 'knowledge.read',
+                          'request.read', 'request.respond', 'report.read', 'operations.reconcile'}),
 }
 TELEGRAM_TOKEN_PATTERN = re.compile(r'[1-9][0-9]*:[A-Za-z0-9_-]{20,128}')
 
@@ -151,6 +153,7 @@ class Config:
     telegram: object = None
     google: object = None
     knowledge: object = None
+    operations: object = None
 
 
 def load_config(path):
@@ -172,12 +175,17 @@ def load_enrollment_config(path):
 def _parse_config(raw, *, enrollment=False):
     expected = ('environment_id', 'simulation_mode', 'agent_name', 'locale', 'timezone',
                 'users', 'permissions', 'limits', 'retention', 'openai')
-    optional = tuple(k for k in ('channels', 'google', 'knowledge') if type(raw) is dict and k in raw)
+    optional = tuple(k for k in ('channels', 'google', 'knowledge', 'operations') if type(raw) is dict and k in raw)
     keys(raw, (*expected, *optional))
     from app.integrations.google_config import parse_google
     google = parse_google(raw.get('google'))
     from app.ai.configuration import parse_knowledge
     knowledge = parse_knowledge(raw.get('knowledge'), google)
+    from app.config.operations import parse_operations
+    operations = parse_operations(raw.get('operations'), google)
+    if operations is not None and operations.live_authorized:
+        from dataclasses import replace
+        google = replace(google, write_access=True)
     telegram = None
     if 'channels' in raw:
         keys(raw['channels'], ('telegram',))
@@ -223,6 +231,8 @@ def _parse_config(raw, *, enrollment=False):
         raise EngineError('unsafe_configuration')
     if {u.role for u in users if u.enabled} != {'resident', 'manager'}:
         raise EngineError('invalid_configuration')
+    if operations is not None and set(operations.units) != {str(u.channel_user_id) for u in users if u.enabled and u.role == 'resident'}:
+        raise EngineError('operations_units_invalid')
     keys(raw['permissions'], ROLE_CAPABILITIES)
     perms = {}
     for role, allowed in ROLE_CAPABILITIES.items():
@@ -256,7 +266,8 @@ def _parse_config(raw, *, enrollment=False):
     if budget['missing_measurement'] != 'block' or type(budget['reference_label']) is not str or not budget['reference_label']:
         raise EngineError('unsafe_configuration')
     return Config(env, tuple(users), MappingProxyType(perms), MappingProxyType(raw['limits']),
-                  MappingProxyType(retention), MappingProxyType(budget), telegram=telegram, google=google, knowledge=knowledge)
+                  MappingProxyType(retention), MappingProxyType(budget), telegram=telegram, google=google,
+                  knowledge=knowledge, operations=operations)
 
 
 def load_telegram_token(path, bot_id):

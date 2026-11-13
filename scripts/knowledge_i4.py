@@ -51,7 +51,7 @@ def main(argv=None):
             con = sqlite3.connect(path.resolve().as_uri()+'?mode=ro',uri=True)
             try:
                 from app.storage.sqlite import APPLICATION_ID
-                if con.execute('PRAGMA application_id').fetchone()[0] != APPLICATION_ID or con.execute('PRAGMA user_version').fetchone()[0] != 3:
+                if con.execute('PRAGMA application_id').fetchone()[0] != APPLICATION_ID or con.execute('PRAGMA user_version').fetchone()[0] not in (3,4):
                     raise EngineError('knowledge_migration_required')
                 rows = con.execute('SELECT kind,state,count(*) FROM knowledge_calls WHERE environment_id=? GROUP BY kind,state',
                                    (config.environment_id,)).fetchall()

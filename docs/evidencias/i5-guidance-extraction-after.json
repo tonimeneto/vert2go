@@ -1,0 +1,71 @@
+{
+  "phase": "I5",
+  "scope": "real_model_extraction_only",
+  "effects_created": false,
+  "updated_at": "2026-11-12T18:14:02.002989+00:00",
+  "cases": [
+    {
+      "case": "original_template",
+      "result": "passed",
+      "action": "guidance_create",
+      "topic": "teste_i5",
+      "start": null,
+      "end": null,
+      "audience": "residents",
+      "effective_from": "2026-11-12T14:00:00-03:00",
+      "effective_until": "2026-11-12T18:00:00-03:00",
+      "expected_version": null,
+      "clarification_field": null
+    },
+    {
+      "case": "spaced_topic",
+      "result": "passed",
+      "action": "guidance_create",
+      "topic": "teste_i5",
+      "start": null,
+      "end": null,
+      "audience": "residents",
+      "effective_from": "2026-11-12T14:00:00-03:00",
+      "effective_until": "2026-11-12T18:00:00-03:00",
+      "expected_version": null,
+      "clarification_field": null
+    },
+    {
+      "case": "missing_end",
+      "result": "passed",
+      "action": "clarify",
+      "topic": "teste_i5",
+      "start": null,
+      "end": null,
+      "audience": "residents",
+      "effective_from": "2026-11-12T14:00:00-03:00",
+      "effective_until": null,
+      "expected_version": null,
+      "clarification_field": "effective_until"
+    },
+    {
+      "case": "cancellation_without_new_vigency",
+      "result": "passed",
+      "action": "guidance_cancel",
+      "topic": null,
+      "start": null,
+      "end": null,
+      "audience": null,
+      "effective_from": null,
+      "effective_until": null,
+      "expected_version": 1,
+      "clarification_field": null
+    },
+    {
+      "case": "end_year_before_start",
+      "result": "passed",
+      "action": "clarify",
+      "effective_from": "2026-11-12T14:00:00-03:00",
+      "effective_until": "2016-11-12T18:00:00-02:00",
+      "clarification_field": "effective_until"
+    }
+  ],
+  "budget_before_brl": "2.651484",
+  "budget_after_brl": "2.739660",
+  "successful": true
+}

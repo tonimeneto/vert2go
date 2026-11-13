@@ -7,9 +7,11 @@ import sqlite3
 from app.core.contracts import EngineError, Message, Scope, Result, canonical, digest, instant, stamp, utcnow
 from app.core.policy import Policy
 from app.services.operational_memory import OperationalMemory, exact
+from app.services.operations import PERMISSIONS as OPERATION_PERMISSIONS
 
 LOG = logging.getLogger('alfredo')
 PERMISSIONS = {
+    **OPERATION_PERMISSIONS,
     'propose_create':'guidance.create', 'propose_correct':'guidance.correct',
     'propose_cancel':'guidance.cancel', 'confirm':'context.read',
     'find_guidance':'guidance.read', 'guidance_history':'guidance.history',
@@ -20,17 +22,20 @@ READ_ACTIONS = {'find_guidance','guidance_history','get_context'}
 
 
 class Orchestrator:
-    def __init__(self, config, store, clock=utcnow, *, knowledge=None):
+    def __init__(self, config, store, clock=utcnow, *, knowledge=None, operations=None):
         self.config, self.store, self.clock = config, store, clock
         self.policy = Policy(config)
         self.memory = OperationalMemory(store,self.policy,config)
         self.knowledge = knowledge
+        self.operations = operations
 
     def startup(self):
         now = instant(self.clock())
         recovered = self.store.recover(self.config.environment_id,now)
         with self.store.transaction():
             expired = self.memory.expire(self.config.environment_id,now)
+        if self.operations is not None:
+            recovered += self.operations.startup()
         return {'recovered':recovered,'expired':expired}
 
     def _validate(self, message, action, payload, now):
@@ -61,6 +66,10 @@ class Orchestrator:
             if isinstance(message,Message):
                 role = self.policy.identify(message.scope)
             role = self._validate(message,action,payload,now)
+            if action in OPERATION_PERMISSIONS:
+                if self.operations is None:
+                    raise EngineError('operations_not_enabled')
+                return self.operations.handle(message,action,payload)
             if action == 'query_documents':
                 exact(payload,())
                 if self.knowledge is None:

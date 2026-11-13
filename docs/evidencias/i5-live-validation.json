@@ -1,0 +1,419 @@
+{
+  "phase": "I5",
+  "input_origin": "synthetic_engine_messages",
+  "google_transport": "real_authorized_pilot",
+  "telegram_live_test": "resident_reservation_calendar_and_human_confirmed",
+  "full_acceptance": false,
+  "deletions_attempted": false,
+  "git_operations": false,
+  "tests": {
+    "real_model_semantic_extraction": {
+      "result": "passed",
+      "model": "gpt-4o-2024-08-06",
+      "no_calendar_write_from_model": true,
+      "budget_before_brl": "2.580846",
+      "budget_after_brl": "2.592221"
+    },
+    "existing_rows_preserved": {
+      "result": "passed",
+      "tables": {
+        "conversation_state": {
+          "original_rows": 2,
+          "preserved": true
+        },
+        "requests_state": {
+          "original_rows": 0,
+          "preserved": true
+        },
+        "processed_messages": {
+          "original_rows": 26,
+          "preserved": true
+        },
+        "operational_guidance": {
+          "original_rows": 0,
+          "preserved": true
+        },
+        "operational_guidance_revisions": {
+          "original_rows": 0,
+          "preserved": true
+        },
+        "operation_log": {
+          "original_rows": 103,
+          "preserved": true
+        },
+        "sync_outbox": {
+          "original_rows": 0,
+          "preserved": true
+        },
+        "document_sync_metadata": {
+          "original_rows": 2,
+          "preserved": true
+        },
+        "usage_ledger": {
+          "original_rows": 103,
+          "preserved": true
+        },
+        "telegram_poll_state": {
+          "original_rows": 1,
+          "preserved": true
+        },
+        "telegram_updates": {
+          "original_rows": 52,
+          "preserved": true
+        },
+        "knowledge_calls": {
+          "original_rows": 52,
+          "preserved": true
+        },
+        "knowledge_versions": {
+          "original_rows": 2,
+          "preserved": true
+        },
+        "knowledge_storage": {
+          "original_rows": 1,
+          "preserved": true
+        }
+      },
+      "revalidated_at": "2026-11-12T14:09:01.539964+00:00"
+    },
+    "calendar_create_and_readback": {
+      "result": "passed",
+      "operation_id": "9e324e54-6c63-539e-befd-2c217941ec0c",
+      "external_reference": "f5a91bcf99132e7db3e59fb58efd79c9f95e5daa0a0aabeb4ca026e8483bed96"
+    },
+    "confirmation_replay": {
+      "result": "passed",
+      "same_message": true
+    },
+    "two_proposals_single_slot": {
+      "result": "passed",
+      "second_event_not_created": true
+    },
+    "reservation_current_calendar_evidence": {
+      "result": "passed"
+    },
+    "sheets_failure_does_not_invalidate_reservation": {
+      "result": "passed",
+      "fault_injection": "Sheets unavailable before real mutation"
+    },
+    "calendar_timeout_after_real_write": {
+      "result": "passed",
+      "operation_id": "36a7723a-046e-5a2f-b0d5-be399bc9c165",
+      "fault_injection": "timeout after successful real POST",
+      "create_attempts": 1
+    },
+    "interrupted_after_real_write_before_result": {
+      "result": "passed",
+      "operation_id": "0b1e4239-a3b8-530c-8bb8-62a72adbac13",
+      "fault_injection": "local interruption after successful real POST",
+      "process_id": 6408
+    },
+    "reconcile_reservation_timeout": {
+      "result": "passed",
+      "operation_id": "36a7723a-046e-5a2f-b0d5-be399bc9c165",
+      "external_reference": "04f2d9d25b5972c1b73a65f6ce15e90cbca66d9d9847c80d35e2e9c54670f8ae",
+      "process_id": 10308,
+      "new_post_not_attempted": true
+    },
+    "reconcile_reservation_restart": {
+      "result": "passed",
+      "operation_id": "0b1e4239-a3b8-530c-8bb8-62a72adbac13",
+      "external_reference": "b3e79f61e6d189c0709bbb997226d9ca394862ca0949e82ebc0420b0d4c07d79",
+      "process_id": 10308,
+      "new_post_not_attempted": true
+    },
+    "sheets_timeout_after_real_put": {
+      "result": "passed",
+      "fault_injection": "timeout after actual RAW PUT",
+      "real_put_attempts": 3
+    },
+    "sheets_reconciliation_and_idempotent_reprocess": {
+      "result": "passed",
+      "rows_reconciled": 3,
+      "second_sync_rows": 0
+    },
+    "calendar_three_unique_test_events": {
+      "result": "passed",
+      "expected_test_events": 3,
+      "actual_event_count": 3,
+      "matched_event_ids": [
+        "04f2d9d25b5972c1b73a65f6ce15e90cbca66d9d9847c80d35e2e9c54670f8ae",
+        "b3e79f61e6d189c0709bbb997226d9ca394862ca0949e82ebc0420b0d4c07d79",
+        "f5a91bcf99132e7db3e59fb58efd79c9f95e5daa0a0aabeb4ca026e8483bed96"
+      ]
+    },
+    "resident_report_denied": {
+      "result": "passed"
+    },
+    "manager_report": {
+      "result": "passed_actual_telegram",
+      "role": "manager",
+      "delivery": "sent",
+      "human_received_report": true,
+      "reservation_confirmed": 4,
+      "reservation_conflicted": 1,
+      "expired_unexecuted_reservation_proposal": 1,
+      "requests_resolved": 1,
+      "responses_confirmed": 1,
+      "sheets_synced": 6,
+      "cancelled_proposal_has_external_reference": false,
+      "no_calendar_event_cancelled": true
+    },
+    "resident_telegram_reservation": {
+      "result": "passed",
+      "operation_id": "b6d53ab8-2395-5668-9465-ca42fe5abe8d",
+      "external_reference": "df207791a409d2c1b50758b30209f52e983fa6fef740f5d61ff3d47c10cedd56",
+      "human_received_confirmation": true,
+      "origin": "actual_resident_telegram_message_and_explicit_confirmation",
+      "calendar_rechecked": true,
+      "start": "2026-11-16T13:00:00.000000+00:00",
+      "end": "2026-11-16T14:00:00.000000+00:00",
+      "sheets_sync": "synced"
+    },
+    "manager_telegram_sheets_sync": {
+      "result": "passed",
+      "operation_id": "b6d53ab8-2395-5668-9465-ca42fe5abe8d",
+      "row_number": 4,
+      "outbox_state": "synced",
+      "origin": "actual_manager_telegram_sync",
+      "sync_result": {
+        "pending": 0,
+        "synced": 1
+      },
+      "human_sheet_update_confirmed": true,
+      "human_screenshot_received": true
+    },
+    "manager_guidance_creation": {
+      "result": "passed_with_supervised_recovery",
+      "guidance_id": "84827e89-72fa-493e-a29f-25f19d427841",
+      "version": 1,
+      "status": "active",
+      "human_received_confirmation": true,
+      "confirmation_origin": "actual_manager_telegram_confirmo",
+      "proposal_origin": "verified_actual_human_request_reprocessed_after_fix",
+      "broadcast_added": false,
+      "remaining": [
+        "resident_read",
+        "correction_versioning",
+        "cancellation"
+      ]
+    },
+    "resident_guidance_read": {
+      "result": "passed_actual_telegram",
+      "role": "resident",
+      "request_origin": "actual_resident_natural_language_query",
+      "reply_code": "pilot_guidance",
+      "delivery": "sent",
+      "version": 1,
+      "guidance_id": "84827e89-72fa-493e-a29f-25f19d427841",
+      "human_receipt_confirmed": false,
+      "created_at": "2026-11-12T18:56:36.243283+00:00"
+    },
+    "manager_guidance_correction": {
+      "result": "passed_actual_telegram",
+      "guidance_id": "84827e89-72fa-493e-a29f-25f19d427841",
+      "operation_id": "374bf94c-a3f6-5a4b-baa1-45d5128b89cf",
+      "version": 2,
+      "status": "active",
+      "previous_revision_preserved": true,
+      "human_received_confirmation": true,
+      "proposal_and_confirmation_delivery": "sent",
+      "proposal_origin": "actual_manager_natural_language_message"
+    },
+    "manager_guidance_cancellation": {
+      "result": "passed_actual_telegram",
+      "guidance_id": "84827e89-72fa-493e-a29f-25f19d427841",
+      "operation_id": "3d7253a5-a3af-595a-bc9c-8290ce3453bf",
+      "version": 3,
+      "status": "cancelled",
+      "previous_revisions_preserved": [
+        1,
+        2
+      ],
+      "human_confirmed_action": true,
+      "confirmation_delivery": "sent",
+      "post_cancel_filter": {
+        "result": "passed",
+        "origin": "synthetic_resident_read_against_live_readonly_database",
+        "guidance_count": 0
+      },
+      "google_operations_attempted": false
+    },
+    "resident_request_and_manager_notice": {
+      "result": "passed_actual_telegram",
+      "request_id": "a8184129-dbb9-5c71-9c65-182c688cd366",
+      "role": "resident",
+      "status": "forwarded",
+      "assigned_to": "manager",
+      "urgent": false,
+      "version": 1,
+      "human_confirmed_action": true,
+      "manager_notification": {
+        "count": 1,
+        "role": "manager",
+        "code": "pilot_request_notification",
+        "delivery": "sent"
+      }
+    },
+    "manager_response_and_resident_notice": {
+      "result": "passed_with_supervised_recovery",
+      "request_id": "a8184129-dbb9-5c71-9c65-182c688cd366",
+      "operation_id": "96cb5455-f300-5f4b-8b7e-dd03d66439f9",
+      "request_status": "resolved",
+      "version": 2,
+      "response": "Ok",
+      "proposal_origin": "actual_manager_messages_recovered_with_verified_source_hashes",
+      "confirmation_origin": "actual_manager_telegram_confirmation",
+      "resident_notification_count": 1,
+      "resident_delivery": "sent",
+      "human_received_once": true,
+      "human_confirmation_source": "explicit_owner_reply_sim_2026-11-12"
+    },
+    "request_response_sheets_sync": {
+      "result": "passed_actual_telegram",
+      "origin": "actual_manager_sync_command",
+      "synced": 2,
+      "pending": 0,
+      "request_row": 5,
+      "response_row": 6,
+      "all_outbox_rows_synced": 6,
+      "human_reported_verified_count": 2,
+      "independent_google_recheck": "i5-final-readonly-recheck.json"
+    },
+    "fresh_manager_guidance_creation": {
+      "result": "passed_actual_telegram_without_recovery",
+      "guidance_id": "3a6a7fdf-dea4-43b7-bb18-037d915e73bb",
+      "operation_id": "6a26a6cb-b702-5686-8d62-0ee37d426e58",
+      "source_update_ids": [
+        436624778,
+        436624779
+      ],
+      "version": 1,
+      "status": "active",
+      "topic": "reteste_i5",
+      "audience": "residents",
+      "effective_from": "2026-11-12T16:00:00-03:00",
+      "effective_until": "2026-11-12T18:00:00-03:00",
+      "human_received_confirmation": true,
+      "proposal_delivery": "sent",
+      "confirmation_delivery": "sent",
+      "manual_recovery": false
+    },
+    "fresh_resident_request": {
+      "result": "passed_actual_telegram_without_recovery",
+      "request_id": "73698aeb-a9c7-5a68-9f9f-c591d334e775",
+      "version": 1,
+      "status": "forwarded",
+      "assigned_to": "manager",
+      "urgent": false,
+      "human_received_confirmation": true,
+      "manager_notice_count": 1,
+      "manager_notice_delivery": "sent",
+      "human_received_manager_notice": true,
+      "manual_recovery": false
+    },
+    "fresh_manager_response": {
+      "result": "passed_actual_telegram_without_recovery",
+      "request_id": "73698aeb-a9c7-5a68-9f9f-c591d334e775",
+      "operation_id": "bfdcc836-fbef-5290-9480-97f9fe7e4d85",
+      "request_status": "resolved",
+      "version": 2,
+      "response": "Reteste I5 recebido. Ensaio encerrado, sem autorização de reserva ou atividade real.",
+      "proposal_delivery": "sent",
+      "manager_confirmation_delivery": "sent",
+      "human_received_manager_confirmation": true,
+      "resident_notification_count": 1,
+      "resident_delivery": "sent",
+      "human_resident_receipt": "confirmed_once",
+      "manual_recovery": false,
+      "human_received_once": true,
+      "human_confirmation_source": "explicit_owner_reply_sim_after_final_receipt_question"
+    },
+    "fresh_request_response_sheets_sync": {
+      "result": "passed_actual_telegram",
+      "synced": 2,
+      "pending": 0,
+      "request_row": 7,
+      "response_row": 8,
+      "total_synced": 8,
+      "human_reported_verified_count": 2,
+      "independent_recheck": "i5-final-readonly-recheck-after-retests.json"
+    }
+  },
+  "updated_at": "2026-11-12T21:16:23.016411+00:00",
+  "pending": [
+    "Actual two-role natural-dialog journey using only Alfredo prompts",
+    "Owner assessment of the revised conversation and formal acceptance"
+  ],
+  "private_database_backup_created": true,
+  "database_schema": 4,
+  "google_write_tests": "passed_selected_scenarios",
+  "google_mutations_attempted": true,
+  "existing_telegram_and_openai_secrets_preserved": true,
+  "local_regression": {
+    "tests_run": 462,
+    "successful": true
+  },
+  "restart_recovered_operations": 1,
+  "previous_configuration_fields_preserved": true,
+  "paused_by_owner": false,
+  "paused_at": "2026-11-12T19:59:45.321764+00:00",
+  "current_google_window_end": "2026-11-17T00:00:00-03:00",
+  "next_action": "Toninho makes a fictitious request to administration in his own words; both actors follow Alfredo prompts, including separate Sheets authorization. No developer-supplied references or commands.",
+  "resumed_at": "2026-11-12T21:16:23.016368+00:00",
+  "guidance_extraction_tests": {
+    "result": "passed",
+    "cases": 5,
+    "effects_created": false,
+    "evidence": "i5-guidance-extraction-after.json",
+    "human_telegram_validation": "pending"
+  },
+  "guidance_decision_tests": {
+    "result": "passed_three_real_model_cases_and_five_new_local_regressions",
+    "evidence": "i5-guidance-decision-after.json",
+    "human_confirmation": "pending"
+  },
+  "response_workflow_fix": {
+    "evidence": "i5-response-extraction-after.json",
+    "result": "local_regression_passed_recovery_proposal_delivered",
+    "actual_resident_receipt": "confirmed_once"
+  },
+  "final_readonly_recheck": {
+    "result": "passed",
+    "evidence": "i5-final-readonly-recheck.json",
+    "calendar_events": 4,
+    "sheet_rows": 6,
+    "pending_outbox": 0,
+    "budget_estimated_brl": "3.018789"
+  },
+  "explicit_interval_fix": {
+    "result": "passed_local",
+    "evidence": "i5-explicit-interval-regression.json",
+    "fresh_human_retest": "passed_without_recovery"
+  },
+  "final_readonly_recheck_after_retests": {
+    "result": "passed",
+    "evidence": "i5-final-readonly-recheck-after-retests.json",
+    "calendar_events": 4,
+    "sheet_rows": 8,
+    "pending_outbox": 0,
+    "requests_resolved": 2,
+    "budget_estimated_brl": "3.129804"
+  },
+  "runtime_state": "ready",
+  "runtime_closed_at": "2026-11-12T19:52:59.112227+00:00",
+  "selected_authorized_i5_tests": "completed_passed",
+  "fresh_end_to_end_retests": "passed_without_supervised_recovery",
+  "human_final_resident_receipt": "confirmed_once",
+  "conversational_usability": {
+    "owner_assessment": "previous_flow_rejected_new_flow_awaiting_real_review",
+    "authorized_next_change": "Alfredo asks authorization itself, commands optional, explicit permission and scope guards maintained",
+    "new_ux_change_implemented": true
+  },
+  "natural_dialog": {
+    "evidence": "i5-natural-dialog.json",
+    "status": "implemented_local_passed_live_pending",
+    "tests_run": 462,
+    "natural_dialog_tests": 21
+  }
+}

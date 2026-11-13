@@ -28,7 +28,7 @@ class EvidenceResult(unittest.TextTestResult):
 def main():
     """Compatibility entry point; I1 delivery evidence remains historical."""
     from scripts.verify_i2 import main as verify_current
-    print('Verificação vigente: I4; evidências históricas I1/I2/I3 preservadas.')
+    print('Verificação vigente: I5; evidências históricas I1–I4 preservadas.')
     return verify_current()
 
 

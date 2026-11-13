@@ -7,6 +7,9 @@ class Sheets:
     def __init__(self, config, http):
         self.config, self.http = config, http
 
+    def write_row(self, spreadsheet_id, target, values):
+        return self.http.row_request(spreadsheet_id,target,values)
+
     def read_metadata(self, spreadsheet_id):
         value = self.http.read('sheets.metadata', spreadsheet_id).json()
         if value.get('spreadsheetId') != spreadsheet_id or type(value.get('properties', {})) is not dict:

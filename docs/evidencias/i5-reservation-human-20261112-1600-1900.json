@@ -1,0 +1,61 @@
+{
+  "phase": "I5",
+  "scope": "real_human_telegram_reservation_and_readonly_calendar_verification",
+  "updated_at": "2026-11-12T22:30:41.295493+00:00",
+  "input_origin": "owner_supplied_telegram_transcript_and_calendar_screenshot",
+  "result": "passed",
+  "operation_ref": "acbdc2e699d19db18890bd62e6f2728ac5c80d0f68f277fe306ae945f13125e6",
+  "start_local": "2026-11-16T16:00:00-03:00",
+  "end_local": "2026-11-16T19:00:00-03:00",
+  "authorization_phrase": "Pode confirmar",
+  "checks": {
+    "operation_confirmed": true,
+    "event_id_matches": true,
+    "event_status_confirmed": true,
+    "private_properties_match": true,
+    "start_matches": true,
+    "end_matches": true,
+    "calendar_read_complete": true,
+    "matching_event_once": true,
+    "no_overlapping_event": true
+  },
+  "sheets_outbox": [
+    {
+      "state": "pending",
+      "attempts": 0
+    }
+  ],
+  "telegram_receipts": [
+    {
+      "code": "reservation_confirmed",
+      "state": "sent",
+      "created_at": "2026-11-12T22:26:34.977329+00:00"
+    },
+    {
+      "code": "pilot_proposal",
+      "state": "sent",
+      "created_at": "2026-11-12T22:25:39.270376+00:00"
+    },
+    {
+      "code": "clarification_required",
+      "state": "sent",
+      "created_at": "2026-11-12T22:25:08.117829+00:00"
+    },
+    {
+      "code": "clarification_required",
+      "state": "sent",
+      "created_at": "2026-11-12T22:23:49.708706+00:00"
+    },
+    {
+      "code": "document_rule_outdated",
+      "state": "sent",
+      "created_at": "2026-11-12T22:06:04.085219+00:00"
+    }
+  ],
+  "confirmed_reservation_count": 5,
+  "google_mutations_attempted_by_verification": false,
+  "operational_database_opened_readonly": true,
+  "owner_formal_acceptance": false,
+  "full_acceptance": false,
+  "remaining_conversation_issue": "availability question became reservation time collection after correcting an invalid year"
+}

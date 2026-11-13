@@ -95,6 +95,7 @@ class Message:
     correlation_id: str
     text: str = ''
     update_id: str | None = None
+    reply_to_message_id: int | None = None
 
 
 @dataclass(frozen=True)

@@ -1,0 +1,31 @@
+{
+  "phase": "I5",
+  "scope": "real_model_extraction_only",
+  "effects_created": false,
+  "updated_at": "2026-11-12T18:08:51.291747+00:00",
+  "cases": [
+    {
+      "case": "original_template",
+      "action": "guidance_create",
+      "topic": "teste_i5",
+      "audience": "residents",
+      "effective_from": null,
+      "effective_until": null,
+      "expected_version": null,
+      "start": "2026-11-12T14:00:00-03:00",
+      "end": "2026-11-12T18:00:00-03:00"
+    },
+    {
+      "case": "spaced_topic",
+      "action": "guidance_create",
+      "topic": "teste-i5",
+      "audience": "residents",
+      "effective_from": null,
+      "effective_until": null,
+      "expected_version": null,
+      "start": "2026-11-12T14:00:00-03:00",
+      "end": "2026-11-12T18:00:00-03:00"
+    }
+  ],
+  "observed_issue": "Guidance dates populated in reservation start/end, leaving effective_from/effective_until null."
+}

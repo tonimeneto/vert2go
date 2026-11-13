@@ -1,12 +1,12 @@
 """Manual startup: finite local check by default; explicitly gated Telegram polling."""
 import argparse
-from contextlib import contextmanager
+from contextlib import contextmanager, ExitStack
 import logging
 from pathlib import Path
 import os
 import sqlite3
 from app.config.schema import load_config, load_telegram_token
-from app.core.contracts import EngineError
+from app.core.contracts import EngineError, digest
 from app.core.orchestrator import Orchestrator
 from app.storage.sqlite import Store
 
@@ -58,6 +58,8 @@ def main(argv=None, *, stop_event=None, lifecycle_observer=None):
     parser.add_argument('--secrets', default='secrets.yaml')
     parser.add_argument('--knowledge', action='store_true', help='Habilitar consultas documentais I4 no Telegram')
     parser.add_argument('--allow-live-openai', action='store_true', help='Atestar G3 e uso OpenAI autorizado')
+    parser.add_argument('--operations',action='store_true',help='Habilitar I5 experimental explicitamente')
+    parser.add_argument('--allow-live-google-writes',action='store_true',help='Atestar autorização dos destinos experimentais cadastrados')
     parser.add_argument('--i2-replay-evidence', action='store_true',
                         help='Verificar uma mensagem real em copias SQLite em memoria, sem reenvio real')
     args = parser.parse_args(argv)
@@ -71,6 +73,14 @@ def main(argv=None, *, stop_event=None, lifecycle_observer=None):
         if stop_event is not None and stop_event.is_set():
             return 0
         config = load_config(args.config)
+        if args.operations:
+            if not args.telegram or not args.knowledge or not args.allow_live_google_writes:
+                raise EngineError('operations_explicit_runtime_required')
+            if config.operations is None:
+                raise EngineError('operations_not_configured')
+            config.operations.require_live()
+        elif args.allow_live_google_writes:
+            raise EngineError('operations_mode_required')
         if args.telegram and (not args.allow_live_telegram or not config.telegram):
             raise EngineError('live_telegram_authorization_required')
         if args.allow_live_telegram and not args.telegram:
@@ -88,12 +98,18 @@ def main(argv=None, *, stop_event=None, lifecycle_observer=None):
         elif args.allow_live_openai:
             raise EngineError('knowledge_mode_required')
         token = load_telegram_token(args.secrets, config.telegram['bot_id']) if args.telegram else None
-        with instance_lock(args.database):
+        with instance_lock(args.database), ExitStack() as operation_stack:
             logging.info('instance_lock_acquired')
-            if args.knowledge:
+            if args.operations:
+                operation_stack.enter_context(instance_lock(Path(__file__).resolve().parents[1]/'data/locks'/
+                    ('i5-runtime-'+digest(config.operations.calendar_id))))
+            if args.operations:
+                from app.storage.backup import before_operations_migration
+                before_operations_migration(args.database,args.config)
+            elif args.knowledge:
                 from app.storage.backup import before_knowledge_migration
                 before_knowledge_migration(args.database,args.config)
-            store = Store(args.database,knowledge=args.knowledge)
+            store = Store(args.database,knowledge=args.knowledge,operations=args.operations)
             try:
                 status = Orchestrator(config,store).startup()
                 logging.info('local_ready schema=%d simulation=true recovered=%d expired=%d',
@@ -110,9 +126,18 @@ def main(argv=None, *, stop_event=None, lifecycle_observer=None):
                     runtime = (knowledge_runtime(config,store,args.secrets,allow_live=True,telegram=True)
                                if args.knowledge else nullcontext(None))
                     with runtime as knowledge:
-                        channel = TelegramChannel(config, store, Orchestrator(config, store,knowledge=knowledge),
+                        operations,interpreter = None,None
+                        if args.operations:
+                            from app.ai.operation_intent import OperationInterpreter
+                            from app.ai.runtime import FreshDrive
+                            from app.integrations.operations import FreshGoogle
+                            from app.services.operations import Operations
+                            google = FreshGoogle(config,args.secrets,allow_live=True)
+                            operations = Operations(config,store,google,google,drive=FreshDrive(config,args.secrets))
+                            interpreter = OperationInterpreter(knowledge)
+                        channel = TelegramChannel(config, store, Orchestrator(config, store,knowledge=knowledge,operations=operations),
                                                   TelegramAPI(token, config.telegram['request_seconds']),
-                                                  receipt_observer=observer)
+                                                  receipt_observer=observer,operation_interpreter=interpreter)
                         if stop_event is not None:
                             channel.stop = stop_event
                         channel.lifecycle_observer = lifecycle_observer

@@ -6,6 +6,12 @@ class Calendar:
     def __init__(self, config, http):
         self.config, self.http = config, http
 
+    def get_event(self, calendar_id, event_id):
+        return self.http.event_request('GET',calendar_id,event_id=event_id)
+
+    def create_event(self, calendar_id, event):
+        return self.http.event_request('POST',calendar_id,event=event)
+
     def read_events(self, calendar_id, start, end):
         events, seen, event_ids, token = [], set(), set(), None
         for _ in range(self.config.max_pages):

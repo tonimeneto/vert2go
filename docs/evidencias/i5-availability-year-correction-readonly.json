@@ -1,0 +1,25 @@
+{
+  "phase": "I5",
+  "scope": "actual_config_real_calendar_readonly_isolated_database_fake_telegram",
+  "updated_at": "2026-11-12T22:32:55.605464+00:00",
+  "result": "passed",
+  "steps": [
+    {
+      "step": 1,
+      "code": "clarification_required",
+      "reply": "Essa data/horário está fora do prazo permitido: a reserva precisa começar no futuro, no período de 10/11/2026 até 17/11/2026 às 00:00 (fim exclusivo), com antecedência máxima de 5 dia(s) e mínima de 0 hora(s). Para qual outra data você deseja consultar a Agenda?"
+    },
+    {
+      "step": 2,
+      "code": "pilot_availability",
+      "reply": "Consultei a Agenda. Faixas livres encontradas:\n16/11/2026: das 08:00 às 10:00; das 11:00 às 16:00; das 19:00 às 22:00.\nPelas condições cadastradas, o horário é das 08:00 às 22:00, por até 4 horas por reserva.\nQual intervalo, dentro de uma dessas faixas, você prefere? Essa consulta não cria uma reserva; vou pedir sua autorização antes de registrar."
+    }
+  ],
+  "real_calendar_reads": 1,
+  "google_mutations_attempted": false,
+  "operational_database_opened": false,
+  "live_telegram_messages_sent": 0,
+  "new_live_reservation_created": false,
+  "model_calls": 0,
+  "full_acceptance": false
+}

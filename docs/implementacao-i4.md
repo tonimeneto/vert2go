@@ -1,5 +1,9 @@
 # Implementação e operação I4 — conhecimento documental
 
+A I5 local posterior está documentada em [implementação I5](implementacao-i5.md).
+O bot e o painel permanecem operando na I4; escrita Google não foi ativada.
+O verificador vigente é `scripts/verify_i5.py`, com evidências I4 preservadas.
+
 Data: 10/11/2026. Conhecimento técnico do Vert2Go.
 Referências: PRD v1.2.0, especificação Alfredo v0.1.8, plano v0.1.1
 e PLAN I4 atualizado aprovado na sessão de execução.

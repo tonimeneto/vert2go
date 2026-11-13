@@ -1,0 +1,72 @@
+{
+  "phase": "I5",
+  "scope": "real_model_response_extraction_and_minimal_scoped_context",
+  "updated_at": "2026-11-12T19:25:24.820311+00:00",
+  "cases": [
+    {
+      "case": "complete_response",
+      "result": "passed",
+      "action": "response",
+      "requested_action": "response",
+      "has_response": true,
+      "target_and_version_preserved": true,
+      "clarification_field": null
+    },
+    {
+      "case": "missing_response",
+      "result": "passed",
+      "action": "clarify",
+      "requested_action": "response",
+      "has_response": false,
+      "target_and_version_preserved": true,
+      "clarification_field": "response"
+    },
+    {
+      "case": "short_followup",
+      "result": "failed",
+      "action": "clarify",
+      "requested_action": "response",
+      "has_response": false,
+      "target_and_version_preserved": true,
+      "clarification_field": "response"
+    }
+  ],
+  "effects_created": false,
+  "budget_estimated_brl": "3.018789",
+  "actual_original_and_ok_source_hashes_verified": true,
+  "source_update_ids": [
+    436624770,
+    436624771
+  ],
+  "recovery": {
+    "source_update_ids": [
+      436624770,
+      436624771
+    ],
+    "source_hashes_verified": true,
+    "origin": "supervised_recovery_of_actual_manager_followup_using_actual_request_context",
+    "response": "Ok",
+    "queue_update_id": -24306350979261981,
+    "operation_id": "96cb5455-f300-5f4b-8b7e-dd03d66439f9",
+    "request_id": "a8184129-dbb9-5c71-9c65-182c688cd366",
+    "state": "confirmed",
+    "expires_at": "2026-11-12T19:25:28.986871+00:00",
+    "delivery": "sent",
+    "confirmation_required": true,
+    "response_sent_to_resident": true,
+    "paid_calls_during_recovery": 0,
+    "original_receipts_preserved": true,
+    "human_received_once": true
+  },
+  "full_acceptance": false,
+  "short_followup_resolution": {
+    "mode": "deterministic_literal_response_only_in_scoped_unexpired_pending_response_context",
+    "local_conversation_tests_passed": 40,
+    "automatic_confirmation": false,
+    "original_model_failure_retained": true
+  },
+  "local_regression": {
+    "tests_run": 430,
+    "successful": true
+  }
+}

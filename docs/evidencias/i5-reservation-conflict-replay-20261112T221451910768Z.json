@@ -1,0 +1,101 @@
+{
+  "phase": "I5",
+  "scope": "actual_config_real_calendar_reads_isolated_database_fake_telegram_simulated_event_write",
+  "updated_at": "2026-11-12T22:14:51.910671+00:00",
+  "result": "passed",
+  "google_mutations_attempted": false,
+  "operational_database_opened": false,
+  "live_telegram_messages_sent": 0,
+  "model_calls": 0,
+  "human_acceptance": false,
+  "full_acceptance": false,
+  "date": "2026-11-16",
+  "source_sha256": {
+    "scripts/check_reservation_dialog_i5.py": "759599d0046c419791be66bab22256cb6cf286d1cb8b5cfc48ebe4c1771a12c0",
+    "app/services/operations.py": "3e6cca617f94796c772d0f68109b2cc4db3985ab5c22a3b8d1b580251f4c8582",
+    "app/channels/reservation_conversation.py": "3efb17e119cd14bf2b997135132ba80ab2c964919675bb238ff1890542848c35",
+    "app/channels/reservation_time.py": "c06d5be99cce77d1b646851d2f27f2488c7509958bdf4cac381b969ed358c924"
+  },
+  "configuration_sha256": "8f9a55aa3d7d9339f6fe3cecbc1d6f3bc4a6490aba239e2626ac5939537be504",
+  "parameters": {
+    "window_start": "2026-11-10T00:00:00-03:00",
+    "window_end": "2026-11-17T00:00:00-03:00",
+    "alternative_offsets_days": [
+      1,
+      2,
+      3
+    ],
+    "resources": [
+      {
+        "id": "salao",
+        "status": "simulated",
+        "verified_at": "2026-11-12T13:08:15.798701+00:00",
+        "valid_until": "2026-11-17T00:00:00-03:00",
+        "opens": "08:00",
+        "closes": "22:00",
+        "max_duration_minutes": 240
+      }
+    ]
+  },
+  "steps": [
+    {
+      "step": 1,
+      "code": "clarification_required",
+      "expected": "clarification_required",
+      "passed": true,
+      "reply": "O intervalo informado dura 6h00, acima do limite de 240 minutos. Pelas condições cadastradas, o horário é das 08:00 às 22:00, por até 4 horas por reserva. Mantive o dia e o início às 14:00. Que horário de término você prefere? Também posso consultar as faixas livres na Agenda."
+    },
+    {
+      "step": 2,
+      "code": "clarification_required",
+      "expected": "clarification_required",
+      "passed": true,
+      "reply": "Já tenho o dia 16/11/2026 e o início às 14:00. Que horas você quer terminar? Pelas condições cadastradas, o horário é das 08:00 às 22:00, por até 4 horas por reserva."
+    },
+    {
+      "step": 3,
+      "code": "pilot_availability",
+      "expected": "pilot_availability",
+      "passed": true,
+      "reply": "Consultei a Agenda. Faixas livres encontradas:\n16/11/2026: das 08:00 às 10:00; das 11:00 às 22:00.\nPelas condições cadastradas, o horário é das 08:00 às 22:00, por até 4 horas por reserva.\nQual intervalo, dentro de uma dessas faixas, você prefere? Essa consulta não cria uma reserva; vou pedir sua autorização antes de registrar."
+    },
+    {
+      "step": 4,
+      "code": "pilot_availability",
+      "expected": "pilot_availability",
+      "passed": true,
+      "reply": "Esse intervalo tem conflito na Agenda. Vou consultar as faixas livres para esse dia.\nConsultei a Agenda. Faixas livres encontradas:\n16/11/2026: das 08:00 às 10:00; das 11:00 às 22:00.\nPelas condições cadastradas, o horário é das 08:00 às 22:00, por até 4 horas por reserva.\nQual intervalo, dentro de uma dessas faixas, você prefere? Essa consulta não cria uma reserva; vou pedir sua autorização antes de registrar."
+    },
+    {
+      "step": 5,
+      "code": "pilot_availability",
+      "expected": "pilot_availability",
+      "passed": true,
+      "reply": "Consultei a Agenda. Faixas livres encontradas:\n16/11/2026: das 08:00 às 10:00; das 11:00 às 22:00.\nPelas condições cadastradas, o horário é das 08:00 às 22:00, por até 4 horas por reserva.\nQual intervalo, dentro de uma dessas faixas, você prefere? Essa consulta não cria uma reserva; vou pedir sua autorização antes de registrar."
+    },
+    {
+      "step": 6,
+      "code": "pilot_availability",
+      "expected": "pilot_availability",
+      "passed": true,
+      "reply": "Esse intervalo tem conflito na Agenda. Vou consultar as faixas livres para esse dia.\nConsultei a Agenda. Faixas livres encontradas:\n16/11/2026: das 08:00 às 10:00; das 11:00 às 22:00.\nPelas condições cadastradas, o horário é das 08:00 às 22:00, por até 4 horas por reserva.\nQual intervalo, dentro de uma dessas faixas, você prefere? Essa consulta não cria uma reserva; vou pedir sua autorização antes de registrar."
+    },
+    {
+      "step": 7,
+      "code": "pilot_proposal",
+      "expected": "pilot_proposal",
+      "passed": true,
+      "reply": "Entendi que você quer reservar este espaço:\nEspaço: salão\nUnidade simulada: 101A\nInício: 16/11/2026 às 14:00 (horário de Brasília)\nFim: 16/11/2026 às 18:00 (horário de Brasília)\nCondição do piloto (simulada): Cenário fictício I5; não é regra condominial — Ensaio experimental autorizado\nTaxa informativa: R$ 0.00. Não haverá cobrança neste ensaio.\nAinda não executei. Este atendimento é experimental.\nPosso confirmar essa reserva na Agenda experimental?\nSe quiser mudar algo, diga o que deseja ajustar.\nEsta autorização vale até 12/11/2026 às 19:19 (horário de Brasília)."
+    },
+    {
+      "step": 8,
+      "code": "reservation_confirmed",
+      "expected": "reservation_confirmed",
+      "passed": true,
+      "reply": "Pronto, sua reserva foi confirmada e verificada na Agenda experimental. Não haverá cobrança neste ensaio."
+    }
+  ],
+  "duplicate_confirmation_created_again": false,
+  "simulated_event_creates": 1,
+  "calendar_reads": 10
+}

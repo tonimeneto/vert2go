@@ -1,0 +1,70 @@
+{
+  "phase": "I5",
+  "scope": "existing_google_resources_read_only",
+  "updated_at": "2026-11-12T22:15:15.573945+00:00",
+  "google_mutations_attempted": false,
+  "openai_used": false,
+  "git_operations": false,
+  "result": "passed",
+  "write_scopes_registered": true,
+  "registered_scope_count": 3,
+  "account_verified": true,
+  "calendar": {
+    "result": "passed",
+    "resource_ref": "440a29972b6825e3786c86398105da60673afb7e673ac6e43b9975e3415e5a49",
+    "event_count": 4,
+    "complete": true
+  },
+  "sheets": [
+    {
+      "result": "passed",
+      "resource_ref": "646952d7809c408a831369d457b436ef1f948a170b62edda0689a19c0a23659e",
+      "range_ref": "609274634aa8b474492e9b8113276b1d64b1bc9a6b98f7b6268af3826ba6dfce",
+      "row_count": 8,
+      "cell_count": 76,
+      "empty": false
+    }
+  ],
+  "calls": [
+    {
+      "correlation_id": "b2c450800a4141d3bfb65b5180ff2bcb",
+      "operation": "identity",
+      "resource_ref": "e3b0c44298fc1c149afbf4c8",
+      "method": "GET",
+      "attempt": 1,
+      "http_status": 200,
+      "duration_ms": 2076,
+      "safe_error": null
+    },
+    {
+      "correlation_id": "625383994b5d4e10b4c2da74478cc78b",
+      "operation": "calendar.events",
+      "resource_ref": "7ec9b2cdbd24087b413169f1",
+      "method": "GET",
+      "attempt": 1,
+      "http_status": 200,
+      "duration_ms": 1108,
+      "safe_error": null
+    },
+    {
+      "correlation_id": "c6fef42376c7432ca2c92e086403628e",
+      "operation": "sheets.metadata",
+      "resource_ref": "7d619d3e2190c36635e67fa7",
+      "method": "GET",
+      "attempt": 1,
+      "http_status": 200,
+      "duration_ms": 2582,
+      "safe_error": null
+    },
+    {
+      "correlation_id": "e0a9bc85bd3f4a51aaaa9fcb684d35fa",
+      "operation": "sheets.values",
+      "resource_ref": "7d619d3e2190c36635e67fa7",
+      "method": "GET",
+      "attempt": 1,
+      "http_status": 200,
+      "duration_ms": 1177,
+      "safe_error": null
+    }
+  ]
+}

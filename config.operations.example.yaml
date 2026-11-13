@@ -1,0 +1,155 @@
+# EXEMPLO FICTICIO I5. Condicoes de simulacao, sem autoridade condominial.
+# Escritas reais desabilitadas; nao substituir config.yaml particular.
+environment_id: i2-fictional
+simulation_mode: true
+agent_name: Alfredo
+locale: pt-BR
+timezone: America/Sao_Paulo
+users:
+- channel: telegram
+  channel_user_id: 1001
+  chat_ids:
+  - 1001
+  role: resident
+  enabled: true
+- channel: telegram
+  channel_user_id: 2002
+  chat_ids:
+  - 2002
+  role: manager
+  enabled: true
+permissions:
+  resident:
+  - guidance.read
+  - context.read
+  - context.write
+  - reservation.create
+  - reservation.read
+  - request.create
+  - request.read
+  - knowledge.read
+  manager:
+  - guidance.read
+  - guidance.create
+  - guidance.correct
+  - guidance.cancel
+  - guidance.history
+  - context.read
+  - context.write
+  - request.read
+  - request.respond
+  - report.read
+  - operations.reconcile
+  - knowledge.read
+limits:
+  confirmation_seconds: 300
+  max_message_chars: 8000
+  messages_per_minute: 60
+retention:
+  conversation_days: 30
+  deduplication_days: 30
+  audit_days: 90
+  closed_request_days: 90
+  guidance_audit_days: 90
+openai:
+  monthly_budget_brl: '30.00'
+  alert_brl: '24.00'
+  usd_brl: '5.00'
+  input_usd_per_million: '1.00'
+  output_usd_per_million: '2.00'
+  reference_date: '2026-11-05'
+  reference_label: fictitious-test-prices-not-market-data
+  missing_measurement: block
+channels:
+  telegram:
+    bot_id: 9009
+    poll_seconds: 25
+    request_seconds: 35
+    batch_size: 100
+    retry_seconds: 5
+google:
+  expected_account: alfredo@example.invalid
+  drive_documents:
+  - id: doc-fictional
+    classification: official
+    export_mime: text/plain
+  calendar:
+    id: calendar-fictional@group.calendar.google.com
+    owned: false
+    window_start: '2026-11-01T00:00:00-03:00'
+    window_end: '2026-11-30T00:00:00-03:00'
+  sheets:
+    id: sheet-fictional
+    ranges:
+    - '''Operacao''!A2:J30'
+  limits:
+    timeout_seconds: 2
+    total_seconds: 20
+    max_attempts: 3
+    max_pages: 2
+    max_bytes: 100000
+    max_cells: 1000
+operations:
+  authorization:
+    calendar_id: calendar-fictional@group.calendar.google.com
+    spreadsheet_id: sheet-fictional
+    sheet_range: '''Operacao''!A2:J30'
+    exclusive_pilot_resources: false
+    calendar_insert: false
+    sheets_update: false
+  units:
+    '1001': SIM-101
+  resources:
+  - id: salao
+    rule_id: fictional-rule
+    status: simulated
+    source_document_id: fixture-only
+    source_title: Cenário fictício; não é regra condominial
+    section: fixture
+    source_revision: '1'
+    source_hash: fixture-only
+    verified_at: '2026-11-01T00:00:00-03:00'
+    valid_until: '2026-12-01T00:00:00-03:00'
+    opens: 08:00
+    closes: '22:00'
+    max_duration_minutes: 240
+    min_notice_hours: 0
+    max_advance_days: 20
+    fee_brl: '0.00'
+  request_categories:
+    excecao: manager
+    informacao: unassigned
+  report_limit: 20
+  alternative_offsets_days:
+  - 1
+  - 2
+  - 3
+  reservation_exception_category: excecao
+knowledge:
+  enabled: true
+  project_id: proj_fictional
+  model: model-fictional
+  vector_store_id: null
+  authorization:
+    accepted_i3: true
+    authorized_at: '2026-11-05T12:00:00Z'
+    telegram: true
+  documents:
+  - id: doc-fictional
+    title: Regulamento fictício
+    sha256: 241dae44b12981654094fcb4e8a91e721070207203d0c8269aedfdc96d3dc61a
+  limits:
+    timeout_seconds: 2
+    max_question_chars: 1000
+    max_output_tokens: 512
+    max_results: 2
+    max_response_bytes: 65536
+    max_poll_attempts: 2
+    poll_seconds: 1
+    max_storage_bytes: 1000000
+    max_input_tokens: 16384
+  prices:
+    search_usd_per_call: '0.0025'
+    storage_usd_per_gb_day: '0.10'
+    reference_date: '2026-11-05'
+    reference_url: https://developers.openai.com/api/docs/pricing

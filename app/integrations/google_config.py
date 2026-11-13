@@ -7,10 +7,14 @@ from app.core.contracts import EngineError, instant
 DRIVE_SCOPE = 'https://www.googleapis.com/auth/drive.readonly'
 CALENDAR_SCOPE = 'https://www.googleapis.com/auth/calendar.events.readonly'
 OWNED_SCOPE = 'https://www.googleapis.com/auth/calendar.events.owned.readonly'
+CALENDAR_WRITE_SCOPE = 'https://www.googleapis.com/auth/calendar.events'
+OWNED_WRITE_SCOPE = 'https://www.googleapis.com/auth/calendar.events.owned'
+SHEETS_WRITE_SCOPE = 'https://www.googleapis.com/auth/spreadsheets'
 AUTH_URI = 'https://accounts.google.com/o/oauth2/auth'
 AUTH_URIS = (AUTH_URI, 'https://accounts.google.com/o/oauth2/v2/auth')
 TOKEN_URI = 'https://oauth2.googleapis.com/token'
-ALLOWED_SCOPES = frozenset((DRIVE_SCOPE, CALENDAR_SCOPE, OWNED_SCOPE))
+ALLOWED_SCOPES = frozenset((DRIVE_SCOPE, CALENDAR_SCOPE, OWNED_SCOPE,
+                          CALENDAR_WRITE_SCOPE, OWNED_WRITE_SCOPE, SHEETS_WRITE_SCOPE))
 
 
 def reject(code='google_configuration_invalid'):
@@ -83,9 +87,12 @@ class GoogleConfig:
     max_bytes: int
     max_cells: int
     discover_structure: bool = False
+    write_access: bool = False
 
     @property
     def scopes(self):
+        if self.write_access:
+            return (DRIVE_SCOPE, OWNED_WRITE_SCOPE if self.calendar_owned else CALENDAR_WRITE_SCOPE, SHEETS_WRITE_SCOPE)
         return (DRIVE_SCOPE,) + ((OWNED_SCOPE if self.calendar_owned else CALENDAR_SCOPE,) if self.calendar_id else ())
 
 
@@ -164,7 +171,7 @@ def validate_oauth(raw):
             instant(token['expiry'])
             account(token['account'])
             scopes = token['scopes']
-            if type(scopes) is not list or not 1 <= len(scopes) <= 2 or any(type(s) is not str for s in scopes) or len(set(scopes)) != len(scopes) or not set(scopes) <= ALLOWED_SCOPES or DRIVE_SCOPE not in scopes:
+            if type(scopes) is not list or not 1 <= len(scopes) <= 3 or any(type(s) is not str for s in scopes) or len(set(scopes)) != len(scopes) or not set(scopes) <= ALLOWED_SCOPES or DRIVE_SCOPE not in scopes:
                 reject()
     except (EngineError, TypeError, ValueError, KeyError):
         raise EngineError('google_oauth_schema_invalid') from None
