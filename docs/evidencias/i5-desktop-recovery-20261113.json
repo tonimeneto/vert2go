@@ -1,0 +1,47 @@
+{
+  "phase": "I5",
+  "scope": "desktop_startup_repair_and_connectivity_diagnosis",
+  "updated_at": "2026-11-13T17:46:05.203984+00:00",
+  "implementation": "corrected",
+  "local_regression": {
+    "tests_run": 531,
+    "passed": 531,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "successful": true
+  },
+  "new_tests": 6,
+  "source_hashes_match": true,
+  "prior_evidence_preserved": "i5-tests-before-desktop-recovery-20261113.json",
+  "desktop_uses_preconfigured_authorized_operations": true,
+  "transient_startup_failure_retried": true,
+  "authentication_failures_still_fatal": true,
+  "tls_certificate_validation_preserved": true,
+  "connectivity_observations": {
+    "one_getMe_verified": true,
+    "public_https_telegram_success_and_timeout": true,
+    "ipv4_and_ipv6_tcp_timeout_observed": true,
+    "google_and_microsoft_https_connected": true,
+    "both_standard_and_race_dialer_timeouts_observed": true,
+    "specific_network_root_cause": "not_established"
+  },
+  "native_ui_helper": "unavailable",
+  "owner_closed_old_panel": true,
+  "corrected_panel_opened": true,
+  "owner_pressed_start": true,
+  "last_human_panel_state": "active",
+  "bot_connection_verified": true,
+  "operator_sent_messages": false,
+  "operator_executed_cancellations": false,
+  "git_write_operations": false,
+  "publication": false,
+  "i6_authorized": false,
+  "full_i5_acceptance": false,
+  "remaining": [
+    "Response to a current Telegram request not yet observed",
+    "Existing I5 integrated/human acceptance criteria"
+  ],
+  "readiness_evidence": "i5-desktop-active-20261113.json",
+  "connection_verification_basis": "Owner reported canonical panel ATIVO; OS locks confirm controller and consumer running"
+}

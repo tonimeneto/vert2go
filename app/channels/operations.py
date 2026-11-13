@@ -13,6 +13,8 @@ class OperationsConversation:
         self.dialog=OperationDialog(engine)
         from app.channels.reservation_conversation import ReservationConversation
         self.reservations=ReservationConversation(self)
+        from app.channels.reservation_cancellation import CancellationConversation
+        self.cancellations=CancellationConversation(self)
 
     def _clarification_context(self, message):
         row=self.engine.store.execute('''SELECT payload,expires_at FROM conversation_state WHERE environment_id=?
@@ -46,6 +48,7 @@ class OperationsConversation:
                               (*message.scope.key(),now)).fetchall()
         rows += store.execute("SELECT operation_id,proposal_hash,kind,'guidance' AS source FROM requests_state WHERE environment_id=? AND channel=? AND channel_user_id=? AND chat_id=? AND state='awaiting_confirmation' AND expires_at>?",
                                (*message.scope.key(),now)).fetchall()
+        rows += store.execute("SELECT operation_id,proposal_hash,'reservation_cancellation' AS kind,'cancellation' AS source FROM pilot_cancellations WHERE environment_id=? AND channel=? AND channel_user_id=? AND chat_id=? AND state='awaiting_confirmation' AND expires_at>?",(*message.scope.key(),now)).fetchall()
         if message.scope.channel == 'telegram':
             delivered = store.execute("SELECT message_id,reply FROM telegram_updates WHERE environment_id=? AND channel_user_id=? AND chat_id=? AND code IN ('pilot_proposal','proposal') AND state='sent'",
                 (message.scope.environment_id,message.scope.channel_user_id,message.scope.chat_id)).fetchall()
@@ -55,6 +58,9 @@ class OperationsConversation:
 
     def _proposal_intent(self, message, operation):
         from app.ai.operation_intent import FIELDS
+        if operation['source']=='cancellation':
+            p=json.loads(self.engine.operations.cancellations.row(message,operation['operation_id'])['proposal'])
+            return {**{key:None for key in FIELDS},'action':'reservation_cancel','requested_action':'reservation_cancel','operation_id':p['reservation_id'],'urgent':False,'expected_version':None}
         if operation['source']=='pilot':
             data=json.loads(self.engine.operations._row(message,operation['operation_id'])['proposal'])
             action=data['kind'] if 'kind' in data else operation['kind']
@@ -85,8 +91,9 @@ class OperationsConversation:
         return 'pilot_sync_proposal',(lead+'\n\n' if lead else '')+f'Há {count} atividade(s) para conferir na planilha experimental. Posso sincronizar esses registros agora?\nEsta autorização vale até '+local_time(expires,self.engine.config.timezone)+'.'
 
     def _completed(self, message, result):
+        if result.code=='cancellation_reconciliation_required':return self.cancellations.present(message,result)
         code,reply=self.render(result)
-        if result.code=='reservation_confirmed':
+        if result.code in ('reservation_confirmed','reservation_cancelled','reservation_already_cancelled'):
             self.reservations.close(message.scope)
         if result.code=='pilot_confirmed' and self.engine.policy.identify(message.scope)=='manager':
             row=self.engine.store.execute('SELECT kind FROM pilot_operations WHERE environment_id=? AND operation_id=?',
@@ -109,6 +116,8 @@ class OperationsConversation:
             data={**json.loads(self.engine.operations._row(message,row['operation_id'])['proposal']),
                   'operation_id':row['operation_id'],'proposal_hash':row['proposal_hash']}
             result=Result('awaiting_confirmation','pilot_proposal',data)
+        elif row['source']=='cancellation':
+            result=self.engine.operations.cancellations.summary(self.engine.operations.cancellations.row(message,row['operation_id']))
         else:
             result=Result('awaiting_confirmation','proposal',self.engine.memory._summary(self.engine.memory._draft(message.scope,row['operation_id'])))
         self._remember_proposal(message,result)
@@ -196,7 +205,7 @@ class OperationsConversation:
                 AND channel_user_id=? AND chat_id=? AND message_id=?''',(*scope.key(),message_id)).fetchone()
             if receipt is None or receipt['operation_id'] is None:
                 raise EngineError('pilot_delivery_invalidated')
-            manager = guard['role'] == 'manager'
+            manager=guard['role']=='manager'
             self.engine.policy.authorize(scope,'operations.reconcile' if manager else 'reservation.read')
             message = Message(scope,'delivery_'+message_id,self.engine.clock(),'delivery')
             operation = self.engine.operations._row(message,receipt['operation_id'],manager=manager)
@@ -204,6 +213,15 @@ class OperationsConversation:
                 result = self.engine.operations._verify_event(message,operation)
             if result.code != 'reservation_confirmed':
                 raise EngineError('pilot_delivery_invalidated')
+        if guard['code']=='reservation_cancelled':
+            from app.core.contracts import Message
+            self.engine.policy.authorize(scope,'reservation.cancel')
+            receipt=store.execute('SELECT operation_id FROM pilot_receipts WHERE environment_id=? AND channel=? AND channel_user_id=? AND chat_id=? AND message_id=?',(*scope.key(),message_id)).fetchone()
+            if not receipt:raise EngineError('pilot_delivery_invalidated')
+            message=Message(scope,'cancel_delivery_'+message_id,self.engine.clock(),'delivery')
+            with self.engine.operations.lock():
+                result=self.engine.operations.cancellations.reconcile(message,self.engine.operations.cancellations.row(message,receipt['operation_id']))
+            if result.code!='reservation_cancelled':raise EngineError('pilot_delivery_invalidated')
 
     def route(self, message):
         text = message.text.strip()
@@ -213,6 +231,8 @@ class OperationsConversation:
             clarification=self._clarification_context(message)
             replaced_proposal=None
             editing_action=None
+            cancel=self.cancellations.route(message,context)
+            if cancel is not None:return cancel
             fragment=self.reservations.route_fragment(message,context)
             if fragment is not None:
                 return fragment
@@ -266,7 +286,8 @@ class OperationsConversation:
                 if not consent:
                     if row['kind']=='reservation':self.reservations.close(message.scope)
                     return self.dialog.decline(message,row)
-                action = 'confirm_operation' if row['source'] == 'pilot' else 'confirm'
+                action = ('confirm_reservation_cancellation' if row['source']=='cancellation' else
+                          'confirm_operation' if row['source'] == 'pilot' else 'confirm')
                 payload = {'explicit':True,'operation_id':row['operation_id'],'proposal_hash':row['proposal_hash']}
                 if action == 'confirm_operation':
                     payload['accept_fee'] = text.endswith(' ACEITO TAXA') or bool(re.search(r'\baceito a taxa\b',phrase))
@@ -341,6 +362,9 @@ class OperationsConversation:
                     if not intent.get('response') and intent.get('content'):
                         intent={**intent,'response':intent['content'],'content':None}
                 intent=self._resolve_references(message,intent)
+                if intent['action']=='reservation_cancel':return self.cancellations.process(message,context)
+                if intent['action']=='my_reservations' or intent['action']=='reservation_status' and not intent.get('operation_id'):
+                    return self.render(self.engine.handle(message,'my_reservations',{'resource':intent['resource']} if intent.get('resource') else {}))
                 if intent['action']=='availability':
                     data=self.reservations.state(message,context)
                     resource=intent.get('resource') or data.get('resource')
@@ -462,6 +486,16 @@ class OperationsConversation:
             return result.code,proposal(d,self.engine.config.timezone,request)
         if result.code == 'reservation_confirmed':
             return result.code,'Pronto, sua reserva foi confirmada e verificada na Agenda experimental. Não haverá cobrança neste ensaio.'
+        if result.code=='reservation_cancelled':
+            return result.code,'Sua reserva foi cancelada e o cancelamento foi verificado na Agenda. O histórico foi preservado; o registro da planilha é sincronizado separadamente.'
+        if result.code=='reservation_already_cancelled':
+            return result.code,'Essa reserva já está cancelada na Agenda. Não repeti o cancelamento.'
+        if result.code=='cancellation_reconciliation_required':
+            return result.code,'Ainda não consegui comprovar o cancelamento na Agenda. Mantive o pedido em verificação, sem repetir a alteração. A reserva só será informada como cancelada após essa conferência.'
+        if result.code=='own_reservations':
+            from app.channels.operation_messages import local_time
+            rows=d['reservations']
+            return result.code,('Suas reservas conferidas na Agenda:\n'+'\n'.join(local_time(r['start'],self.engine.config.timezone)+' até '+local_time(r['end'],self.engine.config.timezone)+' — '+('cancelada' if r['state']=='cancelled' else 'confirmada') for r in rows) if rows else 'Não encontrei reservas suas na Agenda para essa consulta.')
         if result.code == 'pilot_confirmed':
             row=self.engine.store.execute('SELECT kind,proposal FROM pilot_operations WHERE environment_id=? AND operation_id=?',
                                           (self.engine.config.environment_id,d['operation_id'])).fetchone()
@@ -539,5 +573,15 @@ class OperationsConversation:
             'reservation_window_closed':'A janela autorizada deste ensaio terminou. A configuração precisa ser revalidada antes de consultar novas datas; não vou inventar uma disponibilidade.',
             'proposal_changed':'Os dados mudaram desde a pergunta de autorização. Precisamos conferir os dados atuais antes de continuar.',
             'operation_not_confirmable':'Essa autorização já foi encerrada. Não vou executar outra operação com ela.',
+            'simulated_unit_not_enrolled':'Sua conta ainda não tem uma unidade vinculada no cadastro autorizado. A administração precisa informar esse vínculo para você reservar ou cancelar sua própria reserva.',
+            'reservation_unit_changed':'A unidade do cadastro não corresponde à unidade vinculada a essa reserva. Preciso que a administração confira o vínculo antes de continuar.',
+            'reservation_not_found':'Não encontrei uma reserva sua correspondente. Qual é a data e o horário?',
+            'cancellation_target_changed':'A reserva mudou desde a apresentação do cancelamento. Vou precisar conferir os dados atuais e pedir uma nova autorização.',
+            'calendar_etag_required':'Não consegui conferir a versão atual dessa reserva na Agenda. Ainda não preparei o cancelamento.',
+            'calendar_cancellation_not_authorized':'O destino da Agenda ainda não está habilitado para cancelamento. Nenhuma alteração foi executada.',
+            'cancellation_in_progress':'Já há um cancelamento dessa reserva em verificação. Não vou repetir a alteração.',
+            'reservation_not_cancellable':'O estado registrado dessa reserva exige conferência antes de permitir o cancelamento. Nenhuma alteração foi executada.',
+            'reservation_search_limit':'Há mais reservas do que consigo conferir de uma vez. Preciso de uma consulta mais restrita antes de preparar o cancelamento.',
+            'reservation_evidence_invalid':'Os dados atuais da Agenda não correspondem ao registro da reserva. A administração precisa conferir essa diferença antes de eu continuar.',
             'budget_blocked':'O orçamento estimado bloqueia novas interpretações. Nenhuma operação foi executada.',
         }.get(code,'Não consegui concluir esta etapa com segurança. Pode me contar o que deseja fazer ou ajustar para eu esclarecer o pedido antes de continuar?')

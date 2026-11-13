@@ -1,0 +1,114 @@
+{
+  "phase": "I5",
+  "scope": "authorized_local_sqlite_and_configuration_update",
+  "updated_at": "2026-11-13T16:41:50.150651+00:00",
+  "result": "passed",
+  "destination": "data/i2.sqlite3",
+  "schema_before": 4,
+  "schema_after": 5,
+  "migration": "005_reservation_cancellations.sql",
+  "migration_additive_only": true,
+  "supabase_used": false,
+  "config_backup": "data/backups/i5-cancellation-manager-20261113/config-20261113T164147177155Z.yaml",
+  "database_backup": "data/backups/before-i5-20261113T164147-e841eed7af9b48259701cb1833a604dd.sqlite3",
+  "existing_tables": {
+    "conversation_state": {
+      "rows": 106,
+      "preserved": true
+    },
+    "document_sync_metadata": {
+      "rows": 2,
+      "preserved": true
+    },
+    "knowledge_calls": {
+      "rows": 92,
+      "preserved": true
+    },
+    "knowledge_storage": {
+      "rows": 1,
+      "preserved": true
+    },
+    "knowledge_versions": {
+      "rows": 2,
+      "preserved": true
+    },
+    "operation_log": {
+      "rows": 236,
+      "preserved": true
+    },
+    "operational_guidance": {
+      "rows": 2,
+      "preserved": true
+    },
+    "operational_guidance_revisions": {
+      "rows": 4,
+      "preserved": true
+    },
+    "pilot_notifications": {
+      "rows": 4,
+      "preserved": true
+    },
+    "pilot_operations": {
+      "rows": 12,
+      "preserved": true
+    },
+    "pilot_outbox": {
+      "rows": 10,
+      "preserved": true
+    },
+    "pilot_receipts": {
+      "rows": 36,
+      "preserved": true
+    },
+    "pilot_requests": {
+      "rows": 2,
+      "preserved": true
+    },
+    "processed_messages": {
+      "rows": 36,
+      "preserved": true
+    },
+    "requests_state": {
+      "rows": 5,
+      "preserved": true
+    },
+    "sync_outbox": {
+      "rows": 0,
+      "preserved": true
+    },
+    "telegram_poll_state": {
+      "rows": 1,
+      "preserved": true
+    },
+    "telegram_updates": {
+      "rows": 116,
+      "preserved": true
+    },
+    "usage_ledger": {
+      "rows": 143,
+      "preserved": true
+    }
+  },
+  "all_existing_rows_preserved": true,
+  "unit_bindings": [
+    {
+      "role": "resident",
+      "unit": "62",
+      "previous_binding_retained": true
+    },
+    {
+      "role": "manager",
+      "unit": "52",
+      "previous_binding_retained": false
+    }
+  ],
+  "manager_inherits_resident": true,
+  "calendar_cancel_destination_enabled": true,
+  "google_mutations_attempted": false,
+  "telegram_started": false,
+  "secrets_read_or_changed": false,
+  "git_mutations": false,
+  "publication": false,
+  "i6_authorized": false,
+  "full_i5_acceptance": false
+}

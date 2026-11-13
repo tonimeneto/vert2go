@@ -160,5 +160,7 @@
     "current_model": "one role per account; manager has no reservation capability or enrolled reservation unit",
     "implementation_changed": false,
     "status": "decision_and_explicit_unit_binding_pending"
-  }
+  },
+  "historical_evidence": true,
+  "superseded_by": "i5-cancellation-manager-20261113.json"
 }

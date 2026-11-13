@@ -72,7 +72,17 @@ class OperationsHTTP(GoogleHTTP):
         return self._request('PUT',url,{'valueInputOption':'RAW'},
                              {'range':target,'majorDimension':'ROWS','values':[values]},'sheets.update',spreadsheet_id)
 
-    def _request(self, method, url, params, body, operation, resource):
+    def cancel_request(self,calendar_id,event_id,etag):
+        self._consent()
+        if self.operations.calendar_cancel is not True:raise EngineError('calendar_cancellation_not_authorized')
+        if calendar_id!=self.operations.calendar_id:raise EngineError('google_resource_denied')
+        if (type(event_id) is not str or not re.fullmatch('[0-9a-f]{64}',event_id)
+                or type(etag) is not str or not etag or len(etag)>1024 or '\r' in etag or '\n' in etag):
+            raise EngineError('google_operation_denied')
+        url='https://www.googleapis.com/calendar/v3/calendars/'+quote(calendar_id,safe='')+'/events/'+event_id
+        return self._request('PATCH',url,{'sendUpdates':'none'},{'status':'cancelled'},'calendar.cancel',calendar_id,etag=etag)
+
+    def _request(self, method, url, params, body, operation, resource, *, etag=None):
         # Exactly one network attempt. Any lost/malformed response is reconciled by the engine.
         self._consent()
         import requests
@@ -81,9 +91,11 @@ class OperationsHTTP(GoogleHTTP):
         try:
             token = self.bearer()
             timeout = min(self.policy.config.timeout_seconds,self.remaining())
+            headers={'Authorization':'Bearer '+token}
+            if etag is not None:headers['If-Match']=etag
             with quiet_oauth_logs():
                 response = self._session.request(method,url,params=params,json=body,
-                    headers={'Authorization':'Bearer '+token},timeout=timeout,allow_redirects=False,stream=True)
+                    headers=headers,timeout=timeout,allow_redirects=False,stream=True)
             status = response.status_code
             output = bytearray()
             for block in response.iter_content(chunk_size=65536):
@@ -97,6 +109,8 @@ class OperationsHTTP(GoogleHTTP):
                 raise EngineError('google_reauthorization_required')
             if status == 403:
                 raise EngineError('google_access_denied')
+            if status == 412 and operation=='calendar.cancel':
+                raise EngineError('calendar_precondition_failed')
             if not 200 <= status < 300:
                 raise EngineError('google_operation_uncertain')
             return Payload(bytes(output)).json()
@@ -139,6 +153,10 @@ class FreshGoogle:
     def get_event(self, calendar_id, event_id):
         with self.connection() as http:
             return http.event_request('GET',calendar_id,event_id=event_id)
+
+    def cancel_event(self,calendar_id,event_id,etag):
+        with self.connection() as http:
+            return http.cancel_request(calendar_id,event_id,etag)
 
     def read_range(self, spreadsheet_id, target):
         from app.integrations.sheets import Sheets

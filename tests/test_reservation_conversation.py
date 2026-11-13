@@ -199,7 +199,7 @@ class ReservationConversationTests(TelegramConversationCase):
     def test_another_profile_does_not_borrow_resident_reservation_context(self):
         self.start_date_only()
         self.assertEqual(self.channel.conversation.reservations.state(self.msg(self.manager)),{})
-        self.assertEqual(self.send(2,'Quero reservar o salão dia 16/11/2026',2002),'unauthorized')
+        self.assertEqual(self.send(2,'Quero reservar o salão dia 16/11/2026',2002),'simulated_unit_not_enrolled')
         self.assertEqual(self.calendar.creates,0)
 
     def test_transparent_and_cancelled_events_do_not_block_availability(self):

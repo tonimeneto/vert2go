@@ -1,5 +1,303 @@
 # Relatório I5 — implementação local
 
+## Estado vigente — cancelamento autorizado no Telegram — 13/11/2026
+
+Responsável: Codex, após retorno do proprietário. Toninho recebeu a lista, escolheu
+a opção 1, recebeu o resumo da reserva de 16/11/2026 das 16h às 19h e respondeu
+“Autorizo”. O Alfredo informou sucesso. A conferência independente, somente leitura,
+confirmou o evento escolhido como `cancelled` na Agenda e a reserva adjacente,
+das 19h às 22h, como `confirmed`. Nenhum cancelamento parcial foi inferido.
+
+O diário contém uma nova operação de cancelamento `confirmed`, às 15h16min44s de
+Brasília. A reserva original permanece no SQLite, com proposta, referência externa
+e auditoria preservadas. O recibo da resposta `reservation_cancelled` está `sent`;
+o proprietário também confirmou seu recebimento pelo texto da conversa.
+**Este percurso real de cancelamento passou.** A proposta antiga expirada permanece
+como histórico separado e não foi reutilizada como autorização.
+
+Há uma única atividade desse cancelamento na outbox, ainda `pending`. O total atual
+é **três atividades pendentes e oito sincronizadas**. Não foi executada escrita na
+planilha pelo agente de desenvolvimento. Próxima ação operacional: sincronização
+autorizada pelo fluxo existente e conferência da atividade de cancelamento.
+
+O painel está ATIVO, no modo `operations`. O contador agora registra uma falha e
+duas notificações de prontidão, com última transição às 16h09 de Brasília. Portanto
+houve uma reconexão posterior à janela de 90 segundos registrada abaixo; a ausência
+de falhas naquela janela não significa estabilidade prolongada. Não se declara
+resolvida toda a oscilação nem aceite integral da I5. O percurso real de Maria como
+moradora, a sincronização pendente e o aceite aplicável permanecem pendentes.
+I6 não autorizada; sem alterações de código, escritas Git ou publicação nesta
+conferência. Os 538 testes locais anteriores não foram repetidos por esta atualização
+somente documental. [Evidência do teste e leituras](evidencias/i5-reservation-cancellation-human-20261113.json).
+
+Este estado substitui especificamente a pendência de conclusão humana do
+cancelamento nos registros anteriores; os demais limites e históricos permanecem.
+
+## Histórico da correção — oscilação de conexão e resposta à escolha 1 — 13/11/2026
+
+Responsável: Codex. O proprietário relatou que o painel alternava ATIVO e SEM
+CONEXÃO e não recebeu o resumo após escolher a primeira reserva. A leitura do
+SQLite confirmou: a escolha foi processada, a proposta de cancelamento foi criada,
+mas a resposta Telegram ficou `uncertain`. A reserva não foi cancelada pelo agente
+de desenvolvimento e essa resposta não foi reenviada por suposição.
+
+O proprietário esclareceu que os ensaios reais anteriores não apresentavam quedas.
+A comparação de AST do cliente `TelegramAPI` e do conector TCP com o commit de
+aceite I4 confirmou que eram iguais antes desta correção. Isso não determina uma
+causa externa: a diferença observável foi medida em chamadas reais, e a oscilação
+não foi atribuída definitivamente à rede/provedor. Houve encerramento prematuro
+da investigação quando um estado ATIVO isolado foi tratado como recuperação final.
+
+Correção aplicada: manter a conexão TLS saudável entre chamadas. Antes, cada método
+abria e fechava outra conexão, inclusive a resposta imediatamente após o polling.
+Agora o cliente só descarta a conexão quando o servidor indica fechamento, em erro
+ou na parada. A abertura TCP/TLS é explícita e ocorre antes do envio HTTP. Uma falha
+nessa fase comprova que `sendMessage` não saiu e conserva a resposta pendente com
+o intervalo externo de nova tentativa. Após início do envio, continua `uncertain`,
+sem repetição automática. O resumo antigo incerto não foi reclassificado como não
+enviado nem foi usada sua escolha como confirmação do cancelamento.
+
+**538 testes locais aprovados**, zero falhas/erros/ignorados, fontes protegidas e
+hashes conferidos. As provas anteriores de 531 e 525 testes foram preservadas.
+Novas coberturas: conexão reutilizada, fechamento pelo servidor, encerramento
+explícito, distinção pré/pós-transmissão, resposta não enviada que pode ser tentada
+novamente sem duplicar, registro seguro do controlador e launcher manual.
+
+O teste real somente leitura encontrou falhas ao abrir a conexão, mas depois obteve
+12 respostas `getMe` seguidas na mesma conexão. A prova mais longa passou com seis
+respostas ao longo de 71,33 segundos, incluindo pausa de 30 segundos, sem consumir
+mensagens ou enviar conteúdo. Evidências:
+[chamadas seguidas](evidencias/i5-telegram-keepalive-readonly-20261113.json) e
+[intervalos de inatividade](evidencias/i5-telegram-keepalive-soak-20261113.json).
+Não comprovam sozinhas estabilidade prolongada de polling, entrega ou cancelamento.
+
+O controlador registra somente estado/código/mode/PID/data e contadores em um
+arquivo local, permitindo acompanhar a próxima partida sem novas verificações
+manuais repetidas. O launcher mantém o painel canônico e aceita uma solicitação
+manual `--start`; o atalho normal continua sem ligar automaticamente. O controle
+remoto Windows permaneceu indisponível, portanto foi solicitado o fechamento
+cooperativo da janela antiga antes de reabrir com o código atual. Estado dessa
+recarga: o proprietário confirmou o fechamento, o painel foi reaberto e ligado
+pelo mesmo controlador, em modo `operations`. O processo filho foi conferido e a
+trava do consumidor permaneceu ocupada. Entre 15h11 e 15h13 de Brasília, foram
+observados **90,06 segundos contínuos em ATIVO, com zero falhas de conexão**.
+Não houve envio de mensagens nem escrita Google pelo observador.
+[Observação do painel em execução](evidencias/i5-telegram-keepalive-panel-verified-20261113.json).
+O primeiro monitor usou equivocadamente o PID do launcher em lugar do processo
+filho; seu resultado foi preservado e anotado como erro do observador, sem
+interpretá-lo como queda. A observação corrigida usa o PID do processo filho.
+
+A leitura posterior do diário encontrou uma proposta encerrada (`cancelled`)
+pela expiração na partida, sem cancelamento confirmado ou em execução. Esse estado
+encerra a proposta antiga, não a reserva. Não foi reenviado o resumo incerto nem
+enviada autorização pelo agente de desenvolvimento. A retomada do cancelamento
+depende de uma nova proposta entregue e da autorização do participante.
+
+Arquivos alterados nesta continuidade: `app/channels/telegram.py`,
+`app/desktop/control.py`, `app/desktop/panel.py`, `scripts/alfredo_control.py`,
+`tests/test_telegram.py`, `tests/test_desktop.py`, README e documentos pertinentes.
+Não houve mudança de token, sistema de rede, firewall, TLS, banco/esquema,
+permissões ou destinos Google, nem Git de escrita/publicação. I6 não autorizada.
+I5 continua sem aceite formal; a estabilidade de ponta a ponta e a conclusão
+humana do cancelamento continuam pendentes. A observação de 90 segundos é uma
+verificação limitada de transporte, sem garantir estabilidade futura ou entrega
+ao participante. Este registro substitui a conclusão
+anterior de recuperação completa baseada somente em ATIVO.
+
+## Histórico superado — partida pelo painel e conexão Telegram — 13/11/2026
+
+Atualização às 14h50 de Brasília: o proprietário confirmou **ATIVO** após as
+tentativas automáticas. As travas locais confirmaram painel e consumidor em
+execução. A conexão foi restabelecida; isso substitui a pendência de conexão
+descrita no diagnóstico abaixo. [Registro observado](evidencias/i5-desktop-active-20261113.json).
+A conferência ainda não encontrou recibos Telegram novos de 13/11 nem cancelamentos
+operacionais: resposta ao pedido e validação real do fluxo continuam pendentes.
+
+Responsável: Codex, por solicitação de correção do erro `telegram_transport_error`
+mostrado no controle Windows. O painel ainda iniciava somente I4; foi corrigido
+para iniciar o runtime I5 quando as operações já estão configuradas e autorizadas.
+Sem operações autorizadas conserva o modo anterior. Não houve alteração de unidades,
+destinos, credenciais, permissões, banco/esquema ou autorização da I6 nesta correção.
+
+A falha temporária durante `getMe`/`getWebhookInfo` encerrava o consumidor antes de
+ATIVO. A partida agora mostra SEM CONEXÃO e aguarda nova tentativa usando o intervalo
+existente, com parada cooperativa. Somente leituras de inicialização são repetidas;
+envios e escritas incertas continuam sem repetição automática. Falhas de
+autenticação/identidade continuam fatais, sem anunciar prontidão indevida.
+
+**531 testes aprovados**, incluindo seis cenários novos de partida/autorização,
+recuperação, parada e erro fatal. A evidência anterior de 525 testes foi preservada
+em `evidencias/i5-tests-before-desktop-recovery-20261113.json` e transcript correspondente.
+Arquivos de código alterados: `app/desktop/control.py`, `app/channels/telegram.py`,
+`tests/test_desktop.py` e `tests/test_telegram.py`; documentação de controle,
+implementação, README e este relatório reconciliados. Não houve operação Git de
+escrita, publicação ou modificação de infraestrutura/rede.
+
+Diagnóstico real: houve conexão TLS válida ao host oficial e uma resposta `getMe`
+200 com identidade correta, intercaladas com timeouts de TCP em IPv4/IPv6. Google
+e Microsoft responderam normalmente nos testes comparativos; o próprio Telegram
+alternou sucesso e timeout tanto com o conector padrão quanto com o conector de
+endereços concorrentes. Isso não prova uma causa específica no provedor, rede ou
+equipamento. Não foram desabilitados TLS, verificação de certificado ou proteções.
+O teste canônico de partida foi interrompido após falhas de transporte, antes de
+qualquer polling/envio: [evidência](evidencias/i5-desktop-startup-readonly-20261113.json).
+
+O controle remoto Windows desta sessão falhou por indisponibilidade do helper.
+O proprietário fechou a janela antiga; o launcher existente abriu o painel novo
+e o proprietário clicou Ligar. O resultado humano informado foi **SEM CONEXÃO**.
+As travas locais confirmaram painel e consumidor em execução, mas isso não foi
+tratado como prova de conexão: a última observação humana ainda não era ATIVO.
+O painel permanece aberto e tenta reconectar. Não foi enviado comando de
+cancelamento nem confirmação pelo agente de desenvolvimento.
+
+Pendência após a atualização acima: comprovar a resposta ao pedido pendente.
+Não afirmar serviço conectado apenas por PID,
+trava ocupada ou testes automatizados. A validação real de cancelamentos,
+pendências anteriores de Sheets e aceite integral da I5 continuam pendentes.
+I6 permanece não autorizada. Este estado substitui o estado operacional anterior
+de bot encerrado, preservando abaixo o histórico das implementações.
+
+## Estado vigente — EXECUTE de cancelamento e herança de perfis — 13/11/2026
+
+Responsável: Codex. Situação: **as duas correções foram implementadas e validadas
+automaticamente; a I5 continua sem aceite formal integral**. A autorização explícita
+recebida no anexo desta data restringe o trabalho a cancelamento e herança de
+perfis. Substitui, para esta execução, a autorização anterior de sincronização:
+nenhum commit, push, pull, merge, sincronização ou publicação foi executado.
+Somente leituras locais Git identificaram raiz, branch e arquivos alterados.
+I6 continua não autorizada. Os estados anteriores abaixo são históricos.
+
+### Correções concluídas
+
+- Cancelamento em linguagem natural das próprias reservas, com conferência de
+  titularidade por ID Telegram, unidade e destino. O horário 18h–20h, cruzando
+  reservas 16h–19h e 19h–22h, apresenta as duas opções. Escolher uma delas apenas
+  prepara o resumo: outra confirmação explícita é necessária antes de cancelar.
+- Proposta íntegra e com prazo; mesma pessoa/conversa; consulta da versão atual;
+  PATCH condicional de estado cancelado; GET posterior antes de afirmar sucesso.
+  Repetições, propostas concorrentes, estado já cancelado e falhas parciais não
+  repetem efeitos. Reinício recupera operações em processamento por leitura.
+  Uma nova tentativa de escrita após falha exige nova solicitação, proposta e
+  autorização. Falha local depois da alteração remota conserva o diário para
+  recuperação, sem repetir PATCH. Não existe chamada DELETE ou exclusão SQL.
+- Histórico original, IDs, proposta e vínculos preservados. A mudança de estado
+  da reserva, o diário do cancelamento e a auditoria são concluídos em uma única
+  transação. Sheets recebe uma atividade de cancelamento pela outbox independente,
+  preservando a criação original. A Agenda é a fonte de disponibilidade; eventos
+  cancelados deixam de bloquear. Relatório distingue cancelamento efetivo de
+  proposta encerrada sem execução.
+- `manager` recebe a união das funções configuradas para `resident` e suas
+  funções administrativas. Reserva, consulta e cancelamento próprios funcionam
+  sem outra conta Telegram. A herança depende do perfil, não de nome ou ID fixo;
+  também foi testada com outro ID. Não há autorização automática de cancelar
+  reserva de outro participante/unidade, nem elevação de resident para manager.
+
+O proprietário informou os vínculos: **Maria/unidade 52; Toninho/unidade 62**.
+Foram aplicados no YAML privado, mantendo contas, IDs, destinos, condições,
+orçamento e demais campos. A unidade fictícia anterior de Toninho permanece
+como `legacy_units` exclusivamente para o mesmo ID, permitindo tratar seus
+registros históricos sem reescrevê-los. Propostas validam também a unidade atual;
+mudança não autorizada de vínculo bloqueia a confirmação. Acrescentadas a permissão
+`reservation.cancel` e a autorização externa `calendar_cancel` para o destino já
+existente. Não houve mudança de escopos OAuth ou leitura/alteração de segredos.
+
+### Banco e configuração efetivamente atualizados
+
+Destino: **SQLite local `data/i2.sqlite3`**, versão **4 → 5**. Migration aplicada:
+`app/storage/migrations/005_reservation_cancellations.sql`, exclusivamente aditiva
+(nova tabela/índice). Backup anterior em
+`data/backups/before-i5-20261113T164147-e841eed7af9b48259701cb1833a604dd.sqlite3`.
+O YAML anterior foi preservado em
+`data/backups/i5-cancellation-manager-20261113/config-20261113T164147177155Z.yaml`.
+Backups/configuração/dados privados continuam fora do Git.
+
+A comparação de conteúdo de **todas as tabelas preexistentes** confirmou os
+mesmos registros antes e depois; verificação de integridade e de chaves estrangeiras
+aprovada. O diário de cancelamento operacional foi criado vazio: nenhuma reserva
+Google foi alterada ou cancelada nesta entrega. Não há Supabase neste fluxo e
+nenhuma migration remota foi executada. Leitores I4 e inspeção foram compatibilizados
+com esquema 5, conservando os modos anteriores e sem iniciar o painel/bot.
+
+### Validação executada e evidências
+
+**525 testes aprovados**, zero falhas, erros ou ignorados, incluindo **26 novos**
+para estas correções. Cinco configurações de inicialização, demonstrações I1/I2/I4/I5
+e hashes das fontes protegidas aprovados. A evidência anterior de **499 testes**
+foi preservada em `evidencias/i5-tests-before-cancellation-manager-20261113.json`
+e no transcript correspondente. A regressão identificou duas incompatibilidades
+(cancelamento administrativo e conferência privilegiada da síndica), corrigidas
+antes da execução final. Fontes normativas originais não foram reescritas; a
+autorização nova e o comportamento que substitui a restrição de perfil anterior
+estão na implementação e na definição vigente do agente.
+
+Cobertura: própria reserva; outra unidade; sobreposição ambígua; recusa/ausência
+de confirmação; confirmação válida; já cancelada; mensagem repetida; propostas
+duplicadas; timeout antes/depois de PATCH; falha SQLite após efeito remoto;
+reinício; concorrência/ETag; disponibilidade liberada; falha independente Sheets;
+auditoria/retenção; manager criando e cancelando; identidade alternativa;
+mudança de unidade; compatibilidade de vínculo antigo; resident sem privilégios
+administrativos; interpretação semântica; ajuda e novo pedido durante esclarecimento.
+
+A reprodução completa usando o **YAML vigente, unidades 52/62, rede bloqueada,
+Google/Telegram fictícios e SQLite temporário** também passou. Houve dois
+cancelamentos simulados, seleção explícita do primeiro entre dois intervalos
+cruzados, preservação da reserva não escolhida, negativa de cancelamento de outra
+unidade pelo manager, cinco atividades sincronizadas no Sheets fictício e zero
+duplicações após replay. Isso não é uma gravação Google real nem aceite humano.
+
+Evidências:
+
+- [Consolidação desta entrega](evidencias/i5-cancellation-manager-20261113.json).
+- [Migration, backups e preservação de registros](evidencias/i5-cancellation-manager-local-migration-20261113.json).
+- [Percurso isolado com configuração vigente](evidencias/i5-cancellation-manager-config-replay-20261113.json).
+- [Suíte final](evidencias/i5-tests.json) e [transcript](evidencias/i5-unittest.txt).
+
+### Arquivos e responsabilidades alterados
+
+- Domínio: `app/services/reservation_cancellations.py`, `app/services/operations.py`.
+- Conversa: `app/channels/reservation_cancellation.py`, `operations.py`,
+  `operation_dialog.py`, `operation_messages.py`, `reservation_conversation.py`.
+- Interpretação: `app/ai/operation_intent.py`.
+- Configuração/autorização: `app/config/schema.py`, `app/config/operations.py`,
+  `config.operations.example.yaml`, `scripts/setup_operations_i5.py`; YAML privado.
+- Integrações: `app/integrations/operations.py`.
+- Persistência/compatibilidade: `app/storage/sqlite.py`, `backup.py`,
+  `migrations/005_reservation_cancellations.sql`, `app/services/knowledge.py`,
+  `scripts/inspect_telegram_i2.py`, `scripts/knowledge_i4.py`.
+- Testes: `tests/test_reservation_cancellations.py`, `tests/test_operations.py`,
+  `tests/test_reservation_conversation.py`.
+- Documentação: `README.md`, este relatório, `docs/implementacao-i5.md`,
+  `docs/agentes/alfredo-i5.md` e as evidências acima/históricas preservadas.
+  `docs/evidencias/i5-natural-dialog.json` foi identificado como evidência histórica
+  substituída pela consolidação desta entrega, sem remover os resultados anteriores.
+
+Estratégia de fechamento: ampliar os consumidores canônicos existentes e criar
+um diário aditivo de cancelamento, sem substituir reservas ou criar agenda paralela.
+A seleção conversa com o mesmo motor; confirmação, migração, integração, leitores,
+testes e documentação foram reconciliados. Atalhos anteriores continuam compatíveis.
+
+### Lacuna documental, limites e pendências reais
+
+Não foi encontrada política específica de cancelamento nas fontes locais consultadas.
+Não foram inventados prazo, multa, penalidade ou restrição condominial. Esta entrega
+aplica titularidade/unidade, integridade, destino autorizado e confirmação. Uma
+futura política aprovada deverá ser incorporada explicitamente às condições externas.
+O Google pode remover posteriormente os detalhes de eventos com estado cancelado;
+o histórico durável e os identificadores ficam preservados no SQLite conforme a
+retenção existente, como detalhado na implementação com fontes oficiais.
+
+**Não executados nesta entrega:** cancelamento/alteração de eventos preexistentes,
+escrita Google real, nova sessão Telegram, testes humanos das duas correções,
+reconciliação das pendências operacionais anteriores, sincronização GitHub ou
+publicação Lovable. O bot permanece encerrado, sem alteração do modo do painel I4.
+O próximo passo de validação é um ensaio integrado com reserva descartável
+identificada e autorização específica para seu cancelamento, preservando os eventos
+preexistentes. Nenhuma informação cadastral segue pendente após a resposta 52/62.
+Na conferência final somente leitura do SQLite, permanecem **duas atividades
+operacionais pendentes e oito já sincronizadas**; esses registros foram preservados.
+**Implementação e validação automatizada concluídas no escopo; validação real
+integrada e aceite formal integral da I5 pendentes. I6 não autorizada.**
+
 ## Estado para sincronização com GitHub/Lovable — 13/11/2026
 
 A invocação explícita de `local-para-lovable` autoriza nesta entrega o commit,

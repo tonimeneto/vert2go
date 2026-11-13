@@ -11,11 +11,12 @@ from app.core.contracts import EngineError
 
 ROLE_CAPABILITIES = {
     'resident': frozenset({'guidance.read', 'context.read', 'context.write', 'knowledge.read',
-                           'reservation.create', 'reservation.read', 'request.create', 'request.read'}),
+                           'reservation.create', 'reservation.read', 'reservation.cancel', 'request.create', 'request.read'}),
     'manager': frozenset({'guidance.read', 'guidance.create', 'guidance.correct',
                           'guidance.cancel', 'guidance.history', 'context.read', 'context.write', 'knowledge.read',
                           'request.read', 'request.respond', 'report.read', 'operations.reconcile'}),
 }
+ROLE_CAPABILITIES['manager'] = ROLE_CAPABILITIES['manager'] | ROLE_CAPABILITIES['resident']
 TELEGRAM_TOKEN_PATTERN = re.compile(r'[1-9][0-9]*:[A-Za-z0-9_-]{20,128}')
 
 
@@ -231,8 +232,11 @@ def _parse_config(raw, *, enrollment=False):
         raise EngineError('unsafe_configuration')
     if {u.role for u in users if u.enabled} != {'resident', 'manager'}:
         raise EngineError('invalid_configuration')
-    if operations is not None and set(operations.units) != {str(u.channel_user_id) for u in users if u.enabled and u.role == 'resident'}:
-        raise EngineError('operations_units_invalid')
+    if operations is not None:
+        residents={str(u.channel_user_id) for u in users if u.enabled and u.role=='resident'}
+        eligible={str(u.channel_user_id) for u in users if u.enabled and u.role in ('resident','manager')}
+        if not residents<=set(operations.units)<=eligible:
+            raise EngineError('operations_units_invalid')
     keys(raw['permissions'], ROLE_CAPABILITIES)
     perms = {}
     for role, allowed in ROLE_CAPABILITIES.items():
@@ -240,6 +244,7 @@ def _parse_config(raw, *, enrollment=False):
         if type(configured) is not list or not all(type(p) is str for p in configured) or not set(configured) <= allowed:
             raise EngineError('unsafe_permissions')
         perms[role] = frozenset(configured)
+    perms['manager'] = perms['manager'] | perms['resident']
     keys(raw['limits'], ('confirmation_seconds', 'max_message_chars', 'messages_per_minute'))
     for value in raw['limits'].values():
         positive(value)

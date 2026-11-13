@@ -23,20 +23,26 @@ PERMISSIONS = {
     'operations_report':'report.read', 'reconcile_operation':'operations.reconcile',
     'sync_operations':'operations.reconcile', 'contextual_guidance':'guidance.read',
     'reservation_availability':'reservation.read',
+    'my_reservations':'reservation.read',
+    'propose_reservation_cancellation':'reservation.cancel',
+    'confirm_reservation_cancellation':'reservation.cancel',
+    'reconcile_reservation_cancellation':'reservation.cancel',
 }
-READS = {'reservation_status','request_status','operations_report','contextual_guidance','reservation_availability'}
+READS = {'reservation_status','request_status','operations_report','contextual_guidance','reservation_availability','my_reservations','reconcile_reservation_cancellation','confirm_reservation_cancellation','propose_reservation_cancellation'}
 
 
 class Operations:
     def __init__(self, config, store, calendar, sheets, *, drive=None, clock=utcnow, lock_root=None):
         if config.operations is None:
             raise EngineError('operations_not_configured')
-        if store.execute('PRAGMA user_version').fetchone()[0] != 4:
+        if store.execute('PRAGMA user_version').fetchone()[0] != 5:
             raise EngineError('operations_migration_required')
         self.config, self.store, self.calendar, self.sheets = config,store,calendar,sheets
         self.c, self.policy, self.clock, self.drive = config.operations,Policy(config),clock,drive
         # Same canonical resource lock for different database names and processes.
         self.lock_root = Path(lock_root) if lock_root else Path(__file__).resolve().parents[2]/'data/locks'
+        from app.services.reservation_cancellations import ReservationCancellations
+        self.cancellations=ReservationCancellations(self)
 
     @contextmanager
     def lock(self):
@@ -64,7 +70,7 @@ class Operations:
                                        (self.config.environment_id,)).fetchall()
         for row in conflicts:
             self._conflict_request(row)
-        return count
+        return count+self.cancellations.startup()
 
     def _row(self, message, operation_id, *, manager=False):
         identifier(operation_id)
@@ -92,7 +98,7 @@ class Operations:
     def _enqueue(self, operation_id, proposal, category, external, now):
         oid = digest([operation_id,'sheets'])
         status = ('forwarded' if proposal.get('assigned_to') == 'manager' else 'pending') if category == 'request' else (
-            'resolved' if category == 'response' else 'forwarded' if category == 'reservation_conflict' else 'confirmed')
+            'resolved' if category == 'response' else 'forwarded' if category == 'reservation_conflict' else 'cancelled' if category=='reservation_cancellation' else 'confirmed')
         payload = [oid,stamp(now),proposal.get('unit_reference',''),category,status,
                    proposal.get('assigned_to',''),stamp(now),external or operation_id,'synced',
                    proposal.get('content',proposal.get('response',''))]
@@ -275,6 +281,8 @@ class Operations:
         return result
 
     def _dispatch(self, message, action, p, hashed):
+        if action in ('my_reservations','propose_reservation_cancellation','confirm_reservation_cancellation','reconcile_reservation_cancellation'):
+            return self.cancellations.dispatch(message,action,p,hashed)
         if action=='reservation_availability':
             exact(p,('resource',),('date',))
             return self.availability(p['resource'],p.get('date'))
@@ -374,12 +382,14 @@ class Operations:
         if action == 'operations_report':
             exact(p,())
             env = self.config.environment_id
-            groups = lambda table: [dict(r) for r in self.store.execute('SELECT '+('kind,' if table == 'pilot_operations' else '')+
-                ('state' if table != 'pilot_requests' else 'status')+' AS status,count(*) AS count FROM '+table+
-                ' WHERE environment_id=? GROUP BY '+('kind,' if table == 'pilot_operations' else '')+
-                ('state' if table != 'pilot_requests' else 'status'),(env,))]
+            def groups(table):
+                expression=('status' if table=='pilot_requests' else 'state')
+                if table=='pilot_operations':
+                    expression="CASE WHEN state='cancelled' AND json_extract(result,'$.cancellation_id') IS NOT NULL THEN 'reservation_cancelled' ELSE state END"
+                return [dict(r) for r in self.store.execute('SELECT '+('kind,' if table=='pilot_operations' else '')+expression+' AS status,count(*) AS count FROM '+table+' WHERE environment_id=? GROUP BY '+('kind,' if table=='pilot_operations' else '')+expression,(env,))]
             return Result('success','pilot_report',{'experimental':True,'operations':groups('pilot_operations'),
                 'requests':groups('pilot_requests'),'sheets':groups('pilot_outbox'),
+                'cancellations':groups('pilot_cancellations'),
                 'reservation_evidence':'operation_history_only; consult Calendar for current existence'})
         if action == 'contextual_guidance':
             return self.contextual_guidance(message,p)

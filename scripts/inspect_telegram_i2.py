@@ -25,7 +25,7 @@ def inspect(config, database):
     con = sqlite3.connect(database.resolve().as_uri()+'?mode=ro', uri=True)
     try:
         if (con.execute('PRAGMA application_id').fetchone()[0] != APPLICATION_ID
-                or con.execute('PRAGMA user_version').fetchone()[0] not in (2,3,4)):
+                or con.execute('PRAGMA user_version').fetchone()[0] not in (2,3,4,5)):
             raise EngineError('unrecognized_database')
         identity = config.environment_id, config.telegram['bot_id']
         integrity = con.execute('PRAGMA integrity_check').fetchone()[0]

@@ -25,6 +25,7 @@ permissions:
   - context.write
   - reservation.create
   - reservation.read
+  - reservation.cancel
   - request.create
   - request.read
   - knowledge.read
@@ -96,9 +97,11 @@ operations:
     sheet_range: '''Operacao''!A2:J30'
     exclusive_pilot_resources: false
     calendar_insert: false
+    calendar_cancel: false
     sheets_update: false
   units:
     '1001': SIM-101
+    '2002': SIM-202
   resources:
   - id: salao
     rule_id: fictional-rule

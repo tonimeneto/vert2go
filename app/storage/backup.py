@@ -14,7 +14,7 @@ def before_knowledge_migration(database, acl_reference):
 
 
 def before_operations_migration(database, acl_reference):
-    return before_migration(database,acl_reference,4,'i5')
+    return before_migration(database,acl_reference,5,'i5')
 
 
 def before_migration(database, acl_reference, target_version, phase):
@@ -28,11 +28,11 @@ def before_migration(database, acl_reference, target_version, phase):
         if source.execute('PRAGMA application_id').fetchone()[0] != APPLICATION_ID:
             raise EngineError('unrecognized_database')
         version = source.execute('PRAGMA user_version').fetchone()[0]
-        if version not in (1,2,3,4):
+        if version not in (1,2,3,4,5):
             raise EngineError('unrecognized_database')
         if version >= target_version:
             return None
-        if source.execute('PRAGMA user_version').fetchone()[0] not in (1,2,3):
+        if source.execute('PRAGMA user_version').fetchone()[0] not in (1,2,3,4):
             raise EngineError('unrecognized_database')
         private_acl(acl_reference)
         folder = path.parent/'backups'

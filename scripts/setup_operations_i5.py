@@ -17,7 +17,7 @@ from app.integrations.private_files import private_acl, private_lock, atomic_yam
 from app.main import instance_lock
 
 CAPABILITIES = {
-    'resident':('reservation.create','reservation.read','request.create','request.read'),
+    'resident':('reservation.create','reservation.read','reservation.cancel','request.create','request.read'),
     'manager':('request.read','request.respond','report.read','operations.reconcile'),
 }
 

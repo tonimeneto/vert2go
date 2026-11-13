@@ -1,5 +1,41 @@
 # Vert2Go
 
+**Teste real em 13/11/2026:** Toninho autorizou o cancelamento da reserva de
+16/11/2026, das 16h às 19h, por conversa no Telegram. A Agenda confirmou o
+cancelamento; a reserva das 19h às 22h permaneceu confirmada. Histórico preservado,
+atividade do cancelamento aguardando Sheets (três pendências totais). O painel está
+ATIVO, mas registrou uma reconexão posterior à observação inicial. Este resultado
+substitui a pendência de cancelamento real indicada abaixo; estabilidade prolongada
+e aceite integral da I5 continuam pendentes. [Estado vigente](docs/relatorio-i5.md).
+
+**Atualização do transporte Telegram — 13/11/2026:** reutilização de conexão HTTPS
+e distinção entre envio não transmitido e resultado incerto implementadas; **538
+testes aprovados**. Provas reais de identidade por conexão persistente passaram,
+incluindo 71 segundos com períodos de inatividade. Após reabrir e ligar o painel,
+foram observados 90 segundos contínuos em ATIVO, sem falhas de conexão. Estabilidade
+do atendimento e estado do painel são registrados no [relatório I5](docs/relatorio-i5.md); um estado
+ATIVO isolado não equivale a aceite integral da etapa.
+
+**Controle Windows corrigido em 13/11/2026:** o botão Ligar agora inicia também as
+operações I5 quando elas já estão configuradas e autorizadas. Falha temporária de
+conexão na partida gera SEM CONEXÃO e nova tentativa, sem falso estado ATIVO.
+Autenticação inválida continua bloqueando. **531 testes aprovados**; instruções no
+[controle Windows](docs/controle-windows.md) e estado observado no
+[relatório I5](docs/relatorio-i5.md). As evidências anteriores permanecem preservadas.
+
+**Estado vigente — EXECUTE I5 de 13/11/2026:** implementados o cancelamento de
+reservas próprias por conversa natural e a herança das funções de morador pelo
+perfil `manager`. Cancelamentos exigem escolha inequívoca, autorização e conferência
+na Agenda; histórico e outbox são preservados. Maria está vinculada à unidade 52,
+Toninho à 62, com compatibilidade dos registros fictícios anteriores. SQLite local
+migrado aditivamente de 4 para 5, com backup e todos os registros antigos preservados.
+**525 testes aprovados**, incluindo 26 novos; reprodução isolada com a configuração
+vigente aprovada. Não houve cancelamento Google real, publicação, operação Git de
+escrita ou ativação do bot nesta execução. **I5 sem aceite integral; I6 não autorizada.**
+[Alterações, arquivos, evidências e pendências](docs/relatorio-i5.md).
+
+**Histórico anterior, substituído pelo estado acima.**
+
 **Estado vigente — reserva real conferida em 12/11/2026:** Toninho autorizou pelo
 Telegram a reserva de 16/11/2026, das 16h às 19h. Evento único, horários e ausência
 de conflito conferidos em somente leitura. Cinco eventos e oito linhas preservados;

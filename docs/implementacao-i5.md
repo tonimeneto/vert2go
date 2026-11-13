@@ -1,5 +1,98 @@
 # Implementação I5 — operações experimentais
 
+## Correções autorizadas em 13/11/2026 — comportamento vigente
+
+Transporte atualizado após os relatos de oscilação: conexão HTTPS persistente por
+instância do cliente Telegram, encerrada no desligamento ou erro. A abertura TCP/TLS
+é separada do envio HTTP; somente uma falha comprovada nessa abertura permite manter
+`sendMessage` como pendente para nova tentativa. Após início do pedido, o resultado
+continua incerto e não pode ser repetido automaticamente. Não foram relaxados TLS,
+host fixo, autenticação ou vínculo entre proposta entregue e confirmação.
+538 testes locais passaram. Duas provas reais somente leitura registraram 12
+chamadas seguidas e um período de 71 segundos com pausa de 30 segundos na mesma
+conexão. São evidências de transporte, não de cancelamento Google real ou aceite I5.
+Depois do fechamento confirmado pelo proprietário, o painel foi reaberto e ligado
+no modo autorizado. O processo filho e a trava do consumidor foram conferidos;
+90,06 segundos contínuos em ATIVO, com zero falhas, foram registrados na
+[observação operacional](evidencias/i5-telegram-keepalive-panel-verified-20261113.json).
+Não houve confirmação de cancelamento pelo agente de desenvolvimento. A proposta
+anterior expirou; seu encerramento não cancela a reserva original.
+
+O mesmo painel Windows passa a iniciar `--operations --allow-live-google-writes`
+quando `config.yaml` já contém operações autorizadas. Isso corrige o caminho de
+partida que ainda iniciava exclusivamente I4, sem novas permissões ou outro motor.
+Sem operações/autorização, conserva o modo anterior. A inicialização Telegram
+agora reexecuta somente o handshake após falha de transporte/rate limit/resultado
+incerto de leitura; não repete envio de mensagem ou escrita Google. A espera é
+interrompida por desligamento. Erros de identidade/autenticação continuam fatais.
+São 531 testes aprovados após essa correção; estado real no relatório vigente.
+
+O EXECUTE desta data autoriza cancelamento de reservas próprias e herança funcional
+`manager` → `resident`. Substitui a restrição anterior de reserva exclusiva do
+morador e a ausência de cancelamento, inclusive a matriz original da seção 6.1 da
+especificação. PLAN, PRD e especificação originais foram preservados; esta extensão
+é documentada aqui e na [definição atual do Alfredo](agentes/alfredo-i5.md).
+
+`ReservationCancellations` reutiliza titularidade por ID, unidade, destinos,
+exclusividade local, recibos idempotentes, auditoria e a outbox Sheets. A migration
+aditiva `005_reservation_cancellations.sql` acrescenta o diário `pilot_cancellations`,
+com referência à reserva original e índice que impede dois cancelamentos efetivos.
+Não substitui a tabela original nem altera seus identificadores ou propostas.
+
+O diálogo consulta somente as reservas do participante na Agenda. Um intervalo que
+cruza reservas não escolhe alvo nem significa cancelamento parcial: pede a seleção
+da reserva inteira. Depois apresenta seus dados e exige outra autorização explícita.
+Uma recusa encerra somente a proposta; autorização, prazo, hash, unidade e destino
+são revalidados. A LLM identifica a finalidade `reservation_cancel`; não pode
+escolher um ID fictício, conceder privilégios ou confirmar a operação. A consulta
+`my_reservations` permite listar os próprios registros sem digitar referências.
+
+A alteração Google é estritamente um PATCH de `status=cancelled`, com `If-Match`
+da versão conferida. Não há chamada DELETE, exclusão local ou limpeza de histórico.
+Há consentimento externo específico `operations.authorization.calendar_cancel`,
+desabilitado por padrão. Antes do PATCH, o estado `committing` já está persistido.
+O sucesso só é informado após GET confirmar o cancelamento. Resultado incerto não
+repete gravação: a retomada consulta a Agenda; se o evento continuar confirmado,
+uma solicitação explícita de nova tentativa prepara outra proposta e exige nova
+autorização. Alteração concorrente detectada por ETag exige nova conferência.
+
+O [PATCH do Calendar](https://developers.google.com/workspace/calendar/api/v3/reference/events/patch)
+preserva campos omitidos; a [modificação condicional](https://developers.google.com/workspace/calendar/api/guides/version-resources)
+retorna 412 se a versão mudou. No Google, o [estado cancelado](https://developers.google.com/workspace/calendar/api/v3/reference/events)
+tem semântica de evento removido e pode desaparecer posteriormente. Por isso a
+preservação durável de proposta, IDs e auditoria permanece no SQLite, sujeita à
+retenção existente, sem depender da permanência do evento cancelado no Google.
+
+Não foi encontrada política documental específica de cancelamento. Nenhum prazo,
+multa, penalidade ou nova restrição condominial foi inventado. Aplicam-se identidade,
+titularidade/unidade, destino autorizado e confirmação explícita. Restrições de
+criação continuam no fluxo de criação; não são reutilizadas como prazo de desistência.
+
+Depois da conferência Google, SQLite registra o cancelamento da reserva e o diário
+da operação na mesma transação, com auditoria dos dois registros. A planilha recebe
+atividade `reservation_cancellation/cancelled` pela mesma outbox; a linha histórica
+da criação não é sobrescrita. Falha no Sheets não desfaz o cancelamento. Relatórios
+distinguem reserva cancelada na Agenda de proposta encerrada sem execução.
+
+As permissões efetivas de `manager` são a união de suas permissões administrativas
+com as configuradas para `resident`. A identidade continua por ID numérico e a
+seleção de reservas continua limitada ao próprio participante e à unidade vinculada;
+não existe permissão implícita de cancelar reservas de outras unidades. O cadastro
+externo aceita unidade para manager, sem outra conta. A ausência do vínculo pede
+conferência cadastral, em vez de simular uma unidade. O campo opcional `legacy_units`
+permite compatibilidade explícita por ID em correções cadastrais, sempre junto à
+titularidade original. A configuração local usa Maria 52 e Toninho 62; a unidade
+fictícia anterior de Toninho foi mantida somente como vínculo histórico da mesma
+conta, sem reescrever reservas existentes.
+
+SQLite operacional `data/i2.sqlite3`: versão 4 → 5, backup prévio e comparação de
+todos os registros anteriores aprovada. Leitores I4/inspeção reconhecem o esquema
+5; o painel continua no modo I4 e não foi acionado. Não há Supabase neste fluxo.
+Validação: 525 testes aprovados e reprodução completa com configuração vigente,
+Google/Telegram fictícios, rede bloqueada e banco temporário. Cancelamentos reais,
+novo recebimento humano e aceite integral continuam pendentes. I6 não autorizada.
+As seções abaixo que descrevem entregas anteriores preservam a cronologia.
+
 Continuidade: reserva humana de 16/11/2026, das 16h às 19h, confirmada com linguagem
 natural e conferida na Agenda. Agora são cinco eventos; a nova outbox segue pendente.
 A consulta de disponibilidade mantém seu objetivo após correção de data inválida;
@@ -52,11 +145,12 @@ O aceite I4 continua vigente para o bot já configurado. Aceite I5 real e G5/I6 
   `app/ai/operation_intent.py` reutiliza Responses, modelo e orçamento I4.
 - A memória administrativa continua exclusivamente em `OperationalMemory`, com
   confirmação, versões e auditoria existentes; nenhum armazenamento paralelo foi criado.
-- `004_operations.sql`: migração opcional para versão 4. As tabelas I1–I4 são preservadas.
+- `004_operations.sql`: migração original da I5; `005_reservation_cancellations.sql`
+  acrescenta o diário de cancelamentos na versão 5. As tabelas I1–I4 são preservadas.
   Sem habilitação explícita, bancos antigos não recebem a migração I5.
 - O verificador canônico passa a ser `verify_i5.py`. Entradas I1–I4 encaminham para
   ele, preservando os resultados históricos. Leitores I4 e inspeção Telegram aceitam
-  o esquema 4. O painel Windows continua iniciando a I4, sem habilitação implícita I5.
+  os esquemas 4 e 5. O painel Windows continua iniciando a I4, sem habilitação implícita I5.
 
 ## Reservas e reconciliação
 
@@ -89,8 +183,10 @@ consulta continua sendo leitura, sem exigir permissão de criação ou gerar pro
 Escolher horários muda para a coleta de reserva, sujeita às permissões existentes.
 
 A unidade vem do cadastro externo por ID autorizado; o comando de contexto não
-altera a unidade elegível para reservar. Somente `resident` pode propor e confirmar
-sua própria reserva. `manager` consulta relatórios e reconcilia, sem reservar como morador.
+altera a unidade elegível para reservar. `resident` e `manager` podem propor,
+confirmar, consultar e cancelar suas próprias reservas quando as permissões e o
+vínculo de unidade estiverem configurados. `manager` mantém também relatórios,
+respostas e reconciliação administrativos, sem cancelamento irrestrito de terceiros.
 
 O motor valida intervalo com fuso, janela Google autorizada, horário, duração,
 antecedência, vigência e taxa informativa. Nenhuma condição tem valor condominial
@@ -259,12 +355,13 @@ if ($LASTEXITCODE -ne 0) { throw 'Demonstração local I5 reprovada.' }
 Não trocar de banco para contornar pendências. Parar o consumidor antes de restaurar
 backup ou mudar parâmetros; manter banco/WAL/SHM e backup privados. A recuperação
 usa o mesmo banco e IDs. Reverter ativação significa iniciar a I4 sem as opções I5,
-preservando a versão 4 e os registros pendentes. Não fazer downgrade destrutivo nem
+preservando a versão 5 e os registros pendentes. Não fazer downgrade destrutivo nem
 restaurar snapshot anterior a uma possível escrita remota sem reconciliar a Agenda.
 
 A retenção continua somente como relatório de elegibilidade, sem DELETE ou
 agendamento. Pendências I5 preservam conservadoramente contexto, recibos e auditoria.
-Não há pagamento, reservas oficiais, alteração documental ou cancelamento de evento.
+Não há pagamento, reservas oficiais ou alteração documental. Cancelamentos seguem
+exclusivamente o fluxo de titularidade, confirmação e conferência descrito acima.
 Ensaios reais integrados, confirmação humana e aceite final pertencem aos portões
 seguintes e permanecem pendentes.
 

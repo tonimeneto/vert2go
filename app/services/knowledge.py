@@ -42,7 +42,7 @@ class Knowledge:
         if config.knowledge is None:
             raise EngineError('knowledge_not_configured')
         config.knowledge.require_consent()
-        if store.execute('PRAGMA user_version').fetchone()[0] not in (3,4):
+        if store.execute('PRAGMA user_version').fetchone()[0] not in (3,4,5):
             raise EngineError('knowledge_migration_required')
         self.config, self.store, self.drive, self.provider = config, store, drive, provider
         self.k, self.clock, self.sleep = config.knowledge, clock, sleep

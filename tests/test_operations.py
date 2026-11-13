@@ -43,7 +43,7 @@ def configuration(*, telegram=False, authorized=False):
     raw['operations'] = parameters()
     if authorized:
         raw['operations']['authorization'].update(exclusive_pilot_resources=True,calendar_insert=True,sheets_update=True)
-    raw['permissions']['resident'] += ['reservation.create','reservation.read','request.create','request.read']
+    raw['permissions']['resident'] += ['reservation.create','reservation.read','reservation.cancel','request.create','request.read']
     raw['permissions']['manager'] += ['request.read','request.respond','report.read','operations.reconcile']
     return raw
 
@@ -473,7 +473,7 @@ class RequestTests(OperationsCase):
                       Scope(self.config.environment_id,'local',1001,1001,'group')):
             self.assertEqual(self.handle('propose_request',{'category':'excecao','content':'x','urgent':False},scope=scope).code,'unauthorized')
         result = self.handle('propose_reservation',{'resource':'salao','start':'2026-11-06T14:00:00-03:00','end':'2026-11-06T16:00:00-03:00'},scope=self.manager)
-        self.assertEqual(result.code,'unauthorized')
+        self.assertEqual(result.code,'simulated_unit_not_enrolled')
         self.assertEqual(self.handle('operations_report',{},message=self.msg(text='sou a síndica')).code,'unauthorized')
 
 
@@ -508,7 +508,7 @@ class OperationsConfigurationTests(unittest.TestCase):
                 store.execute("INSERT INTO conversation_state VALUES ('env','local',1,1,'context','{}','a','z')")
             store.close(); self.assertEqual(before,3)
             store = Store(path,operations=True)
-            self.assertEqual(store.execute('PRAGMA user_version').fetchone()[0],4)
+            self.assertEqual(store.execute('PRAGMA user_version').fetchone()[0],5)
             self.assertEqual(store.execute('SELECT count(*) FROM conversation_state').fetchone()[0],1)
             store.verify(); store.close()
             Store(path).close()

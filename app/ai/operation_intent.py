@@ -3,7 +3,7 @@ import json
 from app.core.contracts import EngineError, canonical, digest, instant, stamp
 
 ACTIONS = ('documents','reservation','request','response','report','request_status',
-           'reservation_status','guidance_create','guidance_correct','guidance_cancel','guidance_read','availability')
+           'reservation_status','guidance_create','guidance_correct','guidance_cancel','guidance_read','availability','reservation_cancel','my_reservations')
 FIELDS = ('resource','start','end','category','content','topic','audience','effective_from',
           'effective_until','guidance_id','operation_id','request_id','response','clarification_field','requested_action')
 CLARIFICATION_FIELDS = ('resource','start','end','category','content','topic','audience',
@@ -103,6 +103,9 @@ class OperationInterpreter:
             'ou com o dia seguinte. Consulta de datas ou horários livres usa availability; não é uma reserva '
             'nem exige que a pessoa escolha previamente um horário livre. '
             'Reserva usa resource, start e end. Cadastro/correção de orientação usa topic, content, audience '
+            'Cancelamento ou desistência de reserva usa reservation_cancel, nunca reservation_status ou guidance_cancel. '
+            'Não invente referência: o motor consulta as reservas do solicitante e esclarece o alvo. '
+            'Para listar as próprias reservas use my_reservations; não invente operation_id para uma consulta por data. '
             '(residents/managers), effective_from e effective_until; start/end ficam null. Em guidance_create, '
             'guidance_id e expected_version ficam null, pois o motor gera a referência após a proposta. '
             'Correção/cancelamento podem indicar a orientação por topic ou guidance_id. Não invente IDs ou versões: '

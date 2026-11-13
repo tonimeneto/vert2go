@@ -1,0 +1,23 @@
+{
+  "scope": "canonical_desktop_controller_with_real_telegram_handshake_no_polling",
+  "result": "pending_connection",
+  "states": [
+    {
+      "state": "starting",
+      "code": null
+    },
+    {
+      "state": "unavailable",
+      "code": "telegram_transport_error"
+    },
+    {
+      "state": "unavailable",
+      "code": "telegram_transport_error"
+    }
+  ],
+  "exit_code": 0,
+  "messages_consumed": false,
+  "messages_sent": false,
+  "google_writes": false,
+  "concurrent_consumer_left": false
+}

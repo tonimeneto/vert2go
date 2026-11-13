@@ -19,25 +19,40 @@ NEUTRAL = 'Não foi possível atender esta mensagem neste canal de teste.'
 
 
 class TelegramError(EngineError):
-    def __init__(self, code, retry_after=0):
+    def __init__(self, code, retry_after=0, *, definitely_not_sent=False):
         super().__init__(code)
         self.retry_after = retry_after
+        self.definitely_not_sent = definitely_not_sent is True
 
 
 class TelegramAPI:
-    """Fixed TLS host, no redirects, payload/URL diagnostics or automatic retries."""
+    """Fixed-host persistent HTTPS; never retry an uncertain send."""
     def __init__(self, token, request_seconds):
         self._token = token
         self.request_seconds = request_seconds
+        self._connection = None
+
+    def close(self):
+        connection,self._connection=self._connection,None
+        if connection is not None:
+            connection.close()
 
     def call(self, method, parameters):
         if method not in ('getMe', 'getWebhookInfo', 'getUpdates', 'sendMessage'):
             raise TelegramError('telegram_method_denied')
-        connection = http.client.HTTPSConnection('api.telegram.org', timeout=self.request_seconds,
-                                                context=ssl.create_default_context())
-        connection._create_connection = connect_telegram
         started = time.perf_counter()
+        request_started=False
         try:
+            if self._connection is None:
+                connection=http.client.HTTPSConnection('api.telegram.org',timeout=self.request_seconds,context=ssl.create_default_context())
+                connection._create_connection=connect_telegram
+                self._connection=connection
+                # Separate connection establishment from HTTP transmission. A failure
+                # here proves sendMessage has not left this process.
+                connection.connect()
+            else:
+                connection=self._connection
+            request_started=True
             connection.request('POST', '/bot' + self._token + '/' + method,
                                body=canonical(parameters).encode('utf-8'),
                                headers={'Content-Type': 'application/json'})
@@ -59,11 +74,15 @@ class TelegramAPI:
             if response.status != 200 or data.get('ok') is not True or 'result' not in data:
                 # A server error may follow acceptance of sendMessage: outcome uncertain.
                 raise TelegramError('telegram_result_uncertain')
+            if response.will_close:self.close()
             return data['result']
+        except TelegramError:
+            self.close()
+            raise
         except (OSError, http.client.HTTPException, ValueError, RecursionError):
-            raise TelegramError('telegram_transport_error') from None
+            self.close()
+            raise TelegramError('telegram_transport_error',definitely_not_sent=not request_started) from None
         finally:
-            connection.close()
             LOG.info('telegram_http_finished method=%s elapsed_ms=%d', method,
                      round((time.perf_counter()-started)*1000))
 
@@ -373,6 +392,10 @@ class TelegramChannel:
                         or type(sent.get('chat')) is not dict or sent['chat'].get('id') != row['chat_id']):
                     raise TelegramError('telegram_response_invalid')
             except TelegramError as error:
+                if error.definitely_not_sent:
+                    self._delivery_state(key,'pending',self.config.telegram['retry_seconds'])
+                    LOG.warning('telegram_reply_not_transmitted code=%s',error.code)
+                    return
                 if error.retry_after:
                     self._delivery_state(key, 'pending', error.retry_after)
                     LOG.warning('telegram_reply_deferred code=%s retry_seconds=%d', error.code, error.retry_after)
@@ -444,9 +467,26 @@ class TelegramChannel:
             self.lifecycle_observer(state,code)
 
     def run(self):
+        try:
+            return self._run()
+        finally:
+            close=getattr(self.api,'close',None)
+            if callable(close):close()
+
+    def _run(self):
         if self.stop.is_set():
             return
-        self.startup()
+        while not self.stop.is_set():
+            try:
+                self.startup()
+                break
+            except TelegramError as error:
+                if error.code not in ('telegram_transport_error','telegram_rate_limit','telegram_result_uncertain'):
+                    raise
+                LOG.warning('telegram_startup_unavailable code=%s',error.code)
+                self._lifecycle('unavailable',error.code)
+                self.stop.wait(error.retry_after or self.config.telegram['retry_seconds'])
+        if self.stop.is_set():return
         LOG.info('telegram_ready simulation=true')
         self._lifecycle('ready')
         unavailable = False

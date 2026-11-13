@@ -94,14 +94,16 @@ class Panel:
         self.window.after(200,self.refresh)
 
 
-def main():
+def main(*,start=False):
     # No console is needed, and no private payload is sent to the UI or a log file.
     logging.basicConfig(handlers=[logging.NullHandler()],level=logging.INFO)
     window = None
     try:
         with instance_lock(ROOT/'data/alfredo-control'):
             window = tk.Tk()
-            Panel(window,BotControl(ROOT))
+            control=BotControl(ROOT)
+            Panel(window,control)
+            if start:control.start()
             window.mainloop()
         return 0
     except (EngineError,OSError) as error:

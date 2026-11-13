@@ -1,0 +1,96 @@
+{
+  "phase": "I5",
+  "scope": "authorized_cancellation_and_manager_inheritance_execute_20261113",
+  "updated_at": "2026-11-13T16:45:14.699754+00:00",
+  "status": "implemented_and_automatically_validated_real_integrated_acceptance_pending",
+  "owner_authorized_units": {
+    "resident": "62",
+    "manager": "52"
+  },
+  "local_regression": {
+    "tests_run": 525,
+    "passed": 525,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "successful": true
+  },
+  "new_tests": [
+    "tests.test_reservation_cancellations.CancellationHTTPTests.test_patch_is_status_only_and_conditional",
+    "tests.test_reservation_cancellations.CancellationHTTPTests.test_patch_precondition_failure_is_never_retried",
+    "tests.test_reservation_cancellations.CancellationHTTPTests.test_patch_requires_separate_destination_consent",
+    "tests.test_reservation_cancellations.CancellationTests.test_cancelled_booking_stops_blocking_calendar_and_sheet_failure_is_independent",
+    "tests.test_reservation_cancellations.CancellationTests.test_changed_unit_without_explicit_legacy_binding_blocks_confirmation",
+    "tests.test_reservation_cancellations.CancellationTests.test_conditional_patch_prevents_race_and_is_not_retried",
+    "tests.test_reservation_cancellations.CancellationTests.test_confirmation_must_be_explicit_and_proposal_hash_valid",
+    "tests.test_reservation_cancellations.CancellationTests.test_crossing_two_bookings_requires_choice_then_separate_permission",
+    "tests.test_reservation_cancellations.CancellationTests.test_decline_expiry_and_unconfirmed_cancel_have_no_effect",
+    "tests.test_reservation_cancellations.CancellationTests.test_event_changed_after_proposal_requires_new_authorization",
+    "tests.test_reservation_cancellations.CancellationTests.test_legacy_unit_mapping_preserves_original_without_cross_account_authority",
+    "tests.test_reservation_cancellations.CancellationTests.test_manager_inheritance_is_independent_of_name_or_numeric_identity",
+    "tests.test_reservation_cancellations.CancellationTests.test_manager_inherits_all_resident_features_for_own_unit_only",
+    "tests.test_reservation_cancellations.CancellationTests.test_natural_repeat_after_uncertain_patch_reconciles_without_new_write",
+    "tests.test_reservation_cancellations.CancellationTests.test_new_booking_and_help_are_not_hijacked_by_a_cancellation_choice",
+    "tests.test_reservation_cancellations.CancellationTests.test_new_retry_request_requires_a_new_proposal_and_approval",
+    "tests.test_reservation_cancellations.CancellationTests.test_other_unit_and_manager_cannot_cancel_someone_elses_booking",
+    "tests.test_reservation_cancellations.CancellationTests.test_own_reservation_natural_confirmation_and_history",
+    "tests.test_reservation_cancellations.CancellationTests.test_pending_cancellation_keeps_audit_and_context_out_of_retention",
+    "tests.test_reservation_cancellations.CancellationTests.test_repeated_confirmation_and_already_cancelled_never_patch_again",
+    "tests.test_reservation_cancellations.CancellationTests.test_second_proposal_for_same_booking_cannot_duplicate_the_effect",
+    "tests.test_reservation_cancellations.CancellationTests.test_semantic_cancellation_uses_same_owner_scoped_executor",
+    "tests.test_reservation_cancellations.CancellationTests.test_sqlite_failure_after_patch_rolls_back_and_recovers_without_patch_replay",
+    "tests.test_reservation_cancellations.CancellationTests.test_startup_recovers_committing_without_network_or_repeated_patch",
+    "tests.test_reservation_cancellations.CancellationTests.test_timeout_after_patch_is_recovered_by_read_only_after_restart",
+    "tests.test_reservation_cancellations.CancellationTests.test_timeout_before_patch_and_repeated_approval_do_not_retry_write"
+  ],
+  "previous_499_tests_preserved": "i5-tests-before-cancellation-manager-20261113.json",
+  "schema": {
+    "destination": "data/i2.sqlite3",
+    "before": 4,
+    "after": 5,
+    "migration": "005_reservation_cancellations.sql",
+    "additive": true,
+    "all_existing_rows_preserved": true,
+    "backup": "data/backups/before-i5-20261113T164147-e841eed7af9b48259701cb1833a604dd.sqlite3",
+    "supabase_used": false
+  },
+  "configuration": {
+    "manager_inheritance_by_role_not_name": true,
+    "manager_own_unit_required": true,
+    "cross_unit_cancel_not_granted": true,
+    "telegram_ids_preserved": true,
+    "legacy_unit_binding_scoped_to_original_owner": true,
+    "cancellation_destination_consent_added": true,
+    "oauth_scope_change": false
+  },
+  "evidence": [
+    "i5-cancellation-manager-local-migration-20261113.json",
+    "i5-cancellation-manager-config-replay-20261113.json",
+    "i5-tests.json",
+    "i5-unittest.txt"
+  ],
+  "isolated_replay_passed": true,
+  "real_google_writes_executed": false,
+  "preexisting_google_reservations_modified": false,
+  "bot_started": false,
+  "cancellation_rule_gap": "No documented deadline, penalty or extra cancellation restriction found; none invented",
+  "git_write_operations": false,
+  "publication": false,
+  "i6_authorized": false,
+  "full_i5_acceptance": false,
+  "remaining": [
+    "Real Calendar PATCH/readback cancellation not executed in this delivery to preserve preexisting events",
+    "Human Telegram acceptance of the corrected two-role flow not executed",
+    "Existing operational Sheets pending activities preserved, not reconciled by this task",
+    "Formal I5 acceptance not granted"
+  ],
+  "final_operational_readonly_check": {
+    "schema": 5,
+    "integrity_check": "ok",
+    "foreign_key_check": "ok",
+    "cancel_records": 0,
+    "outbox_pending": 2,
+    "outbox_synced": 8,
+    "bot_state": "closed"
+  }
+}

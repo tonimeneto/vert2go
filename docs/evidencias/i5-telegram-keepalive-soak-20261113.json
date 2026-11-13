@@ -1,0 +1,61 @@
+{
+  "scope": "real_readonly_identity_with_idle_intervals",
+  "updated_at": "2026-11-13T18:03:49.558791+00:00",
+  "result": "passed",
+  "steady_calls": 6,
+  "steady_duration_seconds": 71.33,
+  "observations": [
+    {
+      "phase": "connect",
+      "attempt": 1,
+      "ok": false,
+      "code": "telegram_transport_error",
+      "before_http": true
+    },
+    {
+      "phase": "connect",
+      "attempt": 2,
+      "ok": false,
+      "code": "telegram_transport_error",
+      "before_http": true
+    },
+    {
+      "phase": "connect",
+      "attempt": 3,
+      "ok": true
+    },
+    {
+      "phase": "sustained_reuse",
+      "after_seconds": 0.21,
+      "ok": true
+    },
+    {
+      "phase": "sustained_reuse",
+      "after_seconds": 10.43,
+      "ok": true
+    },
+    {
+      "phase": "sustained_reuse",
+      "after_seconds": 20.67,
+      "ok": true
+    },
+    {
+      "phase": "sustained_reuse",
+      "after_seconds": 50.89,
+      "ok": true
+    },
+    {
+      "phase": "sustained_reuse",
+      "after_seconds": 61.1,
+      "ok": true
+    },
+    {
+      "phase": "sustained_reuse",
+      "after_seconds": 71.33,
+      "ok": true
+    }
+  ],
+  "messages_sent": false,
+  "messages_consumed": false,
+  "google_mutations": false
+}

@@ -120,6 +120,7 @@ class ReservationConversation:
 
     def process(self,message,extracted,context=None,values=None,new_booking=False):
         self.engine.policy.authorize(message.scope,'reservation.create')
+        self.engine.operations._unit(message.scope)
         data=self.state(message,context)
         if context and context['kind']=='proposal':
             rows=[r for r in self.conversation._pending(message) if r['operation_id']==context['operation_id'] and r['kind']=='reservation']

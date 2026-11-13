@@ -24,6 +24,8 @@ class OperationsConfig:
     report_limit: int
     alternative_offsets_days: tuple
     reservation_exception_category: str
+    calendar_cancel: bool = False
+    legacy_units: object = None
 
     def require_live(self):
         if not self.live_authorized:
@@ -33,11 +35,16 @@ class OperationsConfig:
 def parse_operations(raw, google):
     if raw is None:
         return None
+    legacy=raw.get('legacy_units',{}) if type(raw) is dict else {}
+    raw={k:v for k,v in raw.items() if k!='legacy_units'} if type(raw) is dict else raw
     exact(raw, ('authorization', 'units', 'resources', 'request_categories', 'report_limit','alternative_offsets_days',
                 'reservation_exception_category'))
     if google is None or not google.calendar_id or not google.spreadsheet_id:
         raise EngineError('operations_google_resources_required')
     auth = raw['authorization']
+    cancel=auth.get('calendar_cancel',False) if type(auth) is dict else False
+    if type(cancel) is not bool:raise EngineError('operations_configuration_invalid')
+    auth={k:v for k,v in auth.items() if k!='calendar_cancel'} if type(auth) is dict else auth
     exact(auth, ('calendar_id', 'spreadsheet_id', 'sheet_range', 'exclusive_pilot_resources',
                  'calendar_insert', 'sheets_update'))
     if (auth['calendar_id'] != google.calendar_id or auth['spreadsheet_id'] != google.spreadsheet_id
@@ -50,11 +57,16 @@ def parse_operations(raw, google):
         if type(auth[key]) is not bool:
             raise EngineError('operations_configuration_invalid')
     authorized = all(auth[k] for k in ('exclusive_pilot_resources', 'calendar_insert', 'sheets_update'))
+    if cancel and not authorized:raise EngineError('operations_authorization_incomplete')
     if any(auth[k] for k in ('calendar_insert', 'sheets_update')) and not authorized:
         raise EngineError('operations_authorization_incomplete')
     units = raw['units']
     if (type(units) is not dict or not units or any(not re.fullmatch(r'[1-9][0-9]*', k)
             or type(v) is not str or not re.fullmatch(r'[a-zA-Z0-9_-]{1,64}', v) for k,v in units.items())):
+        raise EngineError('operations_units_invalid')
+    if (type(legacy) is not dict or not set(legacy)<=set(units) or any(type(v) is not list or not v
+            or any(type(n) is not str or not re.fullmatch(r'[a-zA-Z0-9_-]{1,64}',n) for n in v)
+            for v in legacy.values())):
         raise EngineError('operations_units_invalid')
     resources = raw['resources']
     if type(resources) is not list or not 1 <= len(resources) <= 10:
@@ -107,4 +119,4 @@ def parse_operations(raw, google):
         raise EngineError('operations_configuration_invalid')
     return OperationsConfig(authorized,google.calendar_id,google.spreadsheet_id,auth['sheet_range'],
                             MappingProxyType(units),MappingProxyType(parsed),MappingProxyType(categories),raw['report_limit'],
-                            tuple(alternatives),exception_category)
+                            tuple(alternatives),exception_category,cancel,MappingProxyType({k:tuple(v) for k,v in legacy.items()}))

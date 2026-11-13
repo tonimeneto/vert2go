@@ -1,0 +1,56 @@
+{
+  "scope": "telegram_transport_recovery_actual_controller",
+  "updated_at": "2026-11-13T18:13:53.345640+00:00",
+  "local_tests": {
+    "passed": 538,
+    "successful": true,
+    "tested_source_files": 101,
+    "hash_mismatches": [],
+    "protected_sources_unchanged": {
+      "AGENTS.md": true,
+      "docs/4S_convencao_condominio.md": true,
+      "docs/4S_Regulamento_interno.md": true,
+      "docs/Alfredo-Especificacao-v018.md": true,
+      "docs/Vert2Go-Plano-Implementacao-Codex-v0.1.1.md": true,
+      "docs/Vert2Go-PRD-v1.2.0.md": true
+    }
+  },
+  "controller": {
+    "launcher_pid": 17124,
+    "worker_pid": 4556,
+    "parent_child_relation_confirmed": true,
+    "mode": "operations",
+    "result": "stable_observed",
+    "continuous_active_seconds": 90.06,
+    "connection_failures": 0,
+    "left_running": true
+  },
+  "read_only_transport_evidence": [
+    "i5-telegram-keepalive-readonly-20261113.json",
+    "i5-telegram-keepalive-soak-20261113.json",
+    "i5-telegram-keepalive-panel-verified-20261113.json"
+  ],
+  "observer_correction": {
+    "previous_observation": "i5-telegram-keepalive-panel-stability-20261113.json",
+    "reason": "launcher PID differed from actual worker; old negative observation annotated and retained"
+  },
+  "previous_cancellation": {
+    "choice_processed": true,
+    "summary_delivery": "uncertain",
+    "summary_blindly_resent": false,
+    "proposal_expired": true,
+    "journal_states_readonly": {
+      "cancelled": 1
+    },
+    "cancellation_executed_by_development_agent": false,
+    "confirmation_sent_by_development_agent": false,
+    "meaning": "expired proposal, not cancellation of the original booking"
+  },
+  "network_or_credentials_reconfigured": false,
+  "git_writes_or_publication": false,
+  "full_i5_acceptance": false,
+  "limitations": [
+    "bounded transport observation does not prove future stability or recipient delivery",
+    "real cancellation completion and I5 formal acceptance remain pending"
+  ]
+}

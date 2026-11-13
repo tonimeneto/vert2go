@@ -12,6 +12,7 @@ def proposal(data, timezone, request_content=None):
     kind=data['kind']
     introductions={
         'reservation':'Entendi que você quer reservar este espaço:',
+        'reservation_cancellation':'Você quer cancelar integralmente esta reserva:',
         'request':'Você quer encaminhar este pedido à administração:',
         'response':'Você quer responder ao morador com esta mensagem:',
         'create':'Você quer registrar esta orientação da administração:',
@@ -20,6 +21,7 @@ def proposal(data, timezone, request_content=None):
     }
     questions={
         'reservation':'Posso confirmar essa reserva na Agenda experimental?',
+        'reservation_cancellation':'Você autoriza cancelar integralmente essa reserva na Agenda?',
         'request':'Posso registrar e encaminhar esse pedido?',
         'response':'Posso enviar essa resposta ao morador?',
         'create':'Posso registrar essa orientação?',
@@ -63,10 +65,12 @@ def report(data):
             'cancelled':'proposta encerrada sem execução','needs_reconciliation':'em verificação',
             'committing':'em processamento','failed':'com falha','resolved':'respondido',
             'forwarded':'encaminhado','pending':'pendente','received':'recebido','closed':'encerrado',
-            'synced':'verificado na planilha'}
+            'synced':'verificado na planilha','reservation_cancelled':'cancelada na Agenda'}
     lines=['Relatório do piloto experimental.','Histórico de operações (a existência atual das reservas é conferida na Agenda):']
     for row in data['operations']:
         lines.append(names.get(row['kind'],row['kind'])+' — '+states.get(row['status'],row['status'])+': '+str(row['count']))
     lines.append('Pedidos: '+(', '.join(states.get(r['status'],r['status'])+': '+str(r['count']) for r in data['requests']) or 'nenhum'))
+    if data.get('cancellations'):
+        lines.append('Cancelamentos: '+', '.join(('concluído' if r['status']=='confirmed' else states.get(r['status'],r['status']))+': '+str(r['count']) for r in data['cancellations']))
     lines.append('Planilha: '+(', '.join(states.get(r['status'],r['status'])+': '+str(r['count']) for r in data['sheets']) or 'nenhum registro'))
     return '\n'.join(lines)

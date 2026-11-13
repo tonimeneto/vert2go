@@ -1,0 +1,108 @@
+{
+  "phase": "I5",
+  "updated_at": "2026-11-13T16:42:47.137464+00:00",
+  "scope": "actual_configuration_fake_google_fake_telegram_temporary_sqlite",
+  "result": "passed",
+  "steps": [
+    {
+      "step": 1,
+      "role": "resident",
+      "code": "pilot_proposal",
+      "passed": true
+    },
+    {
+      "step": 2,
+      "role": "resident",
+      "code": "reservation_confirmed",
+      "passed": true
+    },
+    {
+      "step": 3,
+      "role": "resident",
+      "code": "pilot_proposal",
+      "passed": true
+    },
+    {
+      "step": 4,
+      "role": "resident",
+      "code": "reservation_confirmed",
+      "passed": true
+    },
+    {
+      "step": 5,
+      "role": "resident",
+      "code": "cancellation_choice_required",
+      "passed": true
+    },
+    {
+      "step": 6,
+      "role": "resident",
+      "code": "pilot_proposal",
+      "passed": true
+    },
+    {
+      "step": 7,
+      "role": "resident",
+      "code": "reservation_cancelled",
+      "passed": true
+    },
+    {
+      "step": 8,
+      "role": "manager",
+      "code": "pilot_proposal",
+      "passed": true
+    },
+    {
+      "step": 9,
+      "role": "manager",
+      "code": "reservation_confirmed",
+      "passed": true
+    },
+    {
+      "step": 10,
+      "role": "manager",
+      "code": "own_reservations",
+      "passed": true
+    },
+    {
+      "step": 11,
+      "role": "manager",
+      "code": "pilot_proposal",
+      "passed": true
+    },
+    {
+      "step": 12,
+      "role": "manager",
+      "code": "reservation_cancelled",
+      "passed": true
+    },
+    {
+      "step": 13,
+      "role": "manager",
+      "code": "pilot_sync_proposal",
+      "passed": true
+    },
+    {
+      "step": 14,
+      "role": "manager",
+      "code": "pilot_sync",
+      "passed": true
+    }
+  ],
+  "network_forbidden": true,
+  "actual_units": {
+    "resident": "62",
+    "manager": "52"
+  },
+  "ambiguous_interval_selected_before_confirmation": true,
+  "simulated_cancellations": 2,
+  "unselected_reservation_preserved": true,
+  "cross_unit_manager_cancel_denied": true,
+  "sheets_rows": 5,
+  "sheets_pending": 0,
+  "replay_wrote_again": false,
+  "operational_database_opened": false,
+  "google_mutations_attempted": false,
+  "live_telegram_sent": 0,
+  "full_i5_acceptance": false
+}

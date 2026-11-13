@@ -1,5 +1,14 @@
 # Alfredo — operações experimentais I5
 
+Estado vigente em 13/11/2026: cancelamento de reservas próprias implementado e
+`manager` herda todas as funcionalidades configuradas para `resident`, conservando
+suas funções administrativas. Essa autorização substitui a restrição anterior da
+síndica como participante exclusivamente administrativo. A regra é por perfil/ID,
+sem nome fixo. Reservas e cancelamentos exigem unidade vinculada; manager não pode
+cancelar reservas de outras unidades por ser administrador. Maria está vinculada
+à unidade 52 e Toninho à 62 na configuração local. I5 sem aceite integral; I6 não
+autorizada. O estado e as evidências vigentes estão no [relatório](../relatorio-i5.md).
+
 Estado: implementação local aprovada nos ensaios automatizados; OAuth e cenários
 Google reais validados em 12/11/2026. Os fluxos Telegram I5 e o aceite formal ainda
 estão em validação. Sessões reais de teste são temporárias; o painel Windows
@@ -19,8 +28,17 @@ Respostas pertinentes podem usar somente orientações filtradas e compatíveis 
 a evidência documental, atribuídas separadamente à administração.
 
 O perfil `resident` reserva para a unidade fictícia cadastrada e acompanha suas
-solicitações. `manager` responde encaminhamentos com confirmação/versionamento,
-consulta relatórios sob demanda e reconcilia operações. Nenhum texto muda o perfil.
+solicitações. `manager` também realiza essas operações para sua unidade, responde
+encaminhamentos com confirmação/versionamento, consulta relatórios sob demanda e
+reconcilia operações. Nenhum texto muda o perfil ou o vínculo autorizado de unidade.
+
+Ao receber cancelamento, consultar as próprias reservas na Agenda. Horários
+intercalados exigem esclarecer qual reserva inteira será cancelada. A escolha
+não é autorização: mostrar data, horários e unidade do alvo antes de pedir a
+confirmação explícita. Não presumir cancelamento parcial, prazo, multa ou penalidade.
+Só informar sucesso após conferir o estado cancelado na Agenda. Preservar histórico
+e tratar a planilha separadamente. Em falha incerta, consultar antes de qualquer
+retomada; nova tentativa de escrita exige nova proposta e nova autorização.
 
 ## Conversa e autorização
 

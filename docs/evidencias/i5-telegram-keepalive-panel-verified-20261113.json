@@ -1,0 +1,280 @@
+{
+  "observed_at": "2026-11-13T18:13:25.505325+00:00",
+  "launcher_pid": 17124,
+  "verified_worker_pid": 4556,
+  "result": "stable_observed",
+  "continuous_active_seconds": 90.06,
+  "observation_seconds": 90.06,
+  "required_seconds": 90,
+  "samples": [
+    {
+      "observed_at": "2026-11-13T18:11:55.440500+00:00",
+      "status": {
+        "state": "active",
+        "code": null,
+        "mode": "operations",
+        "pid": 4556,
+        "connection_failures": 0,
+        "ready_count": 1,
+        "updated_at": "2026-11-13T18:08:29.879158+00:00"
+      },
+      "database_lock_held": true,
+      "worker_verified": true
+    },
+    {
+      "observed_at": "2026-11-13T18:12:00.441440+00:00",
+      "status": {
+        "state": "active",
+        "code": null,
+        "mode": "operations",
+        "pid": 4556,
+        "connection_failures": 0,
+        "ready_count": 1,
+        "updated_at": "2026-11-13T18:08:29.879158+00:00"
+      },
+      "database_lock_held": true,
+      "worker_verified": true
+    },
+    {
+      "observed_at": "2026-11-13T18:12:05.443066+00:00",
+      "status": {
+        "state": "active",
+        "code": null,
+        "mode": "operations",
+        "pid": 4556,
+        "connection_failures": 0,
+        "ready_count": 1,
+        "updated_at": "2026-11-13T18:08:29.879158+00:00"
+      },
+      "database_lock_held": true,
+      "worker_verified": true
+    },
+    {
+      "observed_at": "2026-11-13T18:12:10.448132+00:00",
+      "status": {
+        "state": "active",
+        "code": null,
+        "mode": "operations",
+        "pid": 4556,
+        "connection_failures": 0,
+        "ready_count": 1,
+        "updated_at": "2026-11-13T18:08:29.879158+00:00"
+      },
+      "database_lock_held": true,
+      "worker_verified": true
+    },
+    {
+      "observed_at": "2026-11-13T18:12:15.451930+00:00",
+      "status": {
+        "state": "active",
+        "code": null,
+        "mode": "operations",
+        "pid": 4556,
+        "connection_failures": 0,
+        "ready_count": 1,
+        "updated_at": "2026-11-13T18:08:29.879158+00:00"
+      },
+      "database_lock_held": true,
+      "worker_verified": true
+    },
+    {
+      "observed_at": "2026-11-13T18:12:20.455476+00:00",
+      "status": {
+        "state": "active",
+        "code": null,
+        "mode": "operations",
+        "pid": 4556,
+        "connection_failures": 0,
+        "ready_count": 1,
+        "updated_at": "2026-11-13T18:08:29.879158+00:00"
+      },
+      "database_lock_held": true,
+      "worker_verified": true
+    },
+    {
+      "observed_at": "2026-11-13T18:12:25.460041+00:00",
+      "status": {
+        "state": "active",
+        "code": null,
+        "mode": "operations",
+        "pid": 4556,
+        "connection_failures": 0,
+        "ready_count": 1,
+        "updated_at": "2026-11-13T18:08:29.879158+00:00"
+      },
+      "database_lock_held": true,
+      "worker_verified": true
+    },
+    {
+      "observed_at": "2026-11-13T18:12:30.463254+00:00",
+      "status": {
+        "state": "active",
+        "code": null,
+        "mode": "operations",
+        "pid": 4556,
+        "connection_failures": 0,
+        "ready_count": 1,
+        "updated_at": "2026-11-13T18:08:29.879158+00:00"
+      },
+      "database_lock_held": true,
+      "worker_verified": true
+    },
+    {
+      "observed_at": "2026-11-13T18:12:35.466317+00:00",
+      "status": {
+        "state": "active",
+        "code": null,
+        "mode": "operations",
+        "pid": 4556,
+        "connection_failures": 0,
+        "ready_count": 1,
+        "updated_at": "2026-11-13T18:08:29.879158+00:00"
+      },
+      "database_lock_held": true,
+      "worker_verified": true
+    },
+    {
+      "observed_at": "2026-11-13T18:12:40.470359+00:00",
+      "status": {
+        "state": "active",
+        "code": null,
+        "mode": "operations",
+        "pid": 4556,
+        "connection_failures": 0,
+        "ready_count": 1,
+        "updated_at": "2026-11-13T18:08:29.879158+00:00"
+      },
+      "database_lock_held": true,
+      "worker_verified": true
+    },
+    {
+      "observed_at": "2026-11-13T18:12:45.474339+00:00",
+      "status": {
+        "state": "active",
+        "code": null,
+        "mode": "operations",
+        "pid": 4556,
+        "connection_failures": 0,
+        "ready_count": 1,
+        "updated_at": "2026-11-13T18:08:29.879158+00:00"
+      },
+      "database_lock_held": true,
+      "worker_verified": true
+    },
+    {
+      "observed_at": "2026-11-13T18:12:50.477780+00:00",
+      "status": {
+        "state": "active",
+        "code": null,
+        "mode": "operations",
+        "pid": 4556,
+        "connection_failures": 0,
+        "ready_count": 1,
+        "updated_at": "2026-11-13T18:08:29.879158+00:00"
+      },
+      "database_lock_held": true,
+      "worker_verified": true
+    },
+    {
+      "observed_at": "2026-11-13T18:12:55.482380+00:00",
+      "status": {
+        "state": "active",
+        "code": null,
+        "mode": "operations",
+        "pid": 4556,
+        "connection_failures": 0,
+        "ready_count": 1,
+        "updated_at": "2026-11-13T18:08:29.879158+00:00"
+      },
+      "database_lock_held": true,
+      "worker_verified": true
+    },
+    {
+      "observed_at": "2026-11-13T18:13:00.485580+00:00",
+      "status": {
+        "state": "active",
+        "code": null,
+        "mode": "operations",
+        "pid": 4556,
+        "connection_failures": 0,
+        "ready_count": 1,
+        "updated_at": "2026-11-13T18:08:29.879158+00:00"
+      },
+      "database_lock_held": true,
+      "worker_verified": true
+    },
+    {
+      "observed_at": "2026-11-13T18:13:05.488871+00:00",
+      "status": {
+        "state": "active",
+        "code": null,
+        "mode": "operations",
+        "pid": 4556,
+        "connection_failures": 0,
+        "ready_count": 1,
+        "updated_at": "2026-11-13T18:08:29.879158+00:00"
+      },
+      "database_lock_held": true,
+      "worker_verified": true
+    },
+    {
+      "observed_at": "2026-11-13T18:13:10.494502+00:00",
+      "status": {
+        "state": "active",
+        "code": null,
+        "mode": "operations",
+        "pid": 4556,
+        "connection_failures": 0,
+        "ready_count": 1,
+        "updated_at": "2026-11-13T18:08:29.879158+00:00"
+      },
+      "database_lock_held": true,
+      "worker_verified": true
+    },
+    {
+      "observed_at": "2026-11-13T18:13:15.497424+00:00",
+      "status": {
+        "state": "active",
+        "code": null,
+        "mode": "operations",
+        "pid": 4556,
+        "connection_failures": 0,
+        "ready_count": 1,
+        "updated_at": "2026-11-13T18:08:29.879158+00:00"
+      },
+      "database_lock_held": true,
+      "worker_verified": true
+    },
+    {
+      "observed_at": "2026-11-13T18:13:20.500089+00:00",
+      "status": {
+        "state": "active",
+        "code": null,
+        "mode": "operations",
+        "pid": 4556,
+        "connection_failures": 0,
+        "ready_count": 1,
+        "updated_at": "2026-11-13T18:08:29.879158+00:00"
+      },
+      "database_lock_held": true,
+      "worker_verified": true
+    },
+    {
+      "observed_at": "2026-11-13T18:13:25.502478+00:00",
+      "status": {
+        "state": "active",
+        "code": null,
+        "mode": "operations",
+        "pid": 4556,
+        "connection_failures": 0,
+        "ready_count": 1,
+        "updated_at": "2026-11-13T18:08:29.879158+00:00"
+      },
+      "database_lock_held": true,
+      "worker_verified": true
+    }
+  ],
+  "messages_sent_by_observer": 0,
+  "google_writes_by_observer": 0,
+  "full_i5_acceptance": false
+}

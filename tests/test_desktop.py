@@ -3,6 +3,8 @@ import tempfile
 from threading import Event
 import time
 import unittest
+from types import SimpleNamespace
+import json
 
 from app.core.contracts import EngineError
 from app.desktop.control import BotControl, database_busy
@@ -28,14 +30,14 @@ class DesktopControlTests(unittest.TestCase):
                 control.thread.join(3)
                 self.assertFalse(control.thread.is_alive())
 
-    def control(self, runner=None, probe=lambda _:False):
+    def control(self, runner=None, probe=lambda _:False, config_loader=lambda _:SimpleNamespace(operations=None)):
         if runner is None:
             def runner(arguments, *, stop_event, lifecycle_observer):
                 lifecycle_observer('ready')
                 self.ready.set()
                 stop_event.wait(3)
                 return 0
-        control = BotControl(self.root,runner=runner,probe=probe)
+        control = BotControl(self.root,runner=runner,probe=probe,config_loader=config_loader)
         self.controls.append(control)
         return control
 
@@ -131,3 +133,37 @@ class DesktopControlTests(unittest.TestCase):
                     lifecycle_observer=lambda state,code:states.append((state,code)))
         self.assertEqual(result,0);self.assertEqual(states,[('starting',None)])
         self.assertEqual(list(self.root.iterdir()),[])
+
+    def test_preconfigured_authorized_operations_are_used_by_same_panel(self):
+        seen=[]
+        def runner(arguments, *, stop_event, lifecycle_observer):
+            seen.extend(arguments);lifecycle_observer('ready');self.ready.set();stop_event.wait(3);return 0
+        loader=lambda _:SimpleNamespace(operations=SimpleNamespace(live_authorized=True))
+        control=self.control(runner,config_loader=loader);control.start();self.assertTrue(self.ready.wait(2))
+        self.assertIn('--operations',seen);self.assertIn('--allow-live-google-writes',seen)
+
+    def test_draft_operations_do_not_grant_live_writes(self):
+        seen=[]
+        def runner(arguments, **kwargs):seen.extend(arguments);self.ready.set();return 0
+        control=self.control(runner,config_loader=lambda _:SimpleNamespace(operations=SimpleNamespace(live_authorized=False)))
+        control.start();self.assertTrue(self.ready.wait(2));self.assertNotIn('--operations',seen)
+
+    def test_config_error_preserves_specific_safe_code(self):
+        def loader(_):raise EngineError('configuration_read_denied')
+        control=self.control(config_loader=loader);control.start();self.pump(control,'failed')
+        self.assertEqual(control.code,'configuration_read_denied')
+
+    def test_safe_status_tracks_real_readiness_and_reconnection_without_private_data(self):
+        control=self.control();control.start();self.assertTrue(self.ready.wait(2));self.pump(control,'active')
+        status=json.loads((self.root/'data/alfredo-control-status.json').read_text())
+        self.assertEqual(status['state'],'active');self.assertEqual(status['ready_count'],1)
+        control._observe('unavailable','telegram_transport_error');control.poll()
+        status=json.loads((self.root/'data/alfredo-control-status.json').read_text())
+        self.assertEqual(status['state'],'unavailable');self.assertEqual(status['connection_failures'],1)
+        self.assertNotIn('token',status)
+
+    def test_manual_launcher_start_flag_preserves_canonical_panel_entry(self):
+        from scripts.alfredo_control import main
+        from unittest.mock import patch
+        with patch('scripts.alfredo_control.panel_main',return_value=0) as run:
+            self.assertEqual(main(['--start']),0);run.assert_called_once_with(start=True)

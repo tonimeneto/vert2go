@@ -1,0 +1,19 @@
+{
+  "scope": "actual_corrected_desktop_consumer_stability",
+  "updated_at": "2026-11-13T18:12:08.092028+00:00",
+  "result": "not_stable",
+  "pid": 17124,
+  "mode": "operations",
+  "last_state": "active",
+  "steady_active_seconds": 0,
+  "connection_failures_total": 0,
+  "samples": [],
+  "panel_lock_held": true,
+  "consumer_lock_held": true,
+  "operator_sent_confirmation": false,
+  "operator_triggered_cancellation": false,
+  "full_i5_acceptance": false,
+  "observer_error": "launcher_pid_used_instead_of_worker_pid",
+  "interpretation": "Observer matched launcher 17124 instead of verified child 4556; not_stable is not evidence of a connection failure. Corrected observation is stored separately.",
+  "corrected_observation": "i5-telegram-keepalive-panel-verified-20261113.json"
+}

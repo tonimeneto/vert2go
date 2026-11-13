@@ -36,11 +36,11 @@ def authorization_words(phrase):
 
 def permission(phrase, kind):
     """Match an explicit answer to the action asked, never to a different action."""
-    if phrase in NO or (kind!='cancel' and phrase in ('pode cancelar','sim pode cancelar')):
+    if phrase in NO or (kind not in ('cancel','reservation_cancellation') and phrase in ('pode cancelar','sim pode cancelar')):
         return False
     phrase=authorization_words(phrase)
     if phrase is None:return None
-    if kind!='cancel' and phrase in ('pode cancelar','sim pode cancelar'):
+    if kind not in ('cancel','reservation_cancellation') and phrase in ('pode cancelar','sim pode cancelar'):
         return False
     if phrase in ('sim','sim pode','pode','pode sim','autorizo','sim autorizo','confirmo','confirmar',
                   'sim confirmo','sim por favor','pode seguir','sim pode seguir','pode fazer','pode prosseguir','claro','com certeza'):
@@ -53,6 +53,7 @@ def permission(phrase, kind):
         'response':('enviar','mandar','registrar'),
         'create':('registrar','cadastrar'), 'correct':('registrar','alterar','atualizar'),
         'cancel':('cancelar','retirar','encerrar'), 'sync':('sincronizar','atualizar'),
+        'reservation_cancellation':('cancelar','desmarcar'),
     }
     objects={
         'reservation':('a reserva','essa reserva'), 'request':('o pedido','esse pedido'),
@@ -61,6 +62,7 @@ def permission(phrase, kind):
         'correct':('a alteração','essa alteração','a orientação','o aviso'),
         'cancel':('a orientação','essa orientação','o aviso','esse aviso'),
         'sync':('a planilha','os registros','as atividades'),
+        'reservation_cancellation':('a reserva','essa reserva','a minha reserva','minha reserva'),
     }
     stem=phrase.removeprefix('sim ').removeprefix('pode ')
     if not phrase.startswith(('pode ','sim pode ')):
@@ -126,7 +128,7 @@ class OperationDialog:
 
     def markup(self, scope, row):
         question=self.outgoing(scope,row)
-        if question and question['kind'] in ('proposal','clarification','request_reply','sync'):
+        if question and question['kind'] in ('proposal','clarification','request_reply','sync','cancellation_choice'):
             # Native reply association; no slash command or copied technical ID.
             return {'force_reply':True,'input_field_placeholder':'Responda normalmente por aqui'}
         return None
@@ -155,9 +157,9 @@ class OperationDialog:
                     and data['proposal_hash']==operation['proposal_hash'])
 
     def decline(self, message, operation):
-        table='pilot_operations' if operation['source']=='pilot' else 'requests_state'
+        table=('pilot_cancellations' if operation['source']=='cancellation' else 'pilot_operations' if operation['source']=='pilot' else 'requests_state')
         permission=({'reservation':'reservation.create','request':'request.create','response':'request.respond'}[operation['kind']]
-                    if table=='pilot_operations' else 'guidance.'+operation['kind'])
+                    if table=='pilot_operations' else 'reservation.cancel' if table=='pilot_cancellations' else 'guidance.'+operation['kind'])
         role=self.engine.policy.authorize(message.scope,permission)
         now=stamp(self.engine.clock())
         with self.engine.store.transaction():

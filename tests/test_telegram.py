@@ -209,6 +209,16 @@ class TelegramTests(EngineCase):
         self.channel.deliver()
         self.assertEqual(len(self.api.sent), 1)
 
+    def test_connect_failure_keeps_unsent_reply_pending_until_safe_retry(self):
+        self.channel.process(self.entry())
+        with patch.object(self.api,'call',side_effect=TelegramError('telegram_transport_error',definitely_not_sent=True)):
+            self.channel.deliver()
+        self.assertEqual(self.state(),'pending');self.assertEqual(len(self.api.sent),0)
+        self.channel.deliver();self.assertEqual(len(self.api.sent),0)
+        self.clock.advance(seconds=self.config.telegram['retry_seconds']+1)
+        self.channel.deliver();self.channel.deliver()
+        self.assertEqual(self.state(),'sent');self.assertEqual(len(self.api.sent),1)
+
     def test_restart_in_sending_marks_uncertain_but_pending_is_delivered(self):
         self.channel.process(self.entry())
         self.channel.process(self.entry(2))
@@ -437,6 +447,26 @@ class TelegramTests(EngineCase):
             self.channel.run()
         self.assertEqual(states,[('ready',None),('unavailable','telegram_transport_error'),('ready',None)])
 
+    def test_startup_transport_failure_retries_before_announcing_ready(self):
+        states=[];self.channel.lifecycle_observer=lambda state,code:states.append((state,code))
+        with patch.object(self.channel,'startup',side_effect=[TelegramError('telegram_transport_error'),None]) as startup, \
+             patch.object(self.channel,'poll_once',side_effect=self.channel.stop.set), \
+             patch.object(self.channel.stop,'wait',return_value=False):
+            self.channel.run()
+        self.assertEqual(startup.call_count,2)
+        self.assertEqual(states,[('unavailable','telegram_transport_error'),('ready',None)])
+
+    def test_stop_during_startup_retry_never_announces_active(self):
+        states=[];self.channel.lifecycle_observer=lambda state,code:states.append((state,code))
+        with patch.object(self.channel,'startup',side_effect=TelegramError('telegram_transport_error')), \
+             patch.object(self.channel.stop,'wait',side_effect=lambda _:self.channel.stop.set()):self.channel.run()
+        self.assertNotIn(('ready',None),states)
+
+    def test_startup_authentication_error_is_not_retried(self):
+        with patch.object(self.channel,'startup',side_effect=TelegramError('telegram_access_or_conflict')) as startup:
+            with self.assertRaisesRegex(TelegramError,'telegram_access_or_conflict'):self.channel.run()
+        self.assertEqual(startup.call_count,1)
+
     def test_main_control_uses_shared_stop_and_closes_canonical_store(self):
         from threading import Event
         from app.main import instance_lock
@@ -533,6 +563,35 @@ class TelegramTests(EngineCase):
 
 
 class TransportTests(EngineCase):
+    def test_successful_keepalive_connection_is_reused_and_closed_explicitly(self):
+        connection=MagicMock();response=connection.getresponse.return_value
+        response.status=200;response.will_close=False;response.read.return_value=b'{"ok":true,"result":{}}'
+        api=TelegramAPI('9009:FAKE_SECRET',35)
+        with patch('http.client.HTTPSConnection',return_value=connection) as make:
+            api.call('getMe',{});api.call('getWebhookInfo',{})
+        self.assertEqual(make.call_count,1);self.assertEqual(connection.connect.call_count,1)
+        self.assertFalse(connection.close.called);api.close();self.assertTrue(connection.close.called)
+
+    def test_connect_failure_proves_message_was_not_transmitted(self):
+        connection=MagicMock();connection.connect.side_effect=TimeoutError('PRIVATE')
+        with patch('http.client.HTTPSConnection',return_value=connection):
+            with self.assertRaises(TelegramError) as error:TelegramAPI('9009:FAKE_SECRET',35).call('sendMessage',{})
+        self.assertTrue(error.exception.definitely_not_sent);connection.request.assert_not_called()
+        self.assertNotIn('PRIVATE',str(error.exception))
+
+    def test_failure_after_request_never_claims_message_not_sent_or_retries(self):
+        connection=MagicMock();connection.getresponse.side_effect=TimeoutError('PRIVATE')
+        with patch('http.client.HTTPSConnection',return_value=connection):
+            with self.assertRaises(TelegramError) as error:TelegramAPI('9009:FAKE_SECRET',35).call('sendMessage',{})
+        self.assertFalse(error.exception.definitely_not_sent);self.assertEqual(connection.request.call_count,1)
+
+    def test_server_closed_connection_is_reestablished_for_next_request(self):
+        connection=MagicMock();response=connection.getresponse.return_value
+        response.status=200;response.will_close=True;response.read.return_value=b'{"ok":true,"result":{}}'
+        api=TelegramAPI('9009:FAKE_SECRET',35)
+        with patch('http.client.HTTPSConnection',return_value=connection) as make:
+            api.call('getMe',{});api.call('getWebhookInfo',{})
+        self.assertEqual(make.call_count,2)
     def invoke(self, body, status=200):
         connection = MagicMock()
         connection.getresponse.return_value.status = status

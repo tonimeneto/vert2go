@@ -1,0 +1,112 @@
+{
+  "scope": "human_authorized_reservation_cancellation_readonly_verification",
+  "observed_at": "2026-11-13T19:12:51.489105+00:00",
+  "owner_report": "Toninho chose option 1, received summary, replied Autorizo and received successful cancellation response",
+  "cancellation": {
+    "operation_id": "1f93501b-715a-5977-9741-a28788c66bba",
+    "reservation_id": "d9346ea3-e5aa-59f7-949f-025d4fca2839",
+    "state": "confirmed",
+    "confirmed_at": "2026-11-13T18:16:44.270500+00:00",
+    "unit": "62",
+    "start": "2026-11-16T19:00:00.000000+00:00",
+    "end": "2026-11-16T22:00:00.000000+00:00"
+  },
+  "original_reservation": {
+    "retained": true,
+    "state": "cancelled",
+    "original_proposal_retained": true,
+    "external_reference_retained": true
+  },
+  "cancellation_outbox_states": {
+    "pending": 1
+  },
+  "all_outbox_states": {
+    "pending": 3,
+    "synced": 8
+  },
+  "audit_transitions": [
+    {
+      "operation": "pilot.reservation",
+      "result": "proposal",
+      "previous_state": null,
+      "next_state": "awaiting_confirmation"
+    },
+    {
+      "operation": "pilot.reservation",
+      "result": "committing",
+      "previous_state": "awaiting_confirmation",
+      "next_state": "committing"
+    },
+    {
+      "operation": "pilot.reservation",
+      "result": "confirmed",
+      "previous_state": "committing",
+      "next_state": "confirmed"
+    },
+    {
+      "operation": "pilot.reservation",
+      "result": "confirmed",
+      "previous_state": "confirmed",
+      "next_state": "confirmed"
+    },
+    {
+      "operation": "pilot.reservation_cancellation",
+      "result": "proposal",
+      "previous_state": null,
+      "next_state": "awaiting_confirmation"
+    },
+    {
+      "operation": "pilot.reservation_cancellation",
+      "result": "committing",
+      "previous_state": "awaiting_confirmation",
+      "next_state": "committing"
+    },
+    {
+      "operation": "pilot.reservation",
+      "result": "cancelled",
+      "previous_state": "confirmed",
+      "next_state": "cancelled"
+    },
+    {
+      "operation": "pilot.reservation_cancellation",
+      "result": "confirmed",
+      "previous_state": "committing",
+      "next_state": "confirmed"
+    }
+  ],
+  "telegram_delivery_receipts": [
+    {
+      "code": "reservation_cancelled",
+      "state": "sent",
+      "created_at": "2026-11-13T18:16:39.601262+00:00",
+      "updated_at": "2026-11-13T18:16:46.231118+00:00"
+    }
+  ],
+  "google_verification": {
+    "selected_reservation": {
+      "state": "cancelled",
+      "id_matches": true
+    },
+    "adjacent_unselected_reservation": {
+      "state": "confirmed",
+      "id_matches": true
+    }
+  },
+  "google_mutations_by_observer": 0,
+  "telegram_messages_by_observer": 0,
+  "full_i5_acceptance": false,
+  "controller": {
+    "state": "active",
+    "mode": "operations",
+    "connection_failures": 1,
+    "ready_count": 2,
+    "updated_at": "2026-11-13T19:09:29.343858+00:00"
+  },
+  "checks": {
+    "selected_cancelled_in_calendar": true,
+    "adjacent_preserved_in_calendar": true,
+    "durable_cancellation_confirmed": true,
+    "original_history_retained": true,
+    "cancellation_activity_enqueued": true
+  }
+}
